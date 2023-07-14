@@ -1,0 +1,68 @@
+﻿@page
+@model webapp.Pages.Records.IndexModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Record[0].Note)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Record[0].Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Record[0].Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Record[0].Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Record[0].IsDone)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Record) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Note)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsDone)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.RecordId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.RecordId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.RecordId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</body>
+</html>
