@@ -1,0 +1,44 @@
+version: '3.4'
+
+services:
+  webapp:
+    container_name: webapp
+    image: webapp
+    build:
+      context: .
+      dockerfile: webapp/Dockerfile
+    restart: always
+    depends_on:
+      - database
+    networks:
+      - local
+
+  database:
+    container_name: database
+    image: mcr.microsoft.com/mssql/server:latest
+    restart: always
+    volumes:
+      - data:/var/opt/mssql
+    environment:
+      - MSSQL_SA_PASSWORD=Password.123
+      - ACCEPT_EULA=Y
+    networks:
+      - local 
+
+  reverse-proxy:
+    container_name: reverse-proxy
+    build:
+      context: .
+      dockerfile: reverse-proxy/Dockerfile
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - local
+
+networks:
+  local:
+
+volumes:
+  data:
