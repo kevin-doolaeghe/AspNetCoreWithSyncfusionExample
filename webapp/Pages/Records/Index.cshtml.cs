@@ -8,24 +8,21 @@ using Microsoft.EntityFrameworkCore;
 using webapp.Models;
 using webapp.Services;
 
-namespace webapp.Pages.Records
-{
-    public class IndexModel : PageModel
-    {
-        private readonly webapp.Services.DatabaseContext _context;
+namespace webapp.Pages.Records {
 
-        public IndexModel(webapp.Services.DatabaseContext context)
-        {
+    public class IndexModel : PageModel {
+
+        private readonly DatabaseContext _context;
+
+        public IndexModel(DatabaseContext context) {
             _context = context;
         }
 
-        public IList<Record> Record { get;set; } = default!;
+        public IList<Record> Records { get;set; } = default!;
 
-        public async Task OnGetAsync()
-        {
-            if (_context.Records != null)
-            {
-                Record = await _context.Records.ToListAsync();
+        public async Task OnGetAsync() {
+            if (_context.Records != null) {
+                Records = await _context.Records.ToListAsync();
             }
         }
     }

@@ -1,8 +1,7 @@
 ﻿@page
 @model webapp.Pages.Records.DetailsModel
-
 @{
-    ViewData["PageTitle"] = "Details";
+    ViewData["PageTitle"] = "Records";
 }
 
 <h1>Details</h1>
@@ -43,7 +42,8 @@
         </dd>
     </dl>
 </div>
+
 <div>
     <a asp-page="./Edit" asp-route-id="@Model.Record?.RecordId">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
+    <a asp-page="./Index">Back to list</a>
 </div>

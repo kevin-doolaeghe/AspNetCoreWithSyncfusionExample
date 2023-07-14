@@ -8,33 +8,27 @@ using Microsoft.EntityFrameworkCore;
 using webapp.Models;
 using webapp.Services;
 
-namespace webapp.Pages.Records
-{
-    public class DetailsModel : PageModel
-    {
-        private readonly webapp.Services.DatabaseContext _context;
+namespace webapp.Pages.Records {
 
-        public DetailsModel(webapp.Services.DatabaseContext context)
-        {
+    public class DetailsModel : PageModel {
+
+        private readonly DatabaseContext _context;
+
+        public DetailsModel(DatabaseContext context) {
             _context = context;
         }
 
-      public Record Record { get; set; } = default!; 
+        public Record Record { get; set; } = default!; 
 
-        public async Task<IActionResult> OnGetAsync(long? id)
-        {
-            if (id == null || _context.Records == null)
-            {
+        public async Task<IActionResult> OnGetAsync(long? id) {
+            if (id == null || _context.Records == null) {
                 return NotFound();
             }
 
             var record = await _context.Records.FirstOrDefaultAsync(m => m.RecordId == id);
-            if (record == null)
-            {
+            if (record == null) {
                 return NotFound();
-            }
-            else 
-            {
+            } else {
                 Record = record;
             }
             return Page();

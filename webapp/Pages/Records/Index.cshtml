@@ -1,60 +1,60 @@
 ﻿@page
 @model webapp.Pages.Records.IndexModel
-
 @{
-    ViewData["PageTitle"] = "Index";
+    ViewData["PageTitle"] = "Records";
 }
 
-<h1>Index</h1>
+<h1>Record list :</h1>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Record[0].Note)
+                @Html.DisplayNameFor(model => model.Records[0].Note)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Record[0].Category)
+                @Html.DisplayNameFor(model => model.Records[0].Category)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Record[0].Amount)
+                @Html.DisplayNameFor(model => model.Records[0].Amount)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Record[0].Date)
+                @Html.DisplayNameFor(model => model.Records[0].Date)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Record[0].IsDone)
+                @Html.DisplayNameFor(model => model.Records[0].IsDone)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Record) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Note)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Amount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsDone)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.RecordId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.RecordId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.RecordId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Records) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Note)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsDone)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.RecordId">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.RecordId">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.RecordId">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+<p>
+    <a asp-page="Create">Add</a>
+</p>

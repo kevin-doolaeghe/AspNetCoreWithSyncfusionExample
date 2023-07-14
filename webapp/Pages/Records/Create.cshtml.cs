@@ -8,31 +8,26 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using webapp.Models;
 using webapp.Services;
 
-namespace webapp.Pages.Records
-{
-    public class CreateModel : PageModel
-    {
-        private readonly webapp.Services.DatabaseContext _context;
+namespace webapp.Pages.Records {
 
-        public CreateModel(webapp.Services.DatabaseContext context)
-        {
+    public class CreateModel : PageModel {
+
+        private readonly DatabaseContext _context;
+
+        public CreateModel(DatabaseContext context) {
             _context = context;
-        }
-
-        public IActionResult OnGet()
-        {
-            return Page();
         }
 
         [BindProperty]
         public Record Record { get; set; } = default!;
-        
+
+        public IActionResult OnGet() {
+            return Page();
+        }
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
-        public async Task<IActionResult> OnPostAsync()
-        {
-          if (!ModelState.IsValid || _context.Records == null || Record == null)
-            {
+        public async Task<IActionResult> OnPostAsync() {
+            if (!ModelState.IsValid || _context.Records == null || Record == null) {
                 return Page();
             }
 
