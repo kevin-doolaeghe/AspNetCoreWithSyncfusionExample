@@ -2,17 +2,10 @@
 @model webapp.Pages.Records.DetailsModel
 
 @{
-    Layout = null;
+    ViewData["PageTitle"] = "Details";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Details</title>
-</head>
-<body>
+<h1>Details</h1>
 
 <div>
     <h4>Record</h4>
@@ -54,5 +47,3 @@
     <a asp-page="./Edit" asp-route-id="@Model.Record?.RecordId">Edit</a> |
     <a asp-page="./Index">Back to List</a>
 </div>
-</body>
-</html>
