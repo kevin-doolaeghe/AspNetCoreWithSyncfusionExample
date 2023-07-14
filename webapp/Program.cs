@@ -32,20 +32,18 @@ using (var scope = app.Services.CreateScope()) {
     context.Database.EnsureCreated();
     // context.Database.Migrate();
 
-    /*
-    if (!context.Categories.Any()) {
-        var categories = new Category[] {
-            new Category { Icon = "🍔", Name = "Food", Type = CategoryType.Expense},
-            new Category { Icon = "💰", Name = "Salary", Type = CategoryType.Income},
-            new Category { Icon = "🎁", Name = "Pleasure", Type = CategoryType.Expense},
-            new Category { Icon = "⚽", Name = "Activity", Type = CategoryType.Expense},
-            new Category { Icon = "💸", Name = "Savings", Type = CategoryType.Income},
+    if (!context.Records.Any()) {
+        var records = new Record[] {
+            new Record { Note = "Salary 06-2023", Category = "💰 Salary", Amount = 1000, Date = DateTime.Parse("2023-06-28"), IsDone = true },
+            new Record { Note = "Food", Category = "🍔 Food", Amount = -100, Date = DateTime.Parse("2023-07-02"), IsDone = true },
+            new Record { Note = "Romain's birthday", Category = "🎁 Pleasure", Amount = -80, Date = DateTime.Parse("2023-07-06"), IsDone = false },
+            new Record { Note = "Movie", Category = "⚽ Activity", Amount = -10, Date = DateTime.Parse("2023-07-09"), IsDone = true },
+            new Record { Note = "Monthly transaction", Category = "💸 Savings", Amount = -200, Date = DateTime.Parse("2023-07-10"), IsDone = false },
         };
 
-        context.Categories.AddRange(categories);
+        context.Records.AddRange(records);
         context.SaveChanges();
     }
-    */
 }
 
 app.UseStaticFiles();
