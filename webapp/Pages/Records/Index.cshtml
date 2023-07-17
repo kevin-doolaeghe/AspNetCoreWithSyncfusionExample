@@ -58,3 +58,45 @@
 <p>
     <a asp-page="Create">Add</a>
 </p>
+
+<ejs-grid id="Grid" dataSource="@Model.Records" allowPaging="true" allowSorting="true" allowFiltering="true" autoFit="true" toolbar="@(new List<string>() { "Add","Delete","Update","Cancel" })">
+    <e-grid-filtersettings type="Menu"></e-grid-filtersettings>
+    <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true" mode="Dialog"></e-grid-editSettings>
+    <e-grid-loadingIndicator indicatorType="Shimmer"></e-grid-loadingIndicator>
+    <e-grid-pagesettings pageSize="20"></e-grid-pagesettings>
+    <e-grid-columns>
+        <e-grid-column field="RecordId" headerText="Id" isPrimaryKey="true" visible="false"></e-grid-column>
+        <e-grid-column field="Date" headerText="Date" format="dd/MM/yyyy" editType="datepickeredit"></e-grid-column>
+        <e-grid-column field="Note" headerText="Note"></e-grid-column>
+        <e-grid-column field="Category" headerText="Category" editType="dropdownedit"></e-grid-column>
+        <e-grid-column field="IsDone" headerText="Status" template="#status" editType="dropdownedit"></e-grid-column>
+        <e-grid-column field="Amount" headerText="Amount" editType="numericedit" format="C2"></e-grid-column>
+        <e-grid-column template="#actions" allowFiltering="false" allowSorting="false"></e-grid-column>
+    </e-grid-columns>
+</ejs-grid>
+
+<script id="status" type="text/x-template">
+    ${if(IsDone)}
+        <span class="badge bg-success">${Status}</span>
+    ${else}
+        <span class="badge bg-danger">${Status}</span>
+    ${/if}
+</script>
+
+<script id="amount" type="text/x-template">
+    ${FormattedAmount}
+</script>
+
+<script id="actions" type="text/x-template">
+    <ejs-button id="edit" content="Edit"></ejs-button>
+    <!--
+    <div class='e-btn-group'>
+        <ejs-button id="edit" content="Edit" asp-page="./Edit" asp-route-id="${RecordId}"></ejs-button>
+        <ejs-button id="delete" content="Delete" asp-page="./Delete" asp-route-id="${RecordId}"></ejs-button>
+    </div>
+    <div class='e-btn-group'>
+        <ejs-button id="edit" content="Edit"></ejs-button>
+        <ejs-button id="delete" content="Delete"></ejs-button>
+    </div>
+    -->
+</script>

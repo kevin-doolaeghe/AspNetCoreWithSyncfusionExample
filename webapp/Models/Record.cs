@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Globalization;
 
 namespace webapp.Models {
 
@@ -22,6 +23,6 @@ namespace webapp.Models {
         public string Status => IsDone ? "Closed" : "Pending";
 
         [NotMapped]
-        public string FormattedAmount => (Amount > 0 ? "+ " : "- ") + Amount.ToString("C2");
+        public string FormattedAmount => Amount.ToString("C2", new CultureInfo("fr-FR"));
     }
 }
