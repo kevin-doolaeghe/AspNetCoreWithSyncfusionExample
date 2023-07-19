@@ -33,7 +33,7 @@ using (var scope = app.Services.CreateScope()) {
     // context.Database.Migrate();
 
     if (!context.Records.Any()) {
-        var records = new Record[] {
+        var records = new List<Record>() {
             new Record { Note = "Salary 06-2023", Category = "💰 Salary", Amount = 1000, Date = DateTime.Parse("2023-06-28"), IsDone = true },
             new Record { Note = "Food", Category = "🍔 Food", Amount = -100, Date = DateTime.Parse("2023-07-02"), IsDone = true },
             new Record { Note = "Romain's birthday", Category = "🎁 Pleasure", Amount = -80, Date = DateTime.Parse("2023-07-06"), IsDone = false },

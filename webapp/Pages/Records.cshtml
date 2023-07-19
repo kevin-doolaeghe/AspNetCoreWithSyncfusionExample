@@ -1,0 +1,72 @@
+﻿@page "{handler?}"
+@model webapp.Pages.RecordsModel
+@{
+    ViewData["PageTitle"] = "Records";
+    var toolbarItems = new List<string>() {
+        "Add", "Edit", "Delete", "Update", "Cancel", "Print", "ExcelExport", "PdfExport", "Search"
+    };
+}
+@Html.AntiForgeryToken()
+
+<ejs-grid id="Grid" load="onLoad" dataBound="dataBound" allowPaging="true" allowSorting="true" allowFiltering="true" allowPdfExport="true" allowExcelExport="true" pdfExportComplete="pdfExportComplete" excelExportComplete="excelExportComplete" toolbarClick="toolbarClick" toolbar="toolbarItems" autoFit="true">
+    <e-data-manager url="RecordsTemp/DataSource" crudUrl="RecordsTemp/CrudUpdate" adaptor="UrlAdaptor"></e-data-manager>
+    <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true" mode="Dialog" showConfirmDialog="true" showDeleteConfirmDialog="true"></e-grid-editSettings>
+    <e-grid-filtersettings type="Menu"></e-grid-filtersettings>
+    <e-grid-searchSettings fields="@(new string[] { "Note", "Category", "Status" })" operator="contains" key="" ignoreCase="true"></e-grid-searchSettings>
+    <e-grid-loadingIndicator indicatorType="Shimmer"></e-grid-loadingIndicator>
+    <e-grid-pagesettings pageSize="20"></e-grid-pagesettings>
+    <e-grid-columns>
+        <e-grid-column field="recordId" headerText="Id" isPrimaryKey="true" visible="false"></e-grid-column>
+        <e-grid-column field="date" headerText="Date" format="dd/MM/yyyy"></e-grid-column>
+        <e-grid-column field="note" headerText="Note"></e-grid-column>
+        <e-grid-column field="category" headerText="Category"></e-grid-column>
+        <e-grid-column field="isDone" headerText="Status" template="#status"></e-grid-column>
+        <e-grid-column field="amount" headerText="Amount" template="#amount"></e-grid-column>
+    </e-grid-columns>
+</ejs-grid>
+
+<script id="status" type="text/x-template">
+    ${if(isDone)}
+        <span class="badge bg-success p-2">${status}</span>
+    ${else}
+        <span class="badge bg-danger p-2">${status}</span>
+    ${/if}
+</script>
+
+<script id="amount" type="text/x-template">
+    ${if(amount > 0)}
+        <span class="badge bg-success p-2">${formattedAmount}</span>
+    ${else}
+        <span class="badge bg-danger p-2">${formattedAmount}</span>
+    ${/if}
+</script>
+
+<script>
+    function onLoad() {
+        this.dataSource.dataSource.headers = [{ 'XSRF-TOKEN': $("input:hidden[name='__RequestVerificationToken']").val() }];
+    }
+
+    function dataBound(args) {
+        this.autoFitColumns();
+    }
+
+    function toolbarClick(args) {
+        var gridObj = document.getElementById("Grid").ej2_instances[0];
+        if (args.item.id === 'Grid_pdfexport') {
+            gridObj.showSpinner();
+            gridObj.pdfExport();
+        }
+        if (args.item.id === 'Grid_excelexport') {
+            gridObj.showSpinner();
+            gridObj.excelExport();
+        }
+    }
+
+    function pdfExportComplete(args) {
+        this.hideSpinner();
+    }
+
+    function excelExportComplete(args) {
+        this.hideSpinner();
+    }
+</script>
