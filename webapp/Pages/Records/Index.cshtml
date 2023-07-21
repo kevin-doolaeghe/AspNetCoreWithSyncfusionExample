@@ -1,30 +1,57 @@
 ﻿@page "{handler?}"
 @model webapp.Pages.Records.IndexModel
+@using Syncfusion.EJ2.Calendars;
+@using Syncfusion.EJ2.DropDowns;
+@using Syncfusion.EJ2.Inputs;
 @{
     ViewData["PageTitle"] = "Records";
 
     var toolbarItems = new string[] {
         "Add", "Edit", "Delete", "Print", "ExcelExport", "PdfExport", "Search"
     };
+    var searchSettings = new string[] { "Note", "Category", "Status" };
+    var sortSettings = new List<Object>() { new { field = "Date", direction = "Ascending" } };
+    var validationRules = new { required = true };
 
-    var statusItems = new object[] {
-        new { Value = false, Text = "Pending" },
-        new { Value = true, Text = "Closed" }
+    var dateParams = new {
+        @@params = new DatePicker() {
+            Format = "dd/MM/yyyy",
+            Placeholder = "Date",
+        }
     };
-    var statusDropDownList = new Syncfusion.EJ2.DropDowns.DropDownList() {
-        DataSource = statusItems,
-        Query = "new ej.data.Query()",
-        Fields = new Syncfusion.EJ2.DropDowns.DropDownListFieldSettings() { Value = "Value", Text = "Text" },
-        AllowFiltering = true,
-        FilterType = Syncfusion.EJ2.DropDowns.FilterType.Contains,
+    var statusParams = new {
+        @@params = new DropDownList() {
+            DataSource = new object[] {
+                new { Value = false, Text = "Pending" },
+                new { Value = true, Text = "Closed" },
+            },
+            Query = "new ej.data.Query()",
+            Fields = new DropDownListFieldSettings() { Value = "Value", Text = "Text" },
+            Placeholder = "Status",
+        }
     };
-
-    var categoryItems = new string[] { "💰 Salary", "🍔 Food", "🎁 Pleasure", "⚽ Activity", "💸 Savings" };
-    var categoryDropDownList = new Syncfusion.EJ2.DropDowns.DropDownList() {
-        DataSource = categoryItems,
-        Query = "new ej.data.Query()",
-        AllowFiltering = true,
-        FilterType = Syncfusion.EJ2.DropDowns.FilterType.Contains
+    var noteParams = new {
+        @@params = new TextBox() {
+            Placeholder = "Note"
+        }
+    };
+    var categoryParams = new {
+        @@params = new DropDownList() {
+            DataSource = new string[] { "💰 Salary", "🍔 Food", "🎁 Pleasure", "⚽ Activity", "💸 Savings" },
+            Query = "new ej.data.Query()",
+            AllowFiltering = true,
+            FilterType = FilterType.Contains,
+            Placeholder = "Category",
+        }
+    };
+    var amountParams = new {
+        @@params = new NumericTextBox() {
+            Decimals = 2,
+            Placeholder = "Amount",
+            Currency = "EUR",
+            Locale = "fr-FR",
+            Format = "C2",
+        }
     };
 }
 @Html.AntiForgeryToken()
@@ -33,32 +60,33 @@
     <e-data-manager url="Records/DataSource" crudUrl="Records/CrudUpdate" adaptor="UrlAdaptor"></e-data-manager>
     <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true" mode="Dialog" showConfirmDialog="true" showDeleteConfirmDialog="true"></e-grid-editSettings>
     <e-grid-filtersettings type="Menu"></e-grid-filtersettings>
-    <e-grid-searchSettings fields="@(new string[] { "Note", "Category", "Status" })" operator="contains" ignoreCase="true"></e-grid-searchSettings>
+    <e-grid-sortsettings columns="sortSettings"></e-grid-sortsettings>
+    <e-grid-searchSettings fields="searchSettings" operator="contains" ignoreCase="true"></e-grid-searchSettings>
     <e-grid-loadingIndicator indicatorType="Shimmer"></e-grid-loadingIndicator>
     <e-grid-pagesettings pageSize="20"></e-grid-pagesettings>
     <e-grid-columns>
-        <e-grid-column field="recordId" headerText="Id" isPrimaryKey="true" visible="false"></e-grid-column>
-        <e-grid-column field="date" headerText="Date" format="dd/MM/yyyy" editType="datepickeredit" validationRules="@(new { required = true })"></e-grid-column>
-        <e-grid-column field="isDone" headerText="Status" template="#statusTemplate" type="boolean" editType="dropdownedit" edit="new { @params = statusDropDownList }" validationRules="@(new { required = true })"></e-grid-column>
-        <e-grid-column field="note" headerText="Note" validationRules="@(new { required = true })"></e-grid-column>
-        <e-grid-column field="category" headerText="Category" editType="dropdownedit" type="string" edit="new { @params = categoryDropDownList }" validationRules="@(new { required = true })"></e-grid-column>
-        <e-grid-column field="amount" headerText="Amount" template="#amountTemplate" editType="numericedit" format="C2" validationRules="@(new { required = true })"></e-grid-column>
+        <e-grid-column field="RecordId" headerText="Id" isPrimaryKey="true" visible="false"></e-grid-column>
+        <e-grid-column field="Date" headerText="Date" editType="datepickeredit" edit="dateParams" validationRules="validationRules" format="dd/MM/yyyy" defaultValue="@DateTime.Now"></e-grid-column>
+        <e-grid-column field="IsDone" headerText="Status" editType="dropdownedit" edit="statusParams" validationRules="validationRules" template="#statusTemplate" defaultValue="false"></e-grid-column>
+        <e-grid-column field="Note" headerText="Note" editType="textboxedit" edit="noteParams" validationRules="validationRules"></e-grid-column>
+        <e-grid-column field="Category" headerText="Category" editType="dropdownedit" edit="categoryParams" validationRules="validationRules"></e-grid-column>
+        <e-grid-column field="Amount" headerText="Amount" editType="numericedit" edit="amountParams" validationRules="validationRules" format="C2" template="#amountTemplate"></e-grid-column>
     </e-grid-columns>
 </ejs-grid>
 
 <script id="statusTemplate" type="text/x-template">
-    ${if(isDone)}
-        <span class="badge bg-success p-2">${status}</span>
+    ${if(IsDone)}
+        <span class="badge bg-success p-2">${Status}</span>
     ${else}
-        <span class="badge bg-danger p-2">${status}</span>
+        <span class="badge bg-danger p-2">${Status}</span>
     ${/if}
 </script>
 
 <script id="amountTemplate" type="text/x-template">
-    ${if(amount > 0)}
-        <span class="badge bg-success p-2">${formattedAmount}</span>
+    ${if(Amount > 0)}
+        <span class="badge bg-success p-2">${FormattedAmount}</span>
     ${else}
-        <span class="badge bg-danger p-2">${formattedAmount}</span>
+        <span class="badge bg-danger p-2">${FormattedAmount}</span>
     ${/if}
 </script>
 
@@ -80,11 +108,11 @@
 
     function toolbarClick(args) {
         var gridObj = document.getElementById("grid").ej2_instances[0];
-        if (args.item.id === "Grid_pdfexport") {
+        if (args.item.id === "grid_pdfexport") {
             gridObj.showSpinner();
             gridObj.pdfExport();
         }
-        if (args.item.id === "Grid_excelexport") {
+        if (args.item.id === "grid_excelexport") {
             gridObj.showSpinner();
             gridObj.excelExport();
         }
