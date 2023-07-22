@@ -4,14 +4,14 @@
 @{
     ViewData["PageTitle"] = "Dashboard";
 
-    var palettes = new string[] { "#61EFCD", "#CDDE1F", "#FEC200", "#CA765A", "#2485FA", "#F57D7D", "#C152D2", "#8854D9", "#3D4EB8", "#00BCD7", "#4472c4", "#ed7d31", "#ffc000", "#70ad47", "#5b9bd5", "#c1c1c1", "#6f6fe2", "#e269ae", "#9e480e", "#997300" };
+    var palettes = new string[] { "#509ED9", "#80D950", "#D45D48", "#FEC200", "#D97F3F", "#64B9C4", "#5848C2", "#C248BA", "#2C3BC7", "#C24883", "#0E9622", "#914C5E", "#12C96E", "#70AD47", "#5B9BD5", "#C1C1C1", "#6F6FE2", "#E269AE", "#9E480E", "#997300" };
     var cellSpacing = new double[] { 10, 10 };
 }
 
 <div class="text-center">
     <h3 class="p-4">Dashboard</h3>
 
-    <ejs-dashboardlayout id="editableLayout1" columns="6" cellSpacing="cellSpacing" cellAspectRatio="0.8" allowDragging="false" allowResizing="false">
+    <ejs-dashboardlayout id="editableLayout1" columns="6" cellSpacing="cellSpacing" cellAspectRatio="1.5" allowDragging="false" allowResizing="false">
         <e-dashboardlayout-panels>
             <e-dashboardlayout-panel sizeX="2" sizeY="1" row="0" col="0">
                 <e-content-template>
@@ -70,7 +70,7 @@
                 </e-content-template>
             </e-dashboardlayout-panel>
 
-            <e-dashboardlayout-panel sizeX="4" sizeY="2" row="1" col="0">
+            <e-dashboardlayout-panel sizeX="4" sizeY="3" row="1" col="0">
                 <e-content-template>
                     <div>
 
@@ -83,11 +83,13 @@
                             </div>
                             <div class="e-panel-content">
                                 <ejs-chart id="linechart" enableAnimation="true" width="100%" height="100%">
-                                    <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category" interval=1>
-                                        <e-labelstyle size="11px"></e-labelstyle>
+                                    <e-chart-tooltipsettings enable="true" shared="true" header="<b>Status</b>"></e-chart-tooltipsettings>
+                                    <e-chart-legendsettings visible="true" enableHighlight="true"></e-chart-legendsettings>
+                                    <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category" interval="1">
                                         <e-majorgridlines width="0"></e-majorgridlines>
+                                        <e-majorticklines width="0"></e-majorticklines>
                                     </e-chart-primaryxaxis>
-                                    <e-chart-primaryyaxis labelFormat="{value}">
+                                    <e-chart-primaryyaxis>
                                         <e-majorticklines width="0"></e-majorticklines>
                                         <e-linestyle width="0"></e-linestyle>
                                         <e-labelstyle size="11px"></e-labelstyle>
@@ -111,7 +113,6 @@
                                             </e-series-marker>
                                         </e-series>
                                     </e-series-collection>
-                                    <e-chart-legendsettings padding="5" shapeHeight="8" shapeWidth="8"></e-chart-legendsettings>
                                 </ejs-chart>
                             </div>
                         </div>
@@ -120,7 +121,7 @@
                 </e-content-template>
             </e-dashboardlayout-panel>
 
-            <e-dashboardlayout-panel sizeX="2" sizeY="2" row="1" col="4">
+            <e-dashboardlayout-panel sizeX="2" sizeY="3" row="1" col="4">
                 <e-content-template>
                     <div>
 
@@ -131,14 +132,14 @@
                             </div>
                             <div class="e-panel-content">
                                 <ejs-accumulationchart id="pie" enableAnimation="true" enableBorderOnMouseMove="true" enableSmartLabels="true" width="100%" height="100%">
-                                    <e-accumulationchart-tooltipsettings enable="true"></e-accumulationchart-tooltipsettings>
+                                    <e-accumulationchart-tooltipsettings enable="true" format="${point.x} : <b>${point.y}€</b>"></e-accumulationchart-tooltipsettings>
                                     <e-accumulationchart-legendsettings position="Top" toggleVisibility="true">
                                         <e-legendsettings-textstyle size="1rem"></e-legendsettings-textstyle>
                                     </e-accumulationchart-legendsettings>
                                     <e-accumulation-series-collection>
-                                        <e-accumulation-series tooltipMappingName="Description" dataSource="Model.PieChartData1" xName="Description" yName="Value" innerRadius="40%" legendShape="Circle" palettes="palettes">
+                                        <e-accumulation-series tooltipMappingName="Description" dataSource="Model.PieChartData1" xName="Description" yName="Value" innerRadius="50%" legendShape="Circle" palettes="palettes">
                                             <e-accumulationseries-datalabel name="FormattedValue" visible="true" position="@AccumulationLabelPosition.Outside">
-                                                <e-connectorstyle length="5px" type="@ConnectorType.Line"></e-connectorstyle>
+                                                <e-connectorstyle length="5px" type="@ConnectorType.Curve"></e-connectorstyle>
                                             </e-accumulationseries-datalabel>
                                         </e-accumulation-series>
                                     </e-accumulation-series-collection>
@@ -150,7 +151,7 @@
                 </e-content-template>
             </e-dashboardlayout-panel>
 
-            <e-dashboardlayout-panel sizeX="4" sizeY="3" row="3" col="2">
+            <e-dashboardlayout-panel sizeX="4" sizeY="3" row="4" col="2">
                 <e-content-template>
                     <div>
 
@@ -171,17 +172,14 @@
                                         <e-majorticklines width="0"></e-majorticklines>
                                         <e-labelstyle size="11px"></e-labelstyle>
                                     </e-chart-primaryyaxis>
-                                    <e-chart-tooltipsettings enable="true" shared="true" enableMarker="false"></e-chart-tooltipsettings>
+                                    <e-chart-tooltipsettings enable="true" shared="true" enableMarker="true"></e-chart-tooltipsettings>
                                     <e-chart-chartarea>
                                         <e-chartarea-border width="0"></e-chartarea-border>
                                     </e-chart-chartarea>
                                     <e-series-collection>
-                                        <e-series dataSource="Model.SplineChartData1" fill="#2485FA" name="Income" xName="Period" opacity="0.3" width="2.5" yName="Value1" type="@ChartSeriesType.SplineArea">
-                                            <e-series-border width="2.75" color="#2485FA"></e-series-border>
-                                        </e-series>
-                                        <e-series dataSource="Model.SplineChartData1" fill="#FEC200" name="Expense" xName="Period" opacity="0.3" width="2.5" yName="Value2" type="@ChartSeriesType.SplineArea">
-                                            <e-series-border width="2.75" color="#FEC200"></e-series-border>
-                                        </e-series>
+                                        <e-series dataSource="Model.SplineChartData1" fill="#509ED9" name="Balance" xName="Period" opacity="1" width="3.5" yName="Value1" type="@ChartSeriesType.Spline"></e-series>
+                                        <e-series dataSource="Model.SplineChartData1" fill="#80D950" name="Income" xName="Period" opacity="1" width="3.5" yName="Value2" type="@ChartSeriesType.Spline"></e-series>
+                                        <e-series dataSource="Model.SplineChartData1" fill="#D45D48" name="Expense" xName="Period" opacity="1" width="3.5" yName="Value3" type="@ChartSeriesType.Spline"></e-series>
                                     </e-series-collection>
                                     <e-chart-legendsettings enableHighlight="true"></e-chart-legendsettings>
                                 </ejs-chart>
@@ -192,7 +190,7 @@
                 </e-content-template>
             </e-dashboardlayout-panel>
 
-            <e-dashboardlayout-panel sizeX="2" sizeY="3" row="3" col="0">
+            <e-dashboardlayout-panel sizeX="2" sizeY="3" row="4" col="0">
                 <e-content-template>
                     <div>
 

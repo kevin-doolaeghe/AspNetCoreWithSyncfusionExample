@@ -65,8 +65,8 @@ namespace webapp.Pages {
                     .GroupBy(x => x.Category)
                     .Select(x => new PieChartData() {
                         Description = x.First().Category,
-                        Value = x.Sum(x => x.Amount),
-                        FormattedValue = x.Sum(x => x.Amount).ToString("C2", cultureInfo),
+                        Value = x.Sum(x => -x.Amount),
+                        FormattedValue = x.Sum(x => -x.Amount).ToString("C2", cultureInfo),
                     })
                     .ToListAsync();
 
@@ -77,10 +77,18 @@ namespace webapp.Pages {
                     .GroupBy(x => x.Date)
                     .Select(x => new SplineChartData {
                         Period = x.First().Date.ToString("dd-MMM"),
-                        Value1 = x.Where(y => y.Amount >= 0).Sum(y => y.Amount),
-                        Value2 = x.Where(y => y.Amount < 0).Sum(y => -y.Amount),
+                        Value2 = x.Where(y => y.Amount >= 0).Sum(y => y.Amount),
+                        Value3 = x.Where(y => y.Amount < 0).Sum(y => -y.Amount),
                     })
                     .ToListAsync();
+
+                for (int i = 0; i < SplineChartData1.Count; i++) {
+                    if (i != 0) {
+                        SplineChartData1[i].Value2 = SplineChartData1[i].Value2 + SplineChartData1[i - 1].Value2;
+                        SplineChartData1[i].Value3 = SplineChartData1[i].Value3 + SplineChartData1[i - 1].Value3;
+                    }
+                    SplineChartData1[i].Value1 = SplineChartData1[i].Value2 - SplineChartData1[i].Value3;
+                }
 
                 RecentRecords = await _databaseContext.Records
                     .AsNoTracking()
@@ -115,6 +123,8 @@ namespace webapp.Pages {
             public double Value1 { get; set; }
 
             public double Value2 { get; set; }
+
+            public double Value3 { get; set; }
         }
     }
 }
