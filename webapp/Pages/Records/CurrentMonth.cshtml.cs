@@ -9,13 +9,13 @@ using webapp.Services;
 namespace webapp.Pages.Records {
 
     [IgnoreAntiforgeryToken]
-    public class IndexModel : PageModel {
+    public class CurrentMonthModel : PageModel {
 
         private readonly ILogger<IndexModel> _logger;
 
         private readonly DatabaseContext _databaseContext;
 
-        public IndexModel(ILogger<IndexModel> logger, DatabaseContext databaseContext) {
+        public CurrentMonthModel(ILogger<IndexModel> logger, DatabaseContext databaseContext) {
             _logger = logger;
             _databaseContext = databaseContext;
         }
@@ -23,11 +23,17 @@ namespace webapp.Pages.Records {
         public IEnumerable<Record> DataSource { get; set; } = default!;
 
         public async Task OnGetAsync() {
-            DataSource = await _databaseContext.Records.ToListAsync();
+            var date = DateTime.Now;
+            DataSource = await _databaseContext.Records
+                .Where(x => x.Date.Year == date.Year && x.Date.Month == date.Month)
+                .ToListAsync();
         }
 
         public async Task<JsonResult> OnPostDataSourceAsync([FromBody] DataManagerRequest dm) {
-            DataSource = await _databaseContext.Records.ToListAsync();
+            var date = DateTime.Now;
+            DataSource = await _databaseContext.Records
+                .Where(x => x.Date.Year == date.Year && x.Date.Month == date.Month)
+                .ToListAsync();
             int count = DataSource.Cast<Record>().Count();
 
             DataOperations operations = new();

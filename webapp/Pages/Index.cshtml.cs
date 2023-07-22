@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Syncfusion.EJ2;
+using Syncfusion.EJ2.Base;
 using Syncfusion.EJ2.Charts;
+using System.Globalization;
 using webapp.Models;
 using webapp.Services;
 
@@ -10,60 +12,109 @@ namespace webapp.Pages {
 
     public class IndexModel : PageModel {
 
-        private readonly DatabaseContext _context;
+        private readonly DatabaseContext _databaseContext;
 
-        public IndexModel(DatabaseContext context) {
-            _context = context;
+        public IndexModel(DatabaseContext databaseContext) {
+            _databaseContext = databaseContext;
         }
 
-        public double ActualBalance { get; set; }
+        public string? CurrentBalance { get; set; }
 
-        public double Balance { get; set; }
+        public string? FutureBalance { get; set; }
 
-        public IList<Object> ColumnChartData { get; set; } = default!;
+        public string? RemainingBalance { get; set; }
 
-        public IList<Object> PieChartData { get; set; } = default!;
+        public IList<Record> SelectedRecords { get; set; } = default!;
 
-        public IList<Object> SplineChartData { get; set; } = default!;
+        public IList<Record> RecentRecords { get; set; } = default!;
+
+        public IList<ColumnChartData> ColumnChartData1 { get; set; } = default!;
+
+        public IList<PieChartData> PieChartData1 { get; set; } = default!;
+
+        public IList<SplineChartData> SplineChartData1 { get; set; } = default!;
 
         public async Task OnGetAsync() {
-            if (_context.Records != null) {
-                var records = await _context.Records.ToListAsync();
+            if (_databaseContext.Records != null) {
+                var currentDate = DateTime.Today;
+                SelectedRecords = await _databaseContext.Records
+                    .AsNoTracking()
+                    .Where(x => x.Date.Year == currentDate.Year && x.Date.Month == currentDate.Month)
+                    .ToListAsync();
 
-                Balance = records.Select(x => x.Amount).Sum();
-                ActualBalance = records.Where(x => x.IsDone).Select(x => x.Amount).Sum();
+                var futureBalance = SelectedRecords.Select(x => x.Amount).Sum();
+                var currentBalance = SelectedRecords.Where(x => x.IsDone).Select(x => x.Amount).Sum();
+                var cultureInfo = new CultureInfo("fr-FR");
+                FutureBalance = futureBalance.ToString("C2", cultureInfo);
+                CurrentBalance = currentBalance.ToString("C2", cultureInfo);
+                RemainingBalance = (futureBalance - currentBalance).ToString("C2", cultureInfo);
 
-                ColumnChartData = new List<Object>() {
-                    new { Period = "2017", OnlinePercentage = 60, RetailPercentage = 40 },
-                    new { Period = "2018", OnlinePercentage = 56, RetailPercentage = 44 },
-                    new { Period = "2019", OnlinePercentage = 71, RetailPercentage = 29 },
-                    new { Period = "2020", OnlinePercentage = 85, RetailPercentage = 15 },
-                    new { Period = "2021", OnlinePercentage = 73, RetailPercentage = 27 }
-                };
+                ColumnChartData1 = await _databaseContext.Records
+                    .AsNoTracking()
+                    .GroupBy(x => x.Category)
+                    .Select(x => new ColumnChartData() {
+                        Period = x.First().Category,
+                        Value1 = x.Where(y => !y.IsDone).Count(),
+                        Value2 = x.Where(y => y.IsDone).Count(),
+                    })
+                    .ToListAsync();
 
-                PieChartData = new List<Object>() {
-                    new { Product = "TV : 30 (12%)",     Percentage = 12, Text = "TV, 30<br>12%" },
-                    new { Product = "PC : 20 (8%)",      Percentage = 8,  Text = "PC, 20<br>8%" },
-                    new { Product = "Laptop : 40 (16%)", Percentage = 16, Text = "Laptop, 40<br>16%" },
-                    new { Product = "Mobile : 90 (36%)", Percentage = 36, Text = "Mobile, 90<br>36%" },
-                    new { Product = "Camera : 27 (11%)", Percentage = 11, Text = "Camera, 27<br>11%" }
-                };
-                
-                SplineChartData = new List<Object>() {
-                    new { Period = "Jan", OnlinePercentage = 3600, RetailPercentage = 6400 },
-                    new { Period = "Feb", OnlinePercentage = 6200, RetailPercentage = 5300 },
-                    new { Period = "Mar", OnlinePercentage = 8100, RetailPercentage = 4900 },
-                    new { Period = "Apr", OnlinePercentage = 5900, RetailPercentage = 5300 },
-                    new { Period = "May", OnlinePercentage = 8900, RetailPercentage = 4200 },
-                    new { Period = "Jun", OnlinePercentage = 7200, RetailPercentage = 6500 },
-                    new { Period = "Jul", OnlinePercentage = 4300, RetailPercentage = 7900 },
-                    new { Period = "Aug", OnlinePercentage = 4600, RetailPercentage = 3800 },
-                    new { Period = "Sep", OnlinePercentage = 5500, RetailPercentage = 6800 },
-                    new { Period = "Oct", OnlinePercentage = 6350, RetailPercentage = 3400 },
-                    new { Period = "Nov", OnlinePercentage = 5700, RetailPercentage = 6400 },
-                    new { Period = "Dec", OnlinePercentage = 8000, RetailPercentage = 6800 }
-                };
+                PieChartData1 = await _databaseContext.Records
+                    .AsNoTracking()
+                    .Where(x => x.Amount < 0)
+                    .GroupBy(x => x.Category)
+                    .Select(x => new PieChartData() {
+                        Description = x.First().Category,
+                        Value = x.Sum(x => x.Amount),
+                        FormattedValue = x.Sum(x => x.Amount).ToString("C2", cultureInfo),
+                    })
+                    .ToListAsync();
+
+                SplineChartData1 = await _databaseContext.Records
+                    .AsNoTracking()
+                    .Where(x => x.Date.Year == currentDate.Year && x.Date.Month == currentDate.Month)
+                    .OrderByDescending(x => x.Date)
+                    .GroupBy(x => x.Date)
+                    .Select(x => new SplineChartData {
+                        Period = x.First().Date.ToString("dd-MMM"),
+                        Value1 = x.Where(y => y.Amount >= 0).Sum(y => y.Amount),
+                        Value2 = x.Where(y => y.Amount < 0).Sum(y => -y.Amount),
+                    })
+                    .ToListAsync();
+
+                RecentRecords = await _databaseContext.Records
+                    .AsNoTracking()
+                    .OrderByDescending(x => x.Date)
+                    .Take(10)
+                    .ToListAsync();
             }
+        }
+
+        public class ColumnChartData {
+
+            public string? Period { get; set; }
+
+            public double Value1 { get; set; }
+
+            public double Value2 { get; set; }
+        }
+
+        public class PieChartData {
+
+            public string? Description { get; set; }
+
+            public double Value { get; set; }
+
+            public string? FormattedValue { get; set; }
+        }
+
+        public class SplineChartData {
+
+            public string? Period { get; set; }
+
+            public double Value1 { get; set; }
+
+            public double Value2 { get; set; }
         }
     }
 }

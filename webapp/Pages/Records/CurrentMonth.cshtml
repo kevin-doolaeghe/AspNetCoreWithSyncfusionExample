@@ -1,5 +1,5 @@
 ﻿@page "{handler?}"
-@model webapp.Pages.Records.IndexModel
+@model webapp.Pages.Records.CurrentMonthModel
 @using Syncfusion.EJ2.Calendars;
 @using Syncfusion.EJ2.DropDowns;
 @using Syncfusion.EJ2.Inputs;
@@ -17,6 +17,7 @@
         @@params = new DatePicker() {
             Format = "dd/MM/yyyy",
             Placeholder = "Date",
+            Min = DateTime.Parse($"01/{DateTime.Today.Month}/{DateTime.Today.Year}"),
         }
     };
     var statusParams = new {
@@ -57,7 +58,7 @@
 @Html.AntiForgeryToken()
 
 <ejs-grid id="grid" load="onLoad" dataBound="dataBound" actionComplete="actionComplete" allowPaging="true" allowSorting="true" allowFiltering="true" allowPdfExport="true" allowExcelExport="true" pdfExportComplete="pdfExportComplete" excelExportComplete="excelExportComplete" toolbarClick="toolbarClick" toolbar="toolbarItems" autoFit="true">
-    <e-data-manager url="/Records/DataSource" crudUrl="/Records/CrudUpdate" adaptor="UrlAdaptor"></e-data-manager>
+    <e-data-manager url="/Records/CurrentMonth/DataSource" crudUrl="/Records/CurrentMonth/CrudUpdate" adaptor="UrlAdaptor"></e-data-manager>
     <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true" mode="Dialog" showConfirmDialog="true" showDeleteConfirmDialog="true"></e-grid-editSettings>
     <e-grid-filtersettings type="Menu"></e-grid-filtersettings>
     <e-grid-sortsettings columns="sortSettings"></e-grid-sortsettings>
