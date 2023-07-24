@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Syncfusion.EJ2.Base;
+using System.Globalization;
 using System.Text.Json;
 using webapp.Models;
 using webapp.Services;
@@ -22,18 +23,62 @@ namespace webapp.Pages.Records {
 
         public IEnumerable<Record> DataSource { get; set; } = default!;
 
+        public string? CurrentBalance { get; set; }
+
+        public string? RealBalance { get; set; }
+
+        public string? Cashflow { get; set; }
+
         public async Task OnGetAsync() {
-            var date = DateTime.Now;
-            DataSource = await _databaseContext.Records
-                .Where(x => x.Date.Year == date.Year && x.Date.Month == date.Month)
+            var records = await _databaseContext.Records
+                .AsNoTracking()
                 .ToListAsync();
+
+            var realBalance = records.Select(x => x.Amount).Sum();
+            var currentBalance = records.Where(x => x.IsDone).Select(x => x.Amount).Sum();
+            var cultureInfo = new CultureInfo("fr-FR");
+            RealBalance = realBalance.ToString("C2", cultureInfo);
+            CurrentBalance = currentBalance.ToString("C2", cultureInfo);
+            Cashflow = (realBalance - currentBalance).ToString("C2", cultureInfo);
+
+            var today = DateTime.Today;
+            var firstDayOfMonth = new DateTime(today.Year, today.Month, 1);
+            var initialBalance = _databaseContext.Records
+                .AsNoTracking()
+                .Where(x => x.Date < firstDayOfMonth)
+                .Select(x => x.Amount)
+                .Sum();
+
+            var dataSource = await _databaseContext.Records
+                .Where(x => x.Date.Year == today.Year && x.Date.Month == today.Month)
+                .OrderBy(x => x.Date)
+                .ToListAsync();
+
+            for (int i = 0; i < dataSource.Count; i++) {
+                if (i == 0) dataSource[i].SlidingBalance = initialBalance + dataSource[i].Amount;
+                else dataSource[i].SlidingBalance = dataSource[i - 1].SlidingBalance + dataSource[i].Amount;
+            }
+            DataSource = dataSource;
         }
 
         public async Task<JsonResult> OnPostDataSourceAsync([FromBody] DataManagerRequest dm) {
-            var date = DateTime.Now;
-            DataSource = await _databaseContext.Records
-                .Where(x => x.Date.Year == date.Year && x.Date.Month == date.Month)
+            var today = DateTime.Today;
+            var firstDayOfMonth = new DateTime(today.Year, today.Month, 1);
+            var initialBalance = _databaseContext.Records
+                .AsNoTracking()
+                .Where(x => x.Date < firstDayOfMonth)
+                .Select(x => x.Amount)
+                .Sum();
+
+            var dataSource = await _databaseContext.Records
+                .Where(x => x.Date.Year == today.Year && x.Date.Month == today.Month)
+                .OrderBy(x => x.Date)
                 .ToListAsync();
+            for (int i = 0; i < dataSource.Count; i++) {
+                if (i == 0) dataSource[i].SlidingBalance = initialBalance + dataSource[i].Amount;
+                else dataSource[i].SlidingBalance = dataSource[i - 1].SlidingBalance + dataSource[i].Amount;
+            }
+            DataSource = dataSource;
             int count = DataSource.Cast<Record>().Count();
 
             DataOperations operations = new();

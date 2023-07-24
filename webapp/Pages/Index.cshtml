@@ -39,11 +39,11 @@
                         <div class="e-panel-container">
                             <div class="e-panel-header">
                                 <div class="title">
-                                    <i class="fa-solid fa-dollar-sign"></i> Future balance
+                                    <i class="fa-solid fa-dollar-sign"></i> Real balance
                                 </div>
                             </div>
                             <div class="e-panel-content">
-                                <h1>@Model.FutureBalance</h1>
+                                <h1>@Model.RealBalance</h1>
                             </div>
                         </div>
 
@@ -58,11 +58,11 @@
                         <div class="e-panel-container">
                             <div class="e-panel-header">
                                 <div class="title">
-                                    <i class="fa-solid fa-dollar-sign"></i> Remaining balance
+                                    <i class="fa-solid fa-dollar-sign"></i> Cashflow
                                 </div>
                             </div>
                             <div class="e-panel-content">
-                                <h1>@Model.RemainingBalance</h1>
+                                <h1>@Model.Cashflow</h1>
                             </div>
                         </div>
 
@@ -229,57 +229,3 @@
         splineObj.refresh();
     });
 </script>
-
-<style>
-    .e-dashboardlayout {
-        padding: 20px;
-        z-index: 0;
-    }
-
-    .e-panel {
-        cursor: auto !important;
-    }
-
-    .e-panel-content {
-        height: calc(100% - 60px) !important;
-        overflow: hidden;
-        width: 100%;
-        padding: 5px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .e-chart, .e-accumulationchart {
-        height: inherit !important;
-        width: inherit !important;
-    }
-
-    .e-panel-header {
-        background: none;
-        border: none !important;
-        height: 50px !important;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .template {
-        height: 100%;
-        width: 100%;
-    }
-
-    .ellipse[id*=_Trackball_1] {
-        stroke-width: 1 !important;
-    }
-
-    .e-chart-focused:focus {
-        outline: none !important;
-    }
-
-    .title {
-        font-size: 15px;
-        font-weight: bold;
-        color: #737373;
-    }
-</style>

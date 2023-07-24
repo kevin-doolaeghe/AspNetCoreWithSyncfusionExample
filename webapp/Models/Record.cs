@@ -24,5 +24,11 @@ namespace webapp.Models {
 
         [NotMapped]
         public string FormattedAmount => Amount.ToString("C2", new CultureInfo("fr-FR"));
+
+        [NotMapped]
+        public double SlidingBalance { get; set; }
+
+        [NotMapped]
+        public string FormattedBalance => SlidingBalance.ToString("C2", new CultureInfo("fr-FR"));
     }
 }
