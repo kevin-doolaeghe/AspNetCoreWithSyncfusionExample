@@ -9,6 +9,10 @@
     var toolbarItems = new string[] {
         "Add", "Edit", "Delete", "Print", "ExcelExport", "PdfExport", "Search"
     };
+    var commands = new List<object>() {
+        new { type = "Edit", buttonOption = new { iconCss = "e-icons e-edit", cssClass = "e-flat" }},
+        new { type = "Delete", buttonOption = new { iconCss = "e-icons e-delete", cssClass = "e-flat" }},
+    };
     var searchSettings = new string[] { "Note", "Category", "Status" };
     var sortSettings = new List<Object>() { new { field = "Date", direction = "Ascending" } };
     var validationRules = new { required = true };
@@ -56,14 +60,14 @@
 }
 @Html.AntiForgeryToken()
 
-<ejs-grid id="grid" load="onLoad" dataBound="dataBound" actionComplete="actionComplete" allowPaging="true" allowSorting="true" allowFiltering="true" allowPdfExport="true" allowExcelExport="true" pdfExportComplete="pdfExportComplete" excelExportComplete="excelExportComplete" toolbarClick="toolbarClick" toolbar="toolbarItems" autoFit="true">
+<ejs-grid id="grid" load="onLoad" dataBound="dataBound" actionComplete="actionComplete" allowPaging="true" allowSorting="true" allowFiltering="true" allowResizing="true" frozenColumns="1" enableStickyHeader="true" allowPdfExport="true" allowExcelExport="true" pdfExportComplete="pdfExportComplete" excelExportComplete="excelExportComplete" toolbarClick="toolbarClick" toolbar="toolbarItems">
     <e-data-manager url="/Records/DataSource" crudUrl="/Records/CrudUpdate" adaptor="UrlAdaptor"></e-data-manager>
     <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true" mode="Dialog" showConfirmDialog="true" showDeleteConfirmDialog="true"></e-grid-editSettings>
-    <e-grid-filtersettings type="Menu"></e-grid-filtersettings>
+    <e-grid-pagesettings pageSize="20"></e-grid-pagesettings>
     <e-grid-sortsettings columns="sortSettings"></e-grid-sortsettings>
+    <e-grid-filtersettings type="Menu"></e-grid-filtersettings>
     <e-grid-searchSettings fields="searchSettings" operator="contains" ignoreCase="true"></e-grid-searchSettings>
     <e-grid-loadingIndicator indicatorType="Shimmer"></e-grid-loadingIndicator>
-    <e-grid-pagesettings pageSize="20"></e-grid-pagesettings>
     <e-grid-columns>
         <e-grid-column field="RecordId" headerText="Id" isPrimaryKey="true" visible="false"></e-grid-column>
         <e-grid-column field="Date" headerText="Date" editType="datepickeredit" edit="dateParams" validationRules="validationRules" format="dd/MM/yyyy" defaultValue="@DateTime.Now"></e-grid-column>
@@ -71,6 +75,7 @@
         <e-grid-column field="Note" headerText="Note" editType="textboxedit" edit="noteParams" validationRules="validationRules"></e-grid-column>
         <e-grid-column field="Category" headerText="Category" editType="dropdownedit" edit="categoryParams" validationRules="validationRules"></e-grid-column>
         <e-grid-column field="Amount" headerText="Amount" editType="numericedit" edit="amountParams" validationRules="validationRules" format="C2" template="#amountTemplate"></e-grid-column>
+        <e-grid-column headerText="Commands" commands="commands" textAlign="Right" allowResizing="false"></e-grid-column>
     </e-grid-columns>
 </ejs-grid>
 
@@ -96,7 +101,7 @@
     }
 
     function dataBound(args) {
-        this.autoFitColumns();
+        this.autoFitColumns(["Date", "IsDone", "Category", "Amount"]);
     }
 
     function actionComplete(args) {

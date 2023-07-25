@@ -12,8 +12,12 @@
     var toolbarItems = new string[] {
         "Add", "Edit", "Delete", "Print", "ExcelExport", "PdfExport", "Search"
     };
+    var commands = new List<object>() {
+        new { type = "Edit", buttonOption = new { iconCss = "e-icons e-edit", cssClass = "e-flat" }},
+        new { type = "Delete", buttonOption = new { iconCss = "e-icons e-delete", cssClass = "e-flat" }},
+    };
     var searchSettings = new string[] { "Note", "Category", "Status" };
-    var sortSettings = new List<Object>() { new { field = "Date", direction = "Ascending" } };
+    var sortSettings = new List<object>() { new { field = "Date", direction = "Ascending" } };
     var validationRules = new { required = true };
 
     var dateParams = new {
@@ -63,9 +67,9 @@
 <div class="text-center">
     <h3 class="p-4">Current month</h3>
 
-    <ejs-dashboardlayout id="editableLayout1" columns="6" cellSpacing="cellSpacing" cellAspectRatio="1.5" allowDragging="false" allowResizing="false">
+    <ejs-dashboardlayout id="editableLayout1" columns="3" cellSpacing="cellSpacing" cellAspectRatio="2.5" allowDragging="false" allowResizing="false">
         <e-dashboardlayout-panels>
-            <e-dashboardlayout-panel sizeX="2" sizeY="1" row="0" col="0">
+            <e-dashboardlayout-panel sizeX="1" sizeY="1" row="0" col="0">
                 <e-content-template>
                     <div>
 
@@ -84,7 +88,7 @@
                 </e-content-template>
             </e-dashboardlayout-panel>
 
-            <e-dashboardlayout-panel sizeX="2" sizeY="1" row="0" col="2">
+            <e-dashboardlayout-panel sizeX="1" sizeY="1" row="0" col="1">
                 <e-content-template>
                     <div>
 
@@ -103,7 +107,7 @@
                 </e-content-template>
             </e-dashboardlayout-panel>
 
-            <e-dashboardlayout-panel sizeX="2" sizeY="1" row="0" col="4">
+            <e-dashboardlayout-panel sizeX="1" sizeY="1" row="0" col="2">
                 <e-content-template>
                     <div>
 
@@ -122,18 +126,18 @@
                 </e-content-template>
             </e-dashboardlayout-panel>
 
-            <e-dashboardlayout-panel sizeX="6" sizeY="5" row="1" col="0">
+            <e-dashboardlayout-panel sizeX="3" sizeY="4" row="1" col="0">
                 <e-content-template>
                     <div>
 
-                        <ejs-grid id="grid" load="onLoad" dataBound="dataBound" actionComplete="actionComplete" allowPaging="true" allowSorting="true" allowFiltering="true" allowPdfExport="true" allowExcelExport="true" pdfExportComplete="pdfExportComplete" excelExportComplete="excelExportComplete" toolbarClick="toolbarClick" toolbar="toolbarItems" autoFit="true">
+                        <ejs-grid id="grid" load="onLoad" dataBound="dataBound" actionComplete="actionComplete" allowPaging="true" allowSorting="true" allowFiltering="true" allowResizing="true" frozenColumns="1" enableStickyHeader="true" allowPdfExport="true" allowExcelExport="true" pdfExportComplete="pdfExportComplete" excelExportComplete="excelExportComplete" toolbarClick="toolbarClick" toolbar="toolbarItems">
                             <e-data-manager url="/Records/CurrentMonth/DataSource" crudUrl="/Records/CurrentMonth/CrudUpdate" adaptor="UrlAdaptor"></e-data-manager>
                             <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true" mode="Dialog" showConfirmDialog="true" showDeleteConfirmDialog="true"></e-grid-editSettings>
-                            <e-grid-filtersettings type="Menu"></e-grid-filtersettings>
+                            <e-grid-pagesettings pageSize="20"></e-grid-pagesettings>
                             <e-grid-sortsettings columns="sortSettings"></e-grid-sortsettings>
+                            <e-grid-filtersettings type="Menu"></e-grid-filtersettings>
                             <e-grid-searchSettings fields="searchSettings" operator="contains" ignoreCase="true"></e-grid-searchSettings>
                             <e-grid-loadingIndicator indicatorType="Shimmer"></e-grid-loadingIndicator>
-                            <e-grid-pagesettings pageSize="20"></e-grid-pagesettings>
                             <e-grid-columns>
                                 <e-grid-column field="RecordId" headerText="Id" isPrimaryKey="true" visible="false"></e-grid-column>
                                 <e-grid-column field="Date" headerText="Date" editType="datepickeredit" edit="dateParams" validationRules="validationRules" format="dd/MM/yyyy" defaultValue="@DateTime.Now"></e-grid-column>
@@ -141,7 +145,7 @@
                                 <e-grid-column field="Note" headerText="Note" editType="textboxedit" edit="noteParams" validationRules="validationRules"></e-grid-column>
                                 <e-grid-column field="Category" headerText="Category" editType="dropdownedit" edit="categoryParams" validationRules="validationRules"></e-grid-column>
                                 <e-grid-column field="Amount" headerText="Amount" editType="numericedit" edit="amountParams" validationRules="validationRules" format="C2" template="#amountTemplate"></e-grid-column>
-                                <e-grid-column field="SlidingBalance" headerText="Sliding balance" allowEditing="false" edit="amountParams" format="C2" template="#balanceTemplate"></e-grid-column>
+                                <e-grid-column headerText="Commands" commands="commands" textAlign="Right" allowResizing="false"></e-grid-column>
                             </e-grid-columns>
                         </ejs-grid>
 
@@ -169,21 +173,13 @@
     ${/if}
 </script>
 
-<script id="balanceTemplate" type="text/x-template">
-    ${if(SlidingBalance > 0)}
-        <span class="badge bg-success p-2">${FormattedBalance}</span>
-    ${else}
-        <span class="badge bg-danger p-2">${FormattedBalance}</span>
-    ${/if}
-</script>
-
 <script>
     function onLoad() {
         this.dataSource.dataSource.headers = [{ "XSRF-TOKEN": $("input:hidden[name='__RequestVerificationToken']").val() }];
     }
 
-    function dataBound(args) {
-        this.autoFitColumns();
+    function dataBound() {
+        this.autoFitColumns(["Date", "IsDone", "Category", "Amount"]);
     }
 
     function actionComplete(args) {
