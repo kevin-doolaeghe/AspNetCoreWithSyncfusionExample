@@ -129,8 +129,8 @@
             <e-dashboardlayout-panel sizeX="3" sizeY="4" row="1" col="0">
                 <e-content-template>
                     <div>
-
-                        <ejs-grid id="grid" load="onLoad" dataBound="dataBound" actionComplete="actionComplete" allowPaging="true" allowSorting="true" allowFiltering="true" allowResizing="true" frozenColumns="1" enableStickyHeader="true" allowPdfExport="true" allowExcelExport="true" pdfExportComplete="pdfExportComplete" excelExportComplete="excelExportComplete" toolbarClick="toolbarClick" toolbar="toolbarItems">
+                        
+                        <ejs-grid id="grid" load="onLoad" dataBound="dataBound" actionComplete="actionComplete" allowPaging="true" allowSorting="true" allowFiltering="true" enableStickyHeader="true" allowPdfExport="true" allowExcelExport="true" pdfExportComplete="pdfExportComplete" excelExportComplete="excelExportComplete" toolbarClick="toolbarClick" toolbar="toolbarItems">
                             <e-data-manager url="/Records/CurrentMonth/DataSource" crudUrl="/Records/CurrentMonth/CrudUpdate" adaptor="UrlAdaptor"></e-data-manager>
                             <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true" mode="Dialog" showConfirmDialog="true" showDeleteConfirmDialog="true"></e-grid-editSettings>
                             <e-grid-pagesettings pageSize="20"></e-grid-pagesettings>
@@ -140,12 +140,12 @@
                             <e-grid-loadingIndicator indicatorType="Shimmer"></e-grid-loadingIndicator>
                             <e-grid-columns>
                                 <e-grid-column field="RecordId" headerText="Id" isPrimaryKey="true" visible="false"></e-grid-column>
-                                <e-grid-column field="Date" headerText="Date" editType="datepickeredit" edit="dateParams" validationRules="validationRules" format="dd/MM/yyyy" defaultValue="@DateTime.Now"></e-grid-column>
-                                <e-grid-column field="IsDone" headerText="Status" editType="dropdownedit" edit="statusParams" validationRules="validationRules" template="#statusTemplate" defaultValue="false"></e-grid-column>
-                                <e-grid-column field="Note" headerText="Note" editType="textboxedit" edit="noteParams" validationRules="validationRules"></e-grid-column>
-                                <e-grid-column field="Category" headerText="Category" editType="dropdownedit" edit="categoryParams" validationRules="validationRules"></e-grid-column>
-                                <e-grid-column field="Amount" headerText="Amount" editType="numericedit" edit="amountParams" validationRules="validationRules" format="C2" template="#amountTemplate"></e-grid-column>
-                                <e-grid-column headerText="Commands" commands="commands" textAlign="Right" allowResizing="false"></e-grid-column>
+                                <e-grid-column field="Date" headerText="Date" editType="datepickeredit" edit="dateParams" validationRules="validationRules" format="dd/MM/yyyy" defaultValue="@DateTime.Now" width="120"></e-grid-column>
+                                <e-grid-column field="IsDone" headerText="Status" editType="dropdownedit" edit="statusParams" validationRules="validationRules" template="#statusTemplate" defaultValue="false" width="120"></e-grid-column>
+                                <e-grid-column field="Note" headerText="Note" editType="textboxedit" edit="noteParams" validationRules="validationRules" minWidth="300"></e-grid-column>
+                                <e-grid-column field="Category" headerText="Category" editType="dropdownedit" edit="categoryParams" validationRules="validationRules" width="180"></e-grid-column>
+                                <e-grid-column field="Amount" headerText="Amount" editType="numericedit" edit="amountParams" validationRules="validationRules" format="C2" template="#amountTemplate" width="150"></e-grid-column>
+                                <e-grid-column headerText="Commands" commands="commands" textAlign="Right" allowResizing="false" width="120"></e-grid-column>
                             </e-grid-columns>
                         </ejs-grid>
 
@@ -178,8 +178,8 @@
         this.dataSource.dataSource.headers = [{ "XSRF-TOKEN": $("input:hidden[name='__RequestVerificationToken']").val() }];
     }
 
-    function dataBound() {
-        this.autoFitColumns(["Date", "IsDone", "Category", "Amount"]);
+    function dataBound(args) {
+
     }
 
     function actionComplete(args) {
