@@ -65,7 +65,14 @@
 @Html.AntiForgeryToken()
 
 <div class="text-center">
-    <h3 class="p-4">Current month</h3>
+
+    <ejs-breadcrumb id="breadcrumb" cssClass="p-4" enableNavigation="true" maxItems="3" overflowMode="Menu">
+        <e-breadcrumb-items>
+            <e-breadcrumb-item iconCss="e-icons e-home" url="/"></e-breadcrumb-item>
+            <e-breadcrumb-item text="Records" url="/Records"></e-breadcrumb-item>
+            <e-breadcrumb-item text="Current month" url="/Records/CurrentMonth"></e-breadcrumb-item>
+        </e-breadcrumb-items>
+    </ejs-breadcrumb>
 
     <ejs-dashboardlayout id="editableLayout1" mediaQuery="max-width: 1000px" columns="3" cellSpacing="cellSpacing" cellAspectRatio="2.5" allowDragging="false" allowResizing="false">
         <e-dashboardlayout-panels>
@@ -164,6 +171,7 @@
         </e-dashboardlayout-panels>
 
     </ejs-dashboardlayout>
+
 </div>
 
 <script id="statusTemplate" type="text/x-template">
@@ -195,6 +203,7 @@
         if ((args.requestType === "beginEdit" || args.requestType === "add")) {
             var dialog = args.dialog;
             dialog.element.style.maxHeight = "1000px";
+            dialog.header = args.requestType === "beginEdit" ? "Edit record of " + args.rowData["Note"] : "New record";
         }
     }
 

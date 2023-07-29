@@ -9,7 +9,13 @@
 }
 
 <div class="text-center">
-    <h3 class="p-4">Dashboard</h3>
+
+    <ejs-breadcrumb id="breadcrumb" cssClass="p-4" enableNavigation="true" maxItems="3" overflowMode="Menu">
+        <e-breadcrumb-items>
+            <e-breadcrumb-item iconCss="e-icons e-home" url="/"></e-breadcrumb-item>
+            <e-breadcrumb-item text="Dashboard" url="/"></e-breadcrumb-item>
+        </e-breadcrumb-items>
+    </ejs-breadcrumb>
 
     <ejs-dashboardlayout id="editableLayout1" mediaQuery="max-width: 1000px" columns="3" cellSpacing="cellSpacing" cellAspectRatio="2.5" allowDragging="false" allowResizing="false">
         <e-dashboardlayout-panels>

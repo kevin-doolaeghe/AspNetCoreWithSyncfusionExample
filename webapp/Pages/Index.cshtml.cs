@@ -38,7 +38,7 @@ namespace webapp.Pages {
                 RecentRecords = await _databaseContext.Records
                     .AsNoTracking()
                     .OrderByDescending(x => x.Date)
-                    .Take(10)
+                    .Take(15)
                     .ToListAsync();
 
                 var records = await _databaseContext.Records
