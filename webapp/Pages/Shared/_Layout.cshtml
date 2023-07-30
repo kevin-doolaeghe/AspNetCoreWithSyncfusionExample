@@ -54,10 +54,14 @@
                         </li>
                         <li class="flex-grow-1">
                         </li>
-                        <li class="nav-item d-flex align-items-center">
-                            <ejs-dropdownlist id="cultureDropdownList" dataSource="AvailableCultures" index="0" change="onCultureChange" floatLabelType="Always">
-                                <e-dropdownlist-fields text="Description" value="Id"></e-dropdownlist-fields>
-                            </ejs-dropdownlist>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="" id="languageSelector" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa-solid fa-language"></i> @Thread.CurrentThread.CurrentUICulture.Name
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="languageSelector">
+                                <a class="dropdown-item" asp-area="" asp-page="/Language" asp-route-newCulture="en">English</a>
+                                <a class="dropdown-item" asp-area="" asp-page="/Language" asp-route-newCulture="fr">Français</a>
+                            </div>
                         </li>
                         <li class="nav-item dropdown">
                             @if (ViewData["IsLogged"] == null) {
@@ -91,19 +95,18 @@
     </div>
 
     <script>
-        function onCultureChange(args) {
-            var culture = args.value;
+        var currentCulture = "@Context.Request.Query["culture"]";
+        console.log("Current culture: " + currentCulture);
 
-            // Load the json culture file
-            var ajax = new ej.base.Ajax(location.origin + "/locale/" + culture + ".json", "GET", false);
-            ajax.send().then((args) => {
-                // Set the culture for the ASP.NET Core controls
-                ej.base.setCulture(culture);
+        // Load the json culture file
+        var ajax = new ej.base.Ajax(location.origin + "/locale/" + currentCulture + ".json", "GET", false);
+        ajax.send().then((args) => {
+            // Set the culture for the ASP.NET Core controls
+            ej.base.setCulture(currentCulture);
 
-                var loader = JSON.parse(args);
-                ej.base.L10n.load(loader);
-            });
-        }
+            var loader = JSON.parse(args);
+            ej.base.L10n.load(loader);
+        });
     </script>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
