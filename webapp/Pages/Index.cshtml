@@ -17,7 +17,7 @@
         </e-breadcrumb-items>
     </ejs-breadcrumb>
 
-    <ejs-dashboardlayout id="editableLayout1" mediaQuery="max-width: 1000px" columns="3" cellSpacing="cellSpacing" cellAspectRatio="2.5" allowDragging="false" allowResizing="false">
+    <ejs-dashboardlayout id="editableLayout1" mediaQuery="max-width: 992px" columns="3" cellSpacing="cellSpacing" cellAspectRatio="2.5" allowDragging="false" allowResizing="false">
         <e-dashboardlayout-panels>
             <e-dashboardlayout-panel sizeX="1" sizeY="1" row="0" col="0">
                 <e-content-template>
@@ -106,14 +106,14 @@
                                     <e-series-collection>
                                         <e-series dataSource="Model.ColumnChartData1" xName="Period" yName="Value1" name="Pending" width="2" fill="#2485FA" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
                                             <e-series-marker>
-                                                <e-series-datalabel visible="true" position="@LabelPosition.Middle">
+                                                <e-series-datalabel visible="true" position="@LabelPosition.Middle" template="<b>${point.y}</b>">
                                                     <e-font color="white"></e-font>
                                                 </e-series-datalabel>
                                             </e-series-marker>
                                         </e-series>
                                         <e-series dataSource="Model.ColumnChartData1" xName="Period" yName="Value2" name="Closed" fill="#FEC200" width="2" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
                                             <e-series-marker>
-                                                <e-series-datalabel visible="true" position="@LabelPosition.Middle">
+                                                <e-series-datalabel visible="true" position="@LabelPosition.Middle" template="<b>${point.y}</b>">
                                                     <e-font color="white"></e-font>
                                                 </e-series-datalabel>
                                             </e-series-marker>
@@ -221,6 +221,7 @@
         </e-dashboardlayout-panels>
 
     </ejs-dashboardlayout>
+
 </div>
 
 <script>
