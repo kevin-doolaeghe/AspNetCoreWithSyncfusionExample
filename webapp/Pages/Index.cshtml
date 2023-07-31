@@ -13,7 +13,7 @@
     <ejs-breadcrumb id="breadcrumb" cssClass="p-4" enableNavigation="true" maxItems="3" overflowMode="Menu">
         <e-breadcrumb-items>
             <e-breadcrumb-item iconCss="e-icons e-home" url="/"></e-breadcrumb-item>
-            <e-breadcrumb-item text="Dashboard" url="/"></e-breadcrumb-item>
+            <e-breadcrumb-item text="@Localizer["Dashboard"]" url="/"></e-breadcrumb-item>
         </e-breadcrumb-items>
     </ejs-breadcrumb>
 
@@ -26,7 +26,7 @@
                         <div class="e-panel-container">
                             <div class="e-panel-header">
                                 <div class="title">
-                                    <i class="fa-solid fa-dollar-sign"></i> @Localizer["Current balance"]
+                                    @Localizer["Current balance"]
                                 </div>
                             </div>
                             <div class="e-panel-content">
@@ -45,7 +45,7 @@
                         <div class="e-panel-container">
                             <div class="e-panel-header">
                                 <div class="title">
-                                    <i class="fa-solid fa-dollar-sign"></i> @Localizer["Real balance"]
+                                    @Localizer["Real balance"]
                                 </div>
                             </div>
                             <div class="e-panel-content">
@@ -64,7 +64,7 @@
                         <div class="e-panel-container">
                             <div class="e-panel-header">
                                 <div class="title">
-                                    <i class="fa-solid fa-dollar-sign"></i> @Localizer["Cashflow"]
+                                    @Localizer["Cashflow"]
                                 </div>
                             </div>
                             <div class="e-panel-content">
@@ -88,8 +88,8 @@
                                 </div>
                             </div>
                             <div class="e-panel-content">
-                                <ejs-chart id="linechart" enableAnimation="true" width="100%" height="100%">
-                                    <e-chart-tooltipsettings enable="true" shared="true" header="<b>Status</b>"></e-chart-tooltipsettings>
+                                <ejs-chart id="lineChart" enableAnimation="true" width="100%" height="100%">
+                                    <e-chart-tooltipsettings enable="true" shared="true" header="<b>@Localizer["Status"]</b>"></e-chart-tooltipsettings>
                                     <e-chart-legendsettings visible="true" enableHighlight="true"></e-chart-legendsettings>
                                     <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category" interval="1">
                                         <e-majorgridlines width="0"></e-majorgridlines>
@@ -104,14 +104,14 @@
                                         <e-chartarea-border width="0"></e-chartarea-border>
                                     </e-chart-chartarea>
                                     <e-series-collection>
-                                        <e-series dataSource="Model.ColumnChartData1" xName="Period" yName="Value1" name="Pending" width="2" fill="#2485FA" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
+                                        <e-series dataSource="Model.ColumnChartData1" xName="Period" yName="Value1" name="@Localizer["Pending"]" width="2" fill="#2485FA" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
                                             <e-series-marker>
                                                 <e-series-datalabel visible="true" position="@LabelPosition.Middle" template="<b>${point.y}</b>">
                                                     <e-font color="white"></e-font>
                                                 </e-series-datalabel>
                                             </e-series-marker>
                                         </e-series>
-                                        <e-series dataSource="Model.ColumnChartData1" xName="Period" yName="Value2" name="Closed" fill="#FEC200" width="2" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
+                                        <e-series dataSource="Model.ColumnChartData1" xName="Period" yName="Value2" name="@Localizer["Closed"]" fill="#FEC200" width="2" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
                                             <e-series-marker>
                                                 <e-series-datalabel visible="true" position="@LabelPosition.Middle" template="<b>${point.y}</b>">
                                                     <e-font color="white"></e-font>
@@ -139,13 +139,13 @@
                                 </div>
                             </div>
                             <div class="e-panel-content">
-                                <ejs-accumulationchart id="pie" enableAnimation="true" enableBorderOnMouseMove="true" enableSmartLabels="true" width="100%" height="100%">
+                                <ejs-accumulationchart id="pieChart" enableAnimation="true" enableBorderOnMouseMove="true" enableSmartLabels="true" width="100%" height="100%">
                                     <e-accumulationchart-tooltipsettings enable="true" format="${point.x} : <b>${point.y}€</b> - ${point.percentage}%"></e-accumulationchart-tooltipsettings>
                                     <e-accumulationchart-legendsettings position="Top" toggleVisibility="true">
                                         <e-legendsettings-textstyle size="1rem"></e-legendsettings-textstyle>
                                     </e-accumulationchart-legendsettings>
                                     <e-accumulation-series-collection>
-                                        <e-accumulation-series tooltipMappingName="Description" dataSource="Model.PieChartData1" xName="Description" yName="Value" innerRadius="50%" legendShape="Circle" palettes="palettes">
+                                        <e-accumulation-series tooltipMappingName="@Localizer["Description"]" dataSource="Model.PieChartData1" xName="Description" yName="Value" innerRadius="50%" legendShape="Circle" palettes="palettes">
                                             <e-accumulationseries-datalabel name="FormattedValue" visible="true" position="@AccumulationLabelPosition.Inside" textWrap="Wrap" template="<div><b>${point.y}€</b></div><div>${point.percentage}%</div>"></e-accumulationseries-datalabel>
                                         </e-accumulation-series>
                                     </e-accumulation-series-collection>
@@ -169,13 +169,13 @@
                                 </div>
                             </div>
                             <div class="e-panel-content">
-                                <ejs-chart id="spline" enableAnimation="true" width="100%" height="100%">
+                                <ejs-chart id="splineChart" enableAnimation="true" width="100%" height="100%">
                                     <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category">
                                         <e-majorgridlines width="0"></e-majorgridlines>
                                         <e-majorticklines width="0"></e-majorticklines>
                                         <e-labelstyle size="11px"></e-labelstyle>
                                     </e-chart-primaryxaxis>
-                                    <e-chart-primaryyaxis labelFormat="{value}€">
+                                    <e-chart-primaryyaxis labelFormat="@Localizer["Amount format"]">
                                         <e-linestyle width="0"></e-linestyle>
                                         <e-majorticklines width="0"></e-majorticklines>
                                         <e-labelstyle size="11px"></e-labelstyle>
@@ -185,9 +185,9 @@
                                         <e-chartarea-border width="0"></e-chartarea-border>
                                     </e-chart-chartarea>
                                     <e-series-collection>
-                                        <e-series dataSource="Model.SplineChartData1" fill="#509ED9" name="Balance" xName="Period" opacity="1" width="3.5" yName="Value1" type="@ChartSeriesType.Spline"></e-series>
-                                        <e-series dataSource="Model.SplineChartData1" fill="#80D950" name="Income" xName="Period" opacity="1" width="3.5" yName="Value2" type="@ChartSeriesType.Spline"></e-series>
-                                        <e-series dataSource="Model.SplineChartData1" fill="#D45D48" name="Expense" xName="Period" opacity="1" width="3.5" yName="Value3" type="@ChartSeriesType.Spline"></e-series>
+                                        <e-series dataSource="Model.SplineChartData1" fill="#509ED9" name="@Localizer["Balance"]" xName="Period" opacity="1" width="3.5" yName="Value1" type="@ChartSeriesType.Spline"></e-series>
+                                        <e-series dataSource="Model.SplineChartData1" fill="#80D950" name="@Localizer["Income"]" xName="Period" opacity="1" width="3.5" yName="Value2" type="@ChartSeriesType.Spline"></e-series>
+                                        <e-series dataSource="Model.SplineChartData1" fill="#D45D48" name="@Localizer["Expense"]" xName="Period" opacity="1" width="3.5" yName="Value3" type="@ChartSeriesType.Spline"></e-series>
                                     </e-series-collection>
                                     <e-chart-legendsettings enableHighlight="true"></e-chart-legendsettings>
                                 </ejs-chart>
@@ -211,9 +211,9 @@
                             <div class="e-panel-content">
                                 <ejs-grid id="recentTransactions" dataSource="@Model.RecentRecords" gridLines="None" width="100%" height="100%">
                                     <e-grid-columns>
-                                        <e-grid-column headerText="Category" field="Category"></e-grid-column>
-                                        <e-grid-column headerText="Date" field="Date" type="date" format="dd-MMM-yy"></e-grid-column>
-                                        <e-grid-column headerText="Amount" field="FormattedAmount" textAlign="Right"></e-grid-column>
+                                        <e-grid-column headerText="@Localizer["Category"]" field="Category"></e-grid-column>
+                                        <e-grid-column headerText="@Localizer["Date"]" field="Date" type="date" format="@Localizer["Date format"]"></e-grid-column>
+                                        <e-grid-column headerText="@Localizer["Amount"]" field="Amount" textAlign="Right" template="#amountTemplate"></e-grid-column>
                                     </e-grid-columns>
                                 </ejs-grid>
                             </div>
@@ -228,13 +228,23 @@
 
 </div>
 
+<script id="amountTemplate" type="text/x-template">
+    ${if(Amount > 0)}
+        <span class="badge bg-success p-2">${FormattedAmount}</span>
+    ${else}
+        <span class="badge bg-danger p-2">${FormattedAmount}</span>
+    ${/if}
+</script>
+
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        var lineObj = document.getElementById('linechart').ej2_instances[0];
-        var pieObj = document.getElementById('pie').ej2_instances[0];
-        var splineObj = document.getElementById('spline').ej2_instances[0];
+    document.addEventListener("DOMContentLoaded", function() {
+        var lineObj = document.getElementById("lineChart").ej2_instances[0];
         lineObj.refresh();
+
+        var pieObj = document.getElementById("pieChart").ej2_instances[0];
         pieObj.refresh();
+
+        var splineObj = document.getElementById("splineChart").ej2_instances[0];
         splineObj.refresh();
     });
 </script>

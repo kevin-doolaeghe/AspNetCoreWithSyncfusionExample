@@ -23,6 +23,6 @@ namespace webapp.Models {
         public string Status => IsDone ? "Closed" : "Pending";
 
         [NotMapped]
-        public string FormattedAmount => Amount.ToString("C2", new CultureInfo("fr-FR"));
+        public string FormattedAmount => Amount.ToString("C2", CultureInfo.CurrentCulture);
     }
 }

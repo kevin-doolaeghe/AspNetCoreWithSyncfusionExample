@@ -9,9 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages()
+    .AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null)
     .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
-    .AddDataAnnotationsLocalization()
-    .AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
+    .AddDataAnnotationsLocalization();
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
 builder.Services.AddDbContext<DatabaseContext>(
     options => options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServerConnectionString"))
@@ -64,8 +64,7 @@ var supportedCultures = new[] {
 app.UseRequestLocalization(new RequestLocalizationOptions {
     DefaultRequestCulture = new RequestCulture("en-US"),
     SupportedCultures = supportedCultures,
-    SupportedUICultures = supportedCultures,
-    // ApplyCurrentCultureToResponseHeaders = true
+    SupportedUICultures = supportedCultures
 });
 
 app.Run();

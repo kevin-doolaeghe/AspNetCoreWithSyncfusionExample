@@ -1,7 +1,7 @@
 ﻿@page
 @model webapp.Pages.SettingsModel
 @{
-    ViewData["PageTitle"] = "Settings";
+    ViewData["PageTitle"] = Localizer["Settings"];
 }
 
 <div class="text-center">
@@ -9,7 +9,7 @@
     <ejs-breadcrumb id="breadcrumb" cssClass="p-4" enableNavigation="true" maxItems="3" overflowMode="Menu">
         <e-breadcrumb-items>
             <e-breadcrumb-item iconCss="e-icons e-home" url="/"></e-breadcrumb-item>
-            <e-breadcrumb-item text="Settings" url="/Settings"></e-breadcrumb-item>
+            <e-breadcrumb-item text="@Localizer["Settings"]" url="/Settings"></e-breadcrumb-item>
         </e-breadcrumb-items>
     </ejs-breadcrumb>
 

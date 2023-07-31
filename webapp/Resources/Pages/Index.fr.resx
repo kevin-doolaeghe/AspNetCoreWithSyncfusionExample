@@ -117,14 +117,41 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Amount" xml:space="preserve">
+    <value>Montant</value>
+  </data>
+  <data name="Amount format" xml:space="preserve">
+    <value>{value}€</value>
+  </data>
+  <data name="Balance" xml:space="preserve">
+    <value>Solde</value>
+  </data>
   <data name="Cashflow" xml:space="preserve">
-    <value>Liquidités</value>
+    <value>&lt;i class="fa-solid fa-euro-sign"&gt;&lt;/i&gt; Liquidités</value>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>Catégorie</value>
+  </data>
+  <data name="Closed" xml:space="preserve">
+    <value>Terminé</value>
   </data>
   <data name="Current balance" xml:space="preserve">
-    <value>Solde actuel</value>
+    <value>&lt;i class="fa-solid fa-euro-sign"&gt;&lt;/i&gt; Solde actuel</value>
   </data>
   <data name="Dashboard" xml:space="preserve">
     <value>Dashboard</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Date format" xml:space="preserve">
+    <value>dd-MMM-yy</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Expense" xml:space="preserve">
+    <value>Dépenses</value>
   </data>
   <data name="Expenses by category" xml:space="preserve">
     <value>Dépenses par catégorie</value>
@@ -132,11 +159,20 @@
   <data name="Expenses vs income" xml:space="preserve">
     <value>Dépenses vs revenus</value>
   </data>
+  <data name="Income" xml:space="preserve">
+    <value>Revenus</value>
+  </data>
+  <data name="Pending" xml:space="preserve">
+    <value>En attente</value>
+  </data>
   <data name="Real balance" xml:space="preserve">
-    <value>Solde réel</value>
+    <value>&lt;i class="fa-solid fa-euro-sign"&gt;&lt;/i&gt; Solde réel</value>
   </data>
   <data name="Recent records" xml:space="preserve">
     <value>Transactions récentes</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Statut</value>
   </data>
   <data name="Transactions by status" xml:space="preserve">
     <value>Transactions par statut</value>

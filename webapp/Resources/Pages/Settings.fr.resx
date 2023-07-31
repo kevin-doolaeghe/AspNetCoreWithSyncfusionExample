@@ -117,31 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Current month" xml:space="preserve">
-    <value>Current month</value>
-  </data>
-  <data name="Dashboard" xml:space="preserve">
-    <value>Dashboard</value>
-  </data>
-  <data name="English" xml:space="preserve">
-    <value>English</value>
-  </data>
-  <data name="French" xml:space="preserve">
-    <value>French</value>
-  </data>
-  <data name="Log in" xml:space="preserve">
-    <value>Log in</value>
-  </data>
-  <data name="Log out" xml:space="preserve">
-    <value>Log out</value>
-  </data>
-  <data name="My account" xml:space="preserve">
-    <value>My account</value>
-  </data>
-  <data name="Records" xml:space="preserve">
-    <value>Records</value>
-  </data>
   <data name="Settings" xml:space="preserve">
-    <value>Settings</value>
+    <value>Paramètres</value>
   </data>
 </root>

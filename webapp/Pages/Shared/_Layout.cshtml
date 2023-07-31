@@ -39,17 +39,17 @@
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-page="/Index">
-                                <i class="fa-solid fa-home"></i> Dashboard
+                                <i class="fa-solid fa-home"></i> @Localizer["Dashboard"]
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-page="/Records/Index">
-                                <i class="fa-solid fa-boxes-stacked"></i> Records
+                                <i class="fa-solid fa-boxes-stacked"></i> @Localizer["Records"]
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-page="/Records/CurrentMonth">
-                                <i class="fa-solid fa-calendar"></i> Current month
+                                <i class="fa-solid fa-calendar"></i> @Localizer["Current month"]
                             </a>
                         </li>
                         <li class="flex-grow-1">
@@ -59,25 +59,25 @@
                                 <i class="fa-solid fa-language"></i> @Thread.CurrentThread.CurrentUICulture.Name
                             </a>
                             <div class="dropdown-menu" aria-labelledby="languageSelector">
-                                <a class="dropdown-item" asp-area="" asp-page="/Language" asp-route-newCulture="en">English</a>
-                                <a class="dropdown-item" asp-area="" asp-page="/Language" asp-route-newCulture="fr">Français</a>
+                                <a class="dropdown-item" asp-area="" asp-page="/Language" asp-route-newCulture="en-US">@Localizer["English"]</a>
+                                <a class="dropdown-item" asp-area="" asp-page="/Language" asp-route-newCulture="fr-FR">@Localizer["French"]</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
                             @if (ViewData["IsLogged"] == null) {
                                 <a class="nav-link" asp-area="" asp-page="/Index">
-                                    <i class="fa-solid fa-user"></i> Log in
+                                    <i class="fa-solid fa-user"></i> @Localizer["Log in"]
                                 </a>
                             } else {
                                 <a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fa-solid fa-user"></i> My account
+                                    <i class="fa-solid fa-user"></i> @Localizer["My account"]
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                     <a class="dropdown-item" asp-area="" asp-page="/Settings">
-                                        <i class="fa-solid fa-gear"></i> Settings
+                                        <i class="fa-solid fa-gear"></i> @Localizer["Settings"]
                                     </a>
                                     <a class="dropdown-item" asp-area="" asp-page="/Index">
-                                        <i class="fa-solid fa-right-from-bracket"></i> Log out
+                                        <i class="fa-solid fa-right-from-bracket"></i> @Localizer["Log out"]
                                     </a>
                                 </div>
                             }
@@ -95,9 +95,7 @@
     </div>
 
     <script>
-        var currentCulture = "@Context.Request.Query["culture"]";
-        console.log("Current culture: " + currentCulture);
-
+        var currentCulture = "@Thread.CurrentThread.CurrentUICulture.Name";
         // Load the json culture file
         var ajax = new ej.base.Ajax(location.origin + "/locale/" + currentCulture + ".json", "GET", false);
         ajax.send().then((args) => {
