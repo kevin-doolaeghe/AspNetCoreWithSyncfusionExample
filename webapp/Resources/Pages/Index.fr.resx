@@ -120,14 +120,11 @@
   <data name="Amount" xml:space="preserve">
     <value>Montant</value>
   </data>
-  <data name="Amount format" xml:space="preserve">
-    <value>{value}€</value>
-  </data>
   <data name="Balance" xml:space="preserve">
     <value>Solde</value>
   </data>
   <data name="Cashflow" xml:space="preserve">
-    <value>&lt;i class="fa-solid fa-euro-sign"&gt;&lt;/i&gt; Liquidités</value>
+    <value>&lt;i class="fa-solid fa-plus-minus"&gt;&lt;/i&gt; Liquidités</value>
   </data>
   <data name="Category" xml:space="preserve">
     <value>Catégorie</value>
@@ -145,36 +142,48 @@
     <value>Date</value>
   </data>
   <data name="Date format" xml:space="preserve">
-    <value>dd-MMM-yy</value>
+    <value>dd-MMM-yyyy</value>
   </data>
   <data name="Description" xml:space="preserve">
     <value>Description</value>
   </data>
   <data name="Expense" xml:space="preserve">
-    <value>Dépenses</value>
+    <value>Débit</value>
   </data>
   <data name="Expenses by category" xml:space="preserve">
-    <value>Dépenses par catégorie</value>
+    <value>&lt;i class="fa-solid fa-icons"&gt;&lt;/i&gt; Dépenses par catégorie</value>
   </data>
   <data name="Expenses vs income" xml:space="preserve">
-    <value>Dépenses vs revenus</value>
+    <value>&lt;i class="fa-solid fa-arrow-trend-up"&gt;&lt;/i&gt; Dépenses vs revenus</value>
   </data>
   <data name="Income" xml:space="preserve">
-    <value>Revenus</value>
+    <value>Crédit</value>
+  </data>
+  <data name="Line label format" xml:space="preserve">
+    <value>&lt;b&gt;${point.y}&lt;/b&gt;</value>
   </data>
   <data name="Pending" xml:space="preserve">
     <value>En attente</value>
+  </data>
+  <data name="Pie label format" xml:space="preserve">
+    <value>&lt;div&gt;&lt;b&gt;${point.y}€&lt;/b&gt;&lt;/div&gt;&lt;div&gt;${point.percentage}%&lt;/div&gt;</value>
+  </data>
+  <data name="Pie tooltip format" xml:space="preserve">
+    <value>${point.x} : &lt;b&gt;${point.y}€&lt;/b&gt; - ${point.percentage}%</value>
   </data>
   <data name="Real balance" xml:space="preserve">
     <value>&lt;i class="fa-solid fa-euro-sign"&gt;&lt;/i&gt; Solde réel</value>
   </data>
   <data name="Recent records" xml:space="preserve">
-    <value>Transactions récentes</value>
+    <value>&lt;i class="fa-solid fa-hourglass-half"&gt;&lt;/i&gt; Transactions récentes</value>
+  </data>
+  <data name="Spline label format" xml:space="preserve">
+    <value>{value}€</value>
   </data>
   <data name="Status" xml:space="preserve">
-    <value>Statut</value>
+    <value>&lt;b&gt;Statut&lt;/b&gt;</value>
   </data>
   <data name="Transactions by status" xml:space="preserve">
-    <value>Transactions par statut</value>
+    <value>&lt;i class="fa-solid fa-check"&gt;&lt;/i&gt; Transactions par statut</value>
   </data>
 </root>

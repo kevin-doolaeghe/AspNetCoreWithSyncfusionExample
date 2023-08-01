@@ -1,16 +1,9 @@
-﻿@{
-    var AvailableCultures = new List<object>() {
-        new { Id = "en-US", Description = "English" },
-        new { Id = "fr-FR", Description = "French" },
-    };
-}
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["PageTitle"] - Demo</title>
+    <title>@ViewData["PageTitle"] - @Localizer["Title"]</title>
     <!-- Bootstrap CSS stylesheet -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <!-- Syncfusion CSS stylesheet -->
@@ -30,7 +23,7 @@
         <nav class="navbar navbar-expand-lg navbar-toggleable-lg navbar-light bg-light box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-page="/Index">
-                    <i class="fa-solid fa-shapes"></i> Demo
+                    @Localizer["Title with icon"]
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -39,17 +32,17 @@
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-page="/Index">
-                                <i class="fa-solid fa-home"></i> @Localizer["Dashboard"]
+                                @Localizer["Dashboard"]
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-page="/Records/Index">
-                                <i class="fa-solid fa-boxes-stacked"></i> @Localizer["Records"]
+                                @Localizer["Records"]
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-page="/Records/CurrentMonth">
-                                <i class="fa-solid fa-calendar"></i> @Localizer["Current month"]
+                                @Localizer["Current month"]
                             </a>
                         </li>
                         <li class="flex-grow-1">
@@ -66,18 +59,18 @@
                         <li class="nav-item dropdown">
                             @if (ViewData["IsLogged"] == null) {
                                 <a class="nav-link" asp-area="" asp-page="/Index">
-                                    <i class="fa-solid fa-user"></i> @Localizer["Log in"]
+                                    @Localizer["Log in"]
                                 </a>
                             } else {
                                 <a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuLink" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fa-solid fa-user"></i> @Localizer["My account"]
+                                    @Localizer["My account"]
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                     <a class="dropdown-item" asp-area="" asp-page="/Settings">
-                                        <i class="fa-solid fa-gear"></i> @Localizer["Settings"]
+                                        @Localizer["Settings"]
                                     </a>
                                     <a class="dropdown-item" asp-area="" asp-page="/Index">
-                                        <i class="fa-solid fa-right-from-bracket"></i> @Localizer["Log out"]
+                                        @Localizer["Log out"]
                                     </a>
                                 </div>
                             }
