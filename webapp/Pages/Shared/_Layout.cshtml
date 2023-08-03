@@ -94,6 +94,7 @@
         ajax.send().then((args) => {
             // Set the culture for the ASP.NET Core controls
             ej.base.setCulture(currentCulture);
+            ej.base.setCurrencyCode("@Localizer["Currency"]");
 
             var loader = JSON.parse(args);
             ej.base.L10n.load(loader);

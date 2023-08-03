@@ -23,23 +23,20 @@ namespace webapp.Pages.Records {
 
         public IEnumerable<Record> DataSource { get; set; } = default!;
 
-        public string? CurrentBalance { get; set; }
+        public double CurrentBalance { get; set; }
 
-        public string? RealBalance { get; set; }
+        public double RealBalance { get; set; }
 
-        public string? Cashflow { get; set; }
+        public double Cashflow { get; set; }
 
         public async Task OnGetAsync() {
             var records = await _databaseContext.Records
                 .AsNoTracking()
                 .ToListAsync();
 
-            var realBalance = records.Select(x => x.Amount).Sum();
-            var currentBalance = records.Where(x => x.IsDone).Select(x => x.Amount).Sum();
-            var cultureInfo = new CultureInfo("fr-FR");
-            RealBalance = realBalance.ToString("C2", cultureInfo);
-            CurrentBalance = currentBalance.ToString("C2", cultureInfo);
-            Cashflow = (realBalance - currentBalance).ToString("C2", cultureInfo);
+            RealBalance = records.Select(x => x.Amount).Sum();
+            CurrentBalance = records.Where(x => x.IsDone).Select(x => x.Amount).Sum();
+            Cashflow = double.Abs(RealBalance - CurrentBalance);
 
             var currentDate = DateTime.Today;
             DataSource = await _databaseContext.Records

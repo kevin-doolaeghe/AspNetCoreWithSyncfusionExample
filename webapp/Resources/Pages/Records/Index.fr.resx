@@ -117,4 +117,118 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Add record" xml:space="preserve">
+    <value>Créer un enregistrement</value>
+  </data>
+  <data name="Amount" xml:space="preserve">
+    <value>Montant</value>
+  </data>
+  <data name="Amount placeholder" xml:space="preserve">
+    <value>Montant</value>
+  </data>
+  <data name="Category" xml:space="preserve">
+    <value>Catégorie</value>
+  </data>
+  <data name="Category 01" xml:space="preserve">
+    <value>💰 Salaire</value>
+  </data>
+  <data name="Category 02" xml:space="preserve">
+    <value>🍔 Nourriture</value>
+  </data>
+  <data name="Category 03" xml:space="preserve">
+    <value>🎁 Plaisir</value>
+  </data>
+  <data name="Category 04" xml:space="preserve">
+    <value>⚽ Activité</value>
+  </data>
+  <data name="Category 05" xml:space="preserve">
+    <value>💸 Epargne</value>
+  </data>
+  <data name="Category placeholder" xml:space="preserve">
+    <value>Catégorie</value>
+  </data>
+  <data name="Closed" xml:space="preserve">
+    <value>Terminé</value>
+  </data>
+  <data name="Commands" xml:space="preserve">
+    <value>Commandes</value>
+  </data>
+  <data name="Contains" xml:space="preserve">
+    <value>Contient</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Date format" xml:space="preserve">
+    <value>dd/MM/yyyy</value>
+  </data>
+  <data name="Date placeholder" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Does not contain" xml:space="preserve">
+    <value>Ne contient pas</value>
+  </data>
+  <data name="Does not end with" xml:space="preserve">
+    <value>Ne se termine pas par</value>
+  </data>
+  <data name="Does not start with" xml:space="preserve">
+    <value>Ne commence pas par</value>
+  </data>
+  <data name="Edit record" xml:space="preserve">
+    <value>Modifier l'enregistrement : </value>
+  </data>
+  <data name="Empty" xml:space="preserve">
+    <value>Est vide</value>
+  </data>
+  <data name="Ends with" xml:space="preserve">
+    <value>Se termine par</value>
+  </data>
+  <data name="Equal" xml:space="preserve">
+    <value>Egal à</value>
+  </data>
+  <data name="Greater than" xml:space="preserve">
+    <value>Supérieur à</value>
+  </data>
+  <data name="Greater than or equal" xml:space="preserve">
+    <value>Supérieur ou égal à</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="Less than" xml:space="preserve">
+    <value>Inférieur à</value>
+  </data>
+  <data name="Less than or equal" xml:space="preserve">
+    <value>Inférieur ou égal à</value>
+  </data>
+  <data name="Like" xml:space="preserve">
+    <value>Comme</value>
+  </data>
+  <data name="Not empty" xml:space="preserve">
+    <value>N'est pas vide</value>
+  </data>
+  <data name="Not equal" xml:space="preserve">
+    <value>Différent de</value>
+  </data>
+  <data name="Note" xml:space="preserve">
+    <value>Note</value>
+  </data>
+  <data name="Note placeholder" xml:space="preserve">
+    <value>Note</value>
+  </data>
+  <data name="Pending" xml:space="preserve">
+    <value>En attente</value>
+  </data>
+  <data name="Records" xml:space="preserve">
+    <value>Enregistrements</value>
+  </data>
+  <data name="Starts with" xml:space="preserve">
+    <value>Démarre par</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Statut</value>
+  </data>
+  <data name="Status placeholder" xml:space="preserve">
+    <value>Statut</value>
+  </data>
 </root>

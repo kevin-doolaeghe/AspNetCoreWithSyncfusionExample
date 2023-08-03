@@ -20,9 +20,6 @@ namespace webapp.Models {
         public bool IsDone { get; set; } = false;
 
         [NotMapped]
-        public string Status => IsDone ? "Closed" : "Pending";
-
-        [NotMapped]
         public string FormattedAmount => Amount.ToString("C2", CultureInfo.CurrentCulture);
     }
 }
