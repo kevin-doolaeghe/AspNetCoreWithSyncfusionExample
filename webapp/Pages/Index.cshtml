@@ -126,14 +126,14 @@
                                         <e-chartarea-border width="0"></e-chartarea-border>
                                     </e-chart-chartarea>
                                     <e-series-collection>
-                                        <e-series dataSource="Model.TransactionsByStatusData" xName="Period" yName="Value1" name="@Localizer["Pending"].Value" width="2" fill="#2485FA" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
+                                        <e-series dataSource="Model.TransactionsByStatusData" xName="Category" yName="Pending" name="@Localizer["Pending"].Value" width="2" fill="#2485FA" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
                                             <e-series-marker>
                                                 <e-series-datalabel visible="true" position="@LabelPosition.Middle" template="@Localizer["Line label format"].Value">
                                                     <e-font color="white"></e-font>
                                                 </e-series-datalabel>
                                             </e-series-marker>
                                         </e-series>
-                                        <e-series dataSource="Model.TransactionsByStatusData" xName="Period" yName="Value2" name="@Localizer["Closed"].Value" fill="#FEC200" width="2" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
+                                        <e-series dataSource="Model.TransactionsByStatusData" xName="Category" yName="Closed" name="@Localizer["Closed"].Value" fill="#FEC200" width="2" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
                                             <e-series-marker>
                                                 <e-series-datalabel visible="true" position="@LabelPosition.Middle" template="<b>${point.y}</b>">
                                                     <e-font color="white"></e-font>
@@ -167,7 +167,7 @@
                                         <e-legendsettings-textstyle size="1rem"></e-legendsettings-textstyle>
                                     </e-accumulationchart-legendsettings>
                                     <e-accumulation-series-collection>
-                                        <e-accumulation-series tooltipMappingName="@Localizer["Description"].Value" dataSource="Model.ExpensesByCategoryData" xName="Description" yName="Value" innerRadius="50%" legendShape="Circle" palettes="palettes">
+                                        <e-accumulation-series tooltipMappingName="@Localizer["Description"].Value" dataSource="Model.ExpensesByCategoryData" xName="Category" yName="Value" innerRadius="50%" legendShape="Circle" palettes="palettes">
                                             <e-accumulationseries-datalabel name="FormattedValue" visible="true" position="@AccumulationLabelPosition.Inside" textWrap="Wrap" template="@Localizer["Pie label format"].Value"></e-accumulationseries-datalabel>
                                         </e-accumulation-series>
                                     </e-accumulation-series-collection>
@@ -207,9 +207,9 @@
                                         <e-chartarea-border width="0"></e-chartarea-border>
                                     </e-chart-chartarea>
                                     <e-series-collection>
-                                        <e-series dataSource="Model.ExpenseVsIncomeData" fill="#509ED9" name="@Localizer["Balance"].Value" xName="Period" opacity="1" width="3.5" yName="Value1" type="@ChartSeriesType.Spline"></e-series>
-                                        <e-series dataSource="Model.ExpenseVsIncomeData" fill="#80D950" name="@Localizer["Income"].Value" xName="Period" opacity="1" width="3.5" yName="Value2" type="@ChartSeriesType.Spline"></e-series>
-                                        <e-series dataSource="Model.ExpenseVsIncomeData" fill="#D45D48" name="@Localizer["Expense"].Value" xName="Period" opacity="1" width="3.5" yName="Value3" type="@ChartSeriesType.Spline"></e-series>
+                                        <e-series dataSource="Model.ExpenseVsIncomeData" fill="#509ED9" name="@Localizer["Balance"].Value" xName="Date" opacity="1" width="3.5" yName="Balance" type="@ChartSeriesType.Spline"></e-series>
+                                        <e-series dataSource="Model.ExpenseVsIncomeData" fill="#80D950" name="@Localizer["Income"].Value" xName="Date" opacity="1" width="3.5" yName="Income" type="@ChartSeriesType.Spline"></e-series>
+                                        <e-series dataSource="Model.ExpenseVsIncomeData" fill="#D45D48" name="@Localizer["Expense"].Value" xName="Date" opacity="1" width="3.5" yName="Expense" type="@ChartSeriesType.Spline"></e-series>
                                     </e-series-collection>
                                     <e-chart-legendsettings enableHighlight="true"></e-chart-legendsettings>
                                 </ejs-chart>
@@ -231,7 +231,7 @@
                                 </div>
                             </div>
                             <div class="e-panel-content">
-                                <ejs-grid id="recentTransactions" dataBound="dataBound" dataSource="@Model.RecentRecords" gridLines="None" width="100%" height="100%">
+                                <ejs-grid id="recentTransactions" dataBound="dataBound" dataSource="@Model.RecentTransactions" gridLines="None" width="100%" height="100%">
                                     <e-grid-columns>
                                         <e-grid-column headerText="@Localizer["Category"].Value" field="Category"></e-grid-column>
                                         <e-grid-column headerText="@Localizer["Date"].Value" field="Date" type="date" format="@Localizer["Date format"].Value"></e-grid-column>

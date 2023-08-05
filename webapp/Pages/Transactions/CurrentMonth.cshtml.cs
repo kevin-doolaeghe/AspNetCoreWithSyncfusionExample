@@ -7,7 +7,7 @@ using System.Text.Json;
 using webapp.Models;
 using webapp.Services;
 
-namespace webapp.Pages.Records {
+namespace webapp.Pages.Transactions {
 
     [IgnoreAntiforgeryToken]
     public class CurrentMonthModel : PageModel {
@@ -21,7 +21,9 @@ namespace webapp.Pages.Records {
             _databaseContext = databaseContext;
         }
 
-        public IEnumerable<Record> DataSource { get; set; } = default!;
+        public IList<Category> Categories { get; set; } = default!;
+
+        public IEnumerable<Transaction> DataSource { get; set; } = default!;
 
         public double CurrentBalance { get; set; }
 
@@ -30,7 +32,8 @@ namespace webapp.Pages.Records {
         public double Cashflow { get; set; }
 
         public async Task OnGetAsync() {
-            var records = await _databaseContext.Records
+            Categories = await _databaseContext.Categories.AsNoTracking().ToListAsync();
+            var records = await _databaseContext.Transactions
                 .AsNoTracking()
                 .ToListAsync();
 
@@ -39,7 +42,7 @@ namespace webapp.Pages.Records {
             Cashflow = double.Abs(RealBalance - CurrentBalance);
 
             var currentDate = DateTime.Today;
-            DataSource = await _databaseContext.Records
+            DataSource = await _databaseContext.Transactions
                 .Where(x => x.Date.Year == currentDate.Year && x.Date.Month == currentDate.Month)
                 .OrderBy(x => x.Date)
                 .ToListAsync();
@@ -47,11 +50,11 @@ namespace webapp.Pages.Records {
 
         public async Task<JsonResult> OnPostDataSourceAsync([FromBody] DataManagerRequest dm) {
             var currentDate = DateTime.Today;
-            DataSource = await _databaseContext.Records
+            DataSource = await _databaseContext.Transactions
                 .Where(x => x.Date.Year == currentDate.Year && x.Date.Month == currentDate.Month)
                 .OrderBy(x => x.Date)
                 .ToListAsync();
-            int count = DataSource.Cast<Record>().Count();
+            int count = DataSource.Cast<Transaction>().Count();
 
             DataOperations operations = new();
             // Search
@@ -76,18 +79,18 @@ namespace webapp.Pages.Records {
             return new JsonResult(dm.RequiresCounts ? new { result = DataSource, count } : new { result = DataSource });
         }
 
-        public async Task<IActionResult> OnPostCrudUpdateAsync([FromBody] CRUDModel<Record> request) {
+        public async Task<IActionResult> OnPostCrudUpdateAsync([FromBody] CRUDModel<Transaction> request) {
             _logger.LogInformation($"Request: {JsonSerializer.Serialize(request)}");
             switch (request.Action) {
                 case "insert":
-                    _databaseContext.Records.Add(request.Value);
+                    _databaseContext.Transactions.Add(request.Value);
                     break;
                 case "update":
-                    _databaseContext.Records.Update(request.Value);
+                    _databaseContext.Transactions.Update(request.Value);
                     break;
                 case "remove":
                     long id = long.Parse($"{request.Key}");
-                    _databaseContext.Records.Remove(_databaseContext.Records.Where(x => x.RecordId == id).First());
+                    _databaseContext.Transactions.Remove(_databaseContext.Transactions.Where(x => x.TransactionId == id).First());
                     break;
             }
             await _databaseContext.SaveChangesAsync();

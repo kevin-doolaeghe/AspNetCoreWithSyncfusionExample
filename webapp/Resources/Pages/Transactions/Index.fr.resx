@@ -117,43 +117,88 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Categories" xml:space="preserve">
-    <value>&lt;i class="fa-solid fa-icons"&gt;&lt;/i&gt; Catégories</value>
+  <data name="Add transaction" xml:space="preserve">
+    <value>Créer une transaction</value>
   </data>
-  <data name="Currency" xml:space="preserve">
-    <value>EUR</value>
+  <data name="Amount" xml:space="preserve">
+    <value>Montant</value>
   </data>
-  <data name="Current month" xml:space="preserve">
-    <value>&lt;i class="fa-solid fa-calendar"&gt;&lt;/i&gt; Mois actuel</value>
+  <data name="Category" xml:space="preserve">
+    <value>Catégorie</value>
   </data>
-  <data name="Dashboard" xml:space="preserve">
-    <value>&lt;i class="fa-solid fa-home"&gt;&lt;/i&gt; Tableau de bord</value>
+  <data name="Closed" xml:space="preserve">
+    <value>Terminé</value>
   </data>
-  <data name="English" xml:space="preserve">
-    <value>Anglais</value>
+  <data name="Commands" xml:space="preserve">
+    <value>Commandes</value>
   </data>
-  <data name="French" xml:space="preserve">
-    <value>Français</value>
+  <data name="Contains" xml:space="preserve">
+    <value>Contient</value>
   </data>
-  <data name="Log in" xml:space="preserve">
-    <value>&lt;i class="fa-solid fa-user"&gt;&lt;/i&gt; Connexion</value>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
   </data>
-  <data name="Log out" xml:space="preserve">
-    <value>&lt;i class="fa-solid fa-right-from-bracket"&gt;&lt;/i&gt; Déconnexion</value>
+  <data name="Date format" xml:space="preserve">
+    <value>dd/MM/yyyy</value>
   </data>
-  <data name="My account" xml:space="preserve">
-    <value>&lt;i class="fa-solid fa-user"&gt;&lt;/i&gt; Mon compte</value>
+  <data name="Does not contain" xml:space="preserve">
+    <value>Ne contient pas</value>
   </data>
-  <data name="Settings" xml:space="preserve">
-    <value>&lt;i class="fa-solid fa-gear"&gt;&lt;/i&gt; Paramètres</value>
+  <data name="Does not end with" xml:space="preserve">
+    <value>Ne se termine pas par</value>
   </data>
-  <data name="Title" xml:space="preserve">
-    <value>Démo</value>
+  <data name="Does not start with" xml:space="preserve">
+    <value>Ne commence pas par</value>
   </data>
-  <data name="Title with icon" xml:space="preserve">
-    <value>&lt;i class="fa-solid fa-shapes"&gt;&lt;/i&gt; Démo</value>
+  <data name="Edit transaction" xml:space="preserve">
+    <value>Modifier la transaction : </value>
+  </data>
+  <data name="Empty" xml:space="preserve">
+    <value>Est vide</value>
+  </data>
+  <data name="Ends with" xml:space="preserve">
+    <value>Se termine par</value>
+  </data>
+  <data name="Equal" xml:space="preserve">
+    <value>Egal à</value>
+  </data>
+  <data name="Greater than" xml:space="preserve">
+    <value>Supérieur à</value>
+  </data>
+  <data name="Greater than or equal" xml:space="preserve">
+    <value>Supérieur ou égal à</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="Less than" xml:space="preserve">
+    <value>Inférieur à</value>
+  </data>
+  <data name="Less than or equal" xml:space="preserve">
+    <value>Inférieur ou égal à</value>
+  </data>
+  <data name="Like" xml:space="preserve">
+    <value>Comme</value>
+  </data>
+  <data name="Not empty" xml:space="preserve">
+    <value>N'est pas vide</value>
+  </data>
+  <data name="Not equal" xml:space="preserve">
+    <value>Différent de</value>
+  </data>
+  <data name="Note" xml:space="preserve">
+    <value>Note</value>
+  </data>
+  <data name="Pending" xml:space="preserve">
+    <value>En attente</value>
+  </data>
+  <data name="Starts with" xml:space="preserve">
+    <value>Démarre par</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Statut</value>
   </data>
   <data name="Transactions" xml:space="preserve">
-    <value>&lt;i class="fa-solid fa-money-bill-transfer"&gt;&lt;/i&gt; Transactions</value>
+    <value>Transactions</value>
   </data>
 </root>

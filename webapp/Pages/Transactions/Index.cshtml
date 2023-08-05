@@ -1,10 +1,10 @@
 ﻿@page "{handler?}"
-@model webapp.Pages.Records.IndexModel
+@model webapp.Pages.Transactions.IndexModel
 @using Syncfusion.EJ2.Calendars;
 @using Syncfusion.EJ2.DropDowns;
 @using Syncfusion.EJ2.Inputs;
 @{
-    ViewData["PageTitle"] = Localizer["Records"];
+    ViewData["PageTitle"] = Localizer["Transactions"];
 
     var toolbarItems = new string[] {
         "Add", "Edit", "Delete", "Print", "ExcelExport", "PdfExport", "Search"
@@ -52,50 +52,24 @@
     var searchSettings = new string[] { "Note", "Category", "Status" };
     var validationRules = new { required = true };
 
-    var dateParams = new {
-        @@params = new DatePicker() {
-            Placeholder = Localizer["Date placeholder"].Value,
-        }
-    };
-    var statusParams = new {
-        @@params = new DropDownList() {
-            DataSource = new string[] {
-                Localizer["Category 01"].Value,
-                Localizer["Category 02"].Value,
-                Localizer["Category 03"].Value,
-                Localizer["Category 04"].Value,
-                Localizer["Category 05"].Value,
-            },
-            Query = "new ej.data.Query()",
-            Fields = new DropDownListFieldSettings() { Value = "Value", Text = "Text" },
-            Placeholder = Localizer["Status placeholder"].Value,
-        }
-    };
-    var noteParams = new {
-        @@params = new TextBox() {
-            Placeholder = Localizer["Note placeholder"].Value,
-        }
-    };
     var categoryParams = new {
         @@params = new DropDownList() {
-            DataSource = new string[] {
-                Localizer["Category 01"].Value,
-                Localizer["Category 02"].Value,
-                Localizer["Category 03"].Value,
-                Localizer["Category 04"].Value,
-                Localizer["Category 05"].Value,
-            },
+            DataSource = Model.Categories.Select(x => new { Value = x.CategoryId, Text = x.Description }),
             Query = "new ej.data.Query()",
-            Placeholder = Localizer["Category placeholder"].Value,
+            Fields = new DropDownListFieldSettings() { Value = "Value", Text = "Text" },
         }
     };
     var amountParams = new {
         @@params = new NumericTextBox() {
-            Decimals = 2,
-            Placeholder = Localizer["Amount placeholder"].Value,
             Format = "C2",
         }
     };
+
+    var statusParams = new object[] {
+        new { Value = false, Text = Localizer["Pending"].Value },
+        new { Value = true, Text = Localizer["Closed"].Value },
+    };
+    var categories = Model.Categories.Select(x => new { Value = x.CategoryId, Text = x.Description });
 }
 @Html.AntiForgeryToken()
 
@@ -104,12 +78,12 @@
     <ejs-breadcrumb id="breadcrumb" cssClass="p-4" enableNavigation="true" maxItems="3" overflowMode="Menu">
         <e-breadcrumb-items>
             <e-breadcrumb-item iconCss="e-icons e-home" url="/"></e-breadcrumb-item>
-            <e-breadcrumb-item text="@Localizer["Records"].Value" url="/Records"></e-breadcrumb-item>
+            <e-breadcrumb-item text="@Localizer["Transactions"].Value" url="/Transactions"></e-breadcrumb-item>
         </e-breadcrumb-items>
     </ejs-breadcrumb>
 
     <ejs-grid id="grid" load="onLoad" dataBound="dataBound" actionComplete="actionComplete" allowPaging="true" allowSorting="true" allowFiltering="true" enableStickyHeader="true" allowPdfExport="true" allowExcelExport="true" pdfExportComplete="pdfExportComplete" excelExportComplete="excelExportComplete" toolbarClick="toolbarClick" toolbar="toolbarItems" width="100%" height="100%">
-        <e-data-manager url="/Records/DataSource" crudUrl="/Records/CrudUpdate" adaptor="UrlAdaptor"></e-data-manager>
+        <e-data-manager url="/Transactions/DataSource" crudUrl="/Transactions/CrudUpdate" adaptor="UrlAdaptor"></e-data-manager>
         <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true" mode="Dialog" showConfirmDialog="true" showDeleteConfirmDialog="true"></e-grid-editSettings>
         <e-grid-pagesettings pageSize="20"></e-grid-pagesettings>
         <e-grid-sortsettings columns="sortSettings"></e-grid-sortsettings>
@@ -118,12 +92,12 @@
         <e-grid-loadingIndicator indicatorType="Shimmer"></e-grid-loadingIndicator>
         <e-grid-columns>
             <e-grid-column field="RecordId" headerText="@Localizer["Id"].Value" isPrimaryKey="true" visible="false"></e-grid-column>
-            <e-grid-column field="Date" headerText="@Localizer["Date"].Value" editType="datepickeredit" edit="dateParams" validationRules="validationRules" format="@Localizer["Date format"].Value" defaultValue="@DateTime.Now" width="120"></e-grid-column>
-            <e-grid-column field="IsDone" headerText="@Localizer["Status"].Value" editType="dropdownedit" edit="statusParams" validationRules="validationRules" template="#statusTemplate" defaultValue="false" width="120"></e-grid-column>
-            <e-grid-column field="Note" headerText="@Localizer["Note"].Value" editType="textboxedit" edit="noteParams" validationRules="validationRules" minWidth="300" width="400"></e-grid-column>
+            <e-grid-column field="Date" headerText="@Localizer["Date"].Value" editType="datepickeredit" validationRules="validationRules" format="@Localizer["Date format"].Value" defaultValue="@DateTime.Now" width="120"></e-grid-column>
+            <e-grid-column field="IsDone" headerText="@Localizer["Status"].Value" editType="dropdownedit" validationRules="validationRules" template="#statusTemplate" defaultValue="false" width="120"></e-grid-column>
+            <e-grid-column field="Note" headerText="@Localizer["Note"].Value" editType="textboxedit" validationRules="validationRules" minWidth="300" width="400"></e-grid-column>
             <e-grid-column field="Category" headerText="@Localizer["Category"].Value" editType="dropdownedit" edit="categoryParams" validationRules="validationRules" width="180"></e-grid-column>
             <e-grid-column field="Amount" headerText="@Localizer["Amount"].Value" editType="numericedit" edit="amountParams" validationRules="validationRules" format="C2" template="#amountTemplate" width="150"></e-grid-column>
-            <e-grid-column headerText="@Localizer["Commands"].Value" commands="commands" textAlign="Right" allowResizing="false" width="120"></e-grid-column>
+            <e-grid-column headerText="@Localizer["Commands"].Value" commands="commands" textAlign="Right" width="120"></e-grid-column>
         </e-grid-columns>
     </ejs-grid>
 
@@ -158,7 +132,7 @@
         if ((args.requestType === "beginEdit" || args.requestType === "add")) {
             var dialog = args.dialog;
             dialog.element.style.maxHeight = "1000px";
-            dialog.header = args.requestType === "beginEdit" ? "@Localizer["Edit record"].Value" + args.rowData["Note"] : "@Localizer["Add record"].Value";
+            dialog.header = args.requestType === "beginEdit" ? "@Localizer["Edit transaction"].Value" + args.rowData["Note"] : "@Localizer["Add transaction"].Value";
         }
     }
 

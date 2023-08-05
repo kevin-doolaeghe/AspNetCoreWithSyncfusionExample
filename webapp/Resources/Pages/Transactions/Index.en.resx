@@ -117,34 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Add record" xml:space="preserve">
-    <value>Add record</value>
+  <data name="Add transaction" xml:space="preserve">
+    <value>Add transaction</value>
   </data>
   <data name="Amount" xml:space="preserve">
     <value>Amount</value>
   </data>
-  <data name="Amount placeholder" xml:space="preserve">
-    <value>Amount</value>
-  </data>
   <data name="Category" xml:space="preserve">
-    <value>Category</value>
-  </data>
-  <data name="Category 01" xml:space="preserve">
-    <value>💰 Salary</value>
-  </data>
-  <data name="Category 02" xml:space="preserve">
-    <value>🍔 Food</value>
-  </data>
-  <data name="Category 03" xml:space="preserve">
-    <value>🎁 Pleasure</value>
-  </data>
-  <data name="Category 04" xml:space="preserve">
-    <value>⚽ Activity</value>
-  </data>
-  <data name="Category 05" xml:space="preserve">
-    <value>💸 Savings</value>
-  </data>
-  <data name="Category placeholder" xml:space="preserve">
     <value>Category</value>
   </data>
   <data name="Closed" xml:space="preserve">
@@ -162,9 +141,6 @@
   <data name="Date format" xml:space="preserve">
     <value>yyyy/MM/dd</value>
   </data>
-  <data name="Date placeholder" xml:space="preserve">
-    <value>Date</value>
-  </data>
   <data name="Does not contain" xml:space="preserve">
     <value>Does not contain</value>
   </data>
@@ -174,8 +150,8 @@
   <data name="Does not start with" xml:space="preserve">
     <value>Does not start with</value>
   </data>
-  <data name="Edit record" xml:space="preserve">
-    <value>Edit record : </value>
+  <data name="Edit transaction" xml:space="preserve">
+    <value>Edit transaction : </value>
   </data>
   <data name="Empty" xml:space="preserve">
     <value>Empty</value>
@@ -213,14 +189,8 @@
   <data name="Note" xml:space="preserve">
     <value>Note</value>
   </data>
-  <data name="Note placeholder" xml:space="preserve">
-    <value>Note</value>
-  </data>
   <data name="Pending" xml:space="preserve">
     <value>Pending</value>
-  </data>
-  <data name="Records" xml:space="preserve">
-    <value>Records</value>
   </data>
   <data name="Starts with" xml:space="preserve">
     <value>Starts with</value>
@@ -228,7 +198,7 @@
   <data name="Status" xml:space="preserve">
     <value>Status</value>
   </data>
-  <data name="Status placeholder" xml:space="preserve">
-    <value>Status</value>
+  <data name="Transactions" xml:space="preserve">
+    <value>Transactions</value>
   </data>
 </root>

@@ -4,18 +4,20 @@ using System.Globalization;
 
 namespace webapp.Models {
 
-    public class Record {
+    public class Transaction {
 
         [Key]
-        public long RecordId { get; set; }
+        public long TransactionId { get; set; }
+
+        public long CategoryId { get; set; }
+
+        public Category? Category { get; set; }
 
         public string? Note { get; set; }
 
-        public string? Category { get; set; }
-
         public double Amount { get; set; }
 
-        public DateTime Date { get; set; } = DateTime.Now;
+        public DateTime Date { get; set; } = DateTime.Today;
 
         public bool IsDone { get; set; } = false;
 

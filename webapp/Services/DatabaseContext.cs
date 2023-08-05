@@ -7,6 +7,8 @@ namespace webapp.Services {
 
         public DatabaseContext(DbContextOptions options) : base(options) { }
 
-        public DbSet<Record> Records { get; set; }
+        public DbSet<Transaction> Transactions { get; set; }
+
+        public DbSet<Category> Categories { get; set; }
     }
 }

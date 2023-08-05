@@ -6,7 +6,7 @@ using System.Text.Json;
 using webapp.Models;
 using webapp.Services;
 
-namespace webapp.Pages.Records {
+namespace webapp.Pages.Categories {
 
     [IgnoreAntiforgeryToken]
     public class IndexModel : PageModel {
@@ -20,15 +20,15 @@ namespace webapp.Pages.Records {
             _databaseContext = databaseContext;
         }
 
-        public IEnumerable<Record> DataSource { get; set; } = default!;
+        public IEnumerable<Category> DataSource { get; set; } = default!;
 
         public async Task OnGetAsync() {
-            DataSource = await _databaseContext.Records.ToListAsync();
+            DataSource = await _databaseContext.Categories.ToListAsync();
         }
 
         public async Task<JsonResult> OnPostDataSourceAsync([FromBody] DataManagerRequest dm) {
-            DataSource = await _databaseContext.Records.ToListAsync();
-            int count = DataSource.Cast<Record>().Count();
+            DataSource = await _databaseContext.Categories.ToListAsync();
+            int count = DataSource.Cast<Category>().Count();
 
             DataOperations operations = new();
             // Search
@@ -53,18 +53,17 @@ namespace webapp.Pages.Records {
             return new JsonResult(dm.RequiresCounts ? new { result = DataSource, count } : new { result = DataSource });
         }
 
-        public async Task<IActionResult> OnPostCrudUpdateAsync([FromBody] CRUDModel<Record> request) {
-            _logger.LogInformation($"Request: {JsonSerializer.Serialize(request)}");
+        public async Task<IActionResult> OnPostCrudUpdateAsync([FromBody] CRUDModel<Category> request) {
             switch (request.Action) {
                 case "insert":
-                    _databaseContext.Records.Add(request.Value);
+                    _databaseContext.Categories.Add(request.Value);
                     break;
                 case "update":
-                    _databaseContext.Records.Update(request.Value);
+                    _databaseContext.Categories.Update(request.Value);
                     break;
                 case "remove":
                     long id = long.Parse($"{request.Key}");
-                    _databaseContext.Records.Remove(_databaseContext.Records.Where(x => x.RecordId == id).First());
+                    _databaseContext.Categories.Remove(_databaseContext.Categories.Where(x => x.CategoryId == id).First());
                     break;
             }
             await _databaseContext.SaveChangesAsync();

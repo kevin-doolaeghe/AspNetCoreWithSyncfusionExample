@@ -38,16 +38,27 @@ using (var scope = app.Services.CreateScope()) {
     context.Database.EnsureCreated();
     // context.Database.Migrate();
 
-    if (app.Environment.IsDevelopment() && !context.Records.Any()) {
-        var records = new List<Record>() {
-            new Record { Note = "Salary 06-2023", Category = "💰 Salary", Amount = 1000, Date = DateTime.Parse("2023-06-28"), IsDone = true },
-            new Record { Note = "Food", Category = "🍔 Food", Amount = -100, Date = DateTime.Parse("2023-07-02"), IsDone = true },
-            new Record { Note = "Romain's birthday", Category = "🎁 Pleasure", Amount = -80, Date = DateTime.Parse("2023-07-06"), IsDone = false },
-            new Record { Note = "Movie", Category = "⚽ Activity", Amount = -10, Date = DateTime.Parse("2023-07-09"), IsDone = true },
-            new Record { Note = "Monthly transaction", Category = "💸 Savings", Amount = -200, Date = DateTime.Parse("2023-07-10"), IsDone = false },
-        };
-
-        context.Records.AddRange(records);
+    if (app.Environment.IsDevelopment()) {
+        if (!context.Categories.Any()) {
+            var categories = new List<Category>() {
+                new Category { Icon = "💰", Name = "Salary" },
+                new Category { Icon = "🍔", Name = "Food" },
+                new Category { Icon = "🎁", Name = "Pleasure" },
+                new Category { Icon = "⚽", Name = "Activity" },
+                new Category { Icon = "💸", Name = "Savings" },
+            };
+            context.Categories.AddRange(categories);
+        }
+        if (!context.Transactions.Any()) {
+            var transactions = new List<Transaction>() {
+                new Transaction { Note = "Salary 06-2023", CategoryId = 1, Amount = 1000, Date = DateTime.Parse("2023-06-28"), IsDone = true },
+                new Transaction { Note = "Food", CategoryId = 2, Amount = -100, Date = DateTime.Parse("2023-07-02"), IsDone = true },
+                new Transaction { Note = "Romain's birthday", CategoryId = 3, Amount = -80, Date = DateTime.Parse("2023-07-06"), IsDone = false },
+                new Transaction { Note = "Movie", CategoryId = 4, Amount = -10, Date = DateTime.Parse("2023-07-09"), IsDone = true },
+                new Transaction { Note = "Monthly transaction", CategoryId = 5, Amount = -200, Date = DateTime.Parse("2023-07-10"), IsDone = false },
+            };
+            context.Transactions.AddRange(transactions);
+        }
         context.SaveChanges();
     }
 }

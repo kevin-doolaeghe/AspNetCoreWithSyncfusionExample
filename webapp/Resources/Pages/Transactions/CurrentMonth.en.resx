@@ -117,130 +117,100 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Add record" xml:space="preserve">
-    <value>Créer un enregistrement</value>
+  <data name="Add transaction" xml:space="preserve">
+    <value>Add transaction</value>
   </data>
   <data name="Amount" xml:space="preserve">
-    <value>Montant</value>
-  </data>
-  <data name="Amount placeholder" xml:space="preserve">
-    <value>Montant</value>
+    <value>Amount</value>
   </data>
   <data name="Cashflow" xml:space="preserve">
-    <value>&lt;i class="fa-solid fa-plus-minus"&gt;&lt;/i&gt; Liquidités</value>
+    <value>&lt;i class="fa-solid fa-plus-minus"&gt;&lt;/i&gt; Cashflow</value>
   </data>
   <data name="Category" xml:space="preserve">
-    <value>Catégorie</value>
-  </data>
-  <data name="Category 01" xml:space="preserve">
-    <value>💰 Salaire</value>
-  </data>
-  <data name="Category 02" xml:space="preserve">
-    <value>🍔 Nourriture</value>
-  </data>
-  <data name="Category 03" xml:space="preserve">
-    <value>🎁 Plaisir</value>
-  </data>
-  <data name="Category 04" xml:space="preserve">
-    <value>⚽ Activité</value>
-  </data>
-  <data name="Category 05" xml:space="preserve">
-    <value>💸 Epargne</value>
-  </data>
-  <data name="Category placeholder" xml:space="preserve">
-    <value>Catégorie</value>
+    <value>Category</value>
   </data>
   <data name="Closed" xml:space="preserve">
-    <value>Terminé</value>
+    <value>Closed</value>
   </data>
   <data name="Commands" xml:space="preserve">
-    <value>Commandes</value>
+    <value>Commands</value>
   </data>
   <data name="Contains" xml:space="preserve">
-    <value>Contient</value>
+    <value>Contains</value>
   </data>
   <data name="Current balance" xml:space="preserve">
-    <value>&lt;i class="fa-solid fa-euro-sign"&gt;&lt;/i&gt; Solde actuel</value>
+    <value>&lt;i class="fa-solid fa-dollar-sign"&gt;&lt;/i&gt; Current balance</value>
   </data>
   <data name="Current month" xml:space="preserve">
-    <value>Mois en cours</value>
+    <value>Current month</value>
   </data>
   <data name="Date" xml:space="preserve">
     <value>Date</value>
   </data>
   <data name="Date format" xml:space="preserve">
-    <value>dd/MM/yyyy</value>
-  </data>
-  <data name="Date placeholder" xml:space="preserve">
-    <value>Date</value>
+    <value>yyyy/MM/dd</value>
   </data>
   <data name="Does not contain" xml:space="preserve">
-    <value>Ne contient pas</value>
+    <value>Does not contain</value>
   </data>
   <data name="Does not end with" xml:space="preserve">
-    <value>Ne se termine pas par</value>
+    <value>Does not end with</value>
   </data>
   <data name="Does not start with" xml:space="preserve">
-    <value>Ne commence pas par</value>
+    <value>Does not start with</value>
   </data>
-  <data name="Edit record" xml:space="preserve">
-    <value>Modifier l'enregistrement : </value>
+  <data name="Edit transaction" xml:space="preserve">
+    <value>Edit transaction : </value>
   </data>
   <data name="Empty" xml:space="preserve">
-    <value>Est vide</value>
+    <value>Empty</value>
   </data>
   <data name="Ends with" xml:space="preserve">
-    <value>Se termine par</value>
+    <value>Ends with</value>
   </data>
   <data name="Equal" xml:space="preserve">
-    <value>Egal à</value>
+    <value>Equal</value>
   </data>
   <data name="Greater than" xml:space="preserve">
-    <value>Supérieur à</value>
+    <value>Greater than</value>
   </data>
   <data name="Greater than or equal" xml:space="preserve">
-    <value>Supérieur ou égal à</value>
+    <value>Greater than or equal</value>
   </data>
   <data name="Id" xml:space="preserve">
     <value>Id</value>
   </data>
   <data name="Less than" xml:space="preserve">
-    <value>Inférieur à</value>
+    <value>Less than</value>
   </data>
   <data name="Less than or equal" xml:space="preserve">
-    <value>Inférieur ou égal à</value>
+    <value>Less than or equal</value>
   </data>
   <data name="Like" xml:space="preserve">
-    <value>Comme</value>
+    <value>Like</value>
   </data>
   <data name="Not empty" xml:space="preserve">
-    <value>N'est pas vide</value>
+    <value>Not empty</value>
   </data>
   <data name="Not equal" xml:space="preserve">
-    <value>Différent de</value>
+    <value>Not equal</value>
   </data>
   <data name="Note" xml:space="preserve">
     <value>Note</value>
   </data>
-  <data name="Note placeholder" xml:space="preserve">
-    <value>Note</value>
-  </data>
   <data name="Pending" xml:space="preserve">
-    <value>En attente</value>
+    <value>Pending</value>
   </data>
   <data name="Real balance" xml:space="preserve">
-    <value>&lt;i class="fa-solid fa-euro-sign"&gt;&lt;/i&gt; Solde réel</value>
-  </data>
-  <data name="Records" xml:space="preserve">
-    <value>Enregistrements</value>
+    <value>&lt;i class="fa-solid fa-dollar-sign"&gt;&lt;/i&gt; Real balance</value>
   </data>
   <data name="Starts with" xml:space="preserve">
-    <value>Démarre par</value>
+    <value>Starts with</value>
   </data>
   <data name="Status" xml:space="preserve">
-    <value>Statut</value>
+    <value>Status</value>
   </data>
-  <data name="Status placeholder" xml:space="preserve">
-    <value>Statut</value>
+  <data name="Transactions" xml:space="preserve">
+    <value>Transactions</value>
   </data>
 </root>

@@ -174,7 +174,7 @@
   <data name="Real balance" xml:space="preserve">
     <value>&lt;i class="fa-solid fa-euro-sign"&gt;&lt;/i&gt; Solde réel</value>
   </data>
-  <data name="Recent records" xml:space="preserve">
+  <data name="Recent transactions" xml:space="preserve">
     <value>&lt;i class="fa-solid fa-hourglass-half"&gt;&lt;/i&gt; Transactions récentes</value>
   </data>
   <data name="Spline label format" xml:space="preserve">

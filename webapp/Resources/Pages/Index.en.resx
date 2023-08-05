@@ -174,8 +174,8 @@
   <data name="Real balance" xml:space="preserve">
     <value>&lt;i class="fa-solid fa-dollar-sign"&gt;&lt;/i&gt; Real balance</value>
   </data>
-  <data name="Recent records" xml:space="preserve">
-    <value>&lt;i class="fa-solid fa-hourglass-half"&gt;&lt;/i&gt; Recent records</value>
+  <data name="Recent transactions" xml:space="preserve">
+    <value>&lt;i class="fa-solid fa-hourglass-half"&gt;&lt;/i&gt; Recent transactions</value>
   </data>
   <data name="Spline label format" xml:space="preserve">
     <value>${value}</value>

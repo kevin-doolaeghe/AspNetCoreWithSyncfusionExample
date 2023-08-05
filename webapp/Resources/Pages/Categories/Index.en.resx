@@ -117,118 +117,58 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Add record" xml:space="preserve">
-    <value>Créer un enregistrement</value>
+  <data name="Add category" xml:space="preserve">
+    <value>Add category</value>
   </data>
-  <data name="Amount" xml:space="preserve">
-    <value>Montant</value>
-  </data>
-  <data name="Amount placeholder" xml:space="preserve">
-    <value>Montant</value>
-  </data>
-  <data name="Category" xml:space="preserve">
-    <value>Catégorie</value>
-  </data>
-  <data name="Category 01" xml:space="preserve">
-    <value>💰 Salaire</value>
-  </data>
-  <data name="Category 02" xml:space="preserve">
-    <value>🍔 Nourriture</value>
-  </data>
-  <data name="Category 03" xml:space="preserve">
-    <value>🎁 Plaisir</value>
-  </data>
-  <data name="Category 04" xml:space="preserve">
-    <value>⚽ Activité</value>
-  </data>
-  <data name="Category 05" xml:space="preserve">
-    <value>💸 Epargne</value>
-  </data>
-  <data name="Category placeholder" xml:space="preserve">
-    <value>Catégorie</value>
-  </data>
-  <data name="Closed" xml:space="preserve">
-    <value>Terminé</value>
+  <data name="Categories" xml:space="preserve">
+    <value>Categories</value>
   </data>
   <data name="Commands" xml:space="preserve">
-    <value>Commandes</value>
+    <value>Commands</value>
   </data>
   <data name="Contains" xml:space="preserve">
-    <value>Contient</value>
-  </data>
-  <data name="Date" xml:space="preserve">
-    <value>Date</value>
-  </data>
-  <data name="Date format" xml:space="preserve">
-    <value>dd/MM/yyyy</value>
-  </data>
-  <data name="Date placeholder" xml:space="preserve">
-    <value>Date</value>
+    <value>Contains</value>
   </data>
   <data name="Does not contain" xml:space="preserve">
-    <value>Ne contient pas</value>
+    <value>Does not contain</value>
   </data>
   <data name="Does not end with" xml:space="preserve">
-    <value>Ne se termine pas par</value>
+    <value>Does not end with</value>
   </data>
   <data name="Does not start with" xml:space="preserve">
-    <value>Ne commence pas par</value>
+    <value>Does not start with</value>
   </data>
-  <data name="Edit record" xml:space="preserve">
-    <value>Modifier l'enregistrement : </value>
+  <data name="Edit category" xml:space="preserve">
+    <value>Edit category : </value>
   </data>
   <data name="Empty" xml:space="preserve">
-    <value>Est vide</value>
+    <value>Empty</value>
   </data>
   <data name="Ends with" xml:space="preserve">
-    <value>Se termine par</value>
+    <value>Ends with</value>
   </data>
   <data name="Equal" xml:space="preserve">
-    <value>Egal à</value>
+    <value>Equal</value>
   </data>
-  <data name="Greater than" xml:space="preserve">
-    <value>Supérieur à</value>
-  </data>
-  <data name="Greater than or equal" xml:space="preserve">
-    <value>Supérieur ou égal à</value>
+  <data name="Icon" xml:space="preserve">
+    <value>Icon</value>
   </data>
   <data name="Id" xml:space="preserve">
     <value>Id</value>
   </data>
-  <data name="Less than" xml:space="preserve">
-    <value>Inférieur à</value>
-  </data>
-  <data name="Less than or equal" xml:space="preserve">
-    <value>Inférieur ou égal à</value>
-  </data>
   <data name="Like" xml:space="preserve">
-    <value>Comme</value>
+    <value>Like</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
   </data>
   <data name="Not empty" xml:space="preserve">
-    <value>N'est pas vide</value>
+    <value>Not empty</value>
   </data>
   <data name="Not equal" xml:space="preserve">
-    <value>Différent de</value>
-  </data>
-  <data name="Note" xml:space="preserve">
-    <value>Note</value>
-  </data>
-  <data name="Note placeholder" xml:space="preserve">
-    <value>Note</value>
-  </data>
-  <data name="Pending" xml:space="preserve">
-    <value>En attente</value>
-  </data>
-  <data name="Records" xml:space="preserve">
-    <value>Enregistrements</value>
+    <value>Not equal</value>
   </data>
   <data name="Starts with" xml:space="preserve">
-    <value>Démarre par</value>
-  </data>
-  <data name="Status" xml:space="preserve">
-    <value>Statut</value>
-  </data>
-  <data name="Status placeholder" xml:space="preserve">
-    <value>Statut</value>
+    <value>Starts with</value>
   </data>
 </root>
