@@ -76,6 +76,7 @@
     };
     var amountParams = new NumericTextBox() {
         Format = "C2",
+        Step = 10,
     };
 }
 @Html.AntiForgeryToken()
@@ -90,20 +91,21 @@
         </e-breadcrumb-items>
     </ejs-breadcrumb>
 
-    <ejs-dashboardlayout id="editableLayout1" mediaQuery="max-width: 992px" columns="3" cellSpacing="cellSpacing" cellAspectRatio="2.5" allowDragging="false" allowResizing="false">
+    <ejs-dashboardlayout id="gridLayout" mediaQuery="max-width: 992px" columns="3" cellSpacing="cellSpacing" cellAspectRatio="2.5" allowDragging="false" allowResizing="false">
+        
         <e-dashboardlayout-panels>
             <e-dashboardlayout-panel sizeX="1" sizeY="1" row="0" col="0">
                 <e-content-template>
                     <div>
 
-                        <div class="e-panel-container">
+                        <div class="e-panel-container current-balance">
                             <div class="e-panel-header">
                                 <div class="title">
                                     @Localizer["Current balance"]
                                 </div>
                             </div>
                             <div class="e-panel-content">
-                                <h1>
+                                <h1 id="currentBalance">
                                     @if (Model.CurrentBalance > 100) {
                                         <i class="fa-solid fa-sm fa-square-check text-success"></i>
                                     } else {
@@ -122,14 +124,14 @@
                 <e-content-template>
                     <div>
 
-                        <div class="e-panel-container">
+                        <div class="e-panel-container real-balance">
                             <div class="e-panel-header">
                                 <div class="title">
                                     @Localizer["Real balance"]
                                 </div>
                             </div>
                             <div class="e-panel-content">
-                                <h1>
+                                <h1 id="realBalance">
                                     @if (Model.RealBalance > 100) {
                                         <i class="fa-solid fa-sm fa-square-check text-success"></i>
                                     } else {
@@ -148,14 +150,14 @@
                 <e-content-template>
                     <div>
 
-                        <div class="e-panel-container">
+                        <div class="e-panel-container cashflow">
                             <div class="e-panel-header">
                                 <div class="title">
                                     @Localizer["Cashflow"]
                                 </div>
                             </div>
                             <div class="e-panel-content">
-                                <h1>
+                                <h1 id="cashflow">
                                     @if (Model.Cashflow < 500) {
                                         <i class="fa-solid fa-sm fa-square-check text-success"></i>
                                     } else {
@@ -190,12 +192,12 @@
                                     <e-grid-searchsettings fields="searchSettings" operator="contains" ignoreCase="true"></e-grid-searchsettings>
                                     <e-grid-loadingindicator indicatorType="Shimmer"></e-grid-loadingindicator>
                                     <e-grid-columns>
-                                        <e-grid-column field="RecordId" headerText="@Localizer["Id"].Value" isPrimaryKey="true" visible="false"></e-grid-column>
-                                        <e-grid-column field="Date" headerText="@Localizer["Date"].Value" editType="datepickeredit" edit="new { @params = dateParams }" filter="new { @params = dateParams }" validationRules="validationRules" format="@Localizer["Date format"].Value" defaultValue="@DateTime.Today" width="120"></e-grid-column>
-                                        <e-grid-column field="IsDone" headerText="@Localizer["Status"].Value" editType="dropdownedit" edit="new { @params = statusParams }" filter="new { @params = statusParams }" validationRules="validationRules" template="#statusTemplate" defaultValue="false" width="120"></e-grid-column>
-                                        <e-grid-column field="Note" headerText="@Localizer["Note"].Value" editType="textboxedit" validationRules="validationRules" minWidth="300" width="400"></e-grid-column>
-                                        <e-grid-column field="CategoryId" headerText="@Localizer["Category"].Value" editType="dropdownedit" edit="new { @params = categoryParams }" foreignKeyValue="Description" dataSource="Model.Categories" validationRules="validationRules" width="180"></e-grid-column>
-                                        <e-grid-column field="Amount" headerText="@Localizer["Amount"].Value" editType="numericedit" edit="new { @params = amountParams }" validationRules="validationRules" format="C2" template="#amountTemplate" width="150"></e-grid-column>
+                                        <e-grid-column field="TransactionId" headerText="@Localizer["Id"].Value" isPrimaryKey="true" visible="false"></e-grid-column>
+                                        <e-grid-column field="Date" headerText="@Localizer["Date"].Value" editType="datepickeredit" edit="new { @params = dateParams }" validationRules="validationRules" format="@Localizer["Date format"].Value" defaultValue="@DateTime.Today" width="120"></e-grid-column>
+                                        <e-grid-column field="IsDone" headerText="@Localizer["Status"].Value" editType="dropdownedit" edit="new { @params = statusParams }" filter="new { @params = statusParams }" validationRules="validationRules" template="#statusTemplate" defaultValue="false" width="100"></e-grid-column>
+                                        <e-grid-column field="Note" headerText="@Localizer["Note"].Value" editType="textboxedit" validationRules="validationRules" minWidth="200" width="300"></e-grid-column>
+                                        <e-grid-column field="CategoryId" headerText="@Localizer["Category"].Value" editType="dropdownedit" edit="new { @params = categoryParams }" filter="new { @params = categoryParams }" foreignKeyValue="Description" dataSource="Model.Categories" validationRules="validationRules" width="140"></e-grid-column>
+                                        <e-grid-column field="Amount" headerText="@Localizer["Amount"].Value" editType="numericedit" edit="new { @params = amountParams }" validationRules="validationRules" format="C2" template="#amountTemplate" width="120"></e-grid-column>
                                         <e-grid-column headerText="@Localizer["Commands"].Value" commands="commands" textAlign="Right" width="120"></e-grid-column>
                                     </e-grid-columns>
                                 </ejs-grid>
@@ -208,7 +210,6 @@
         </e-dashboardlayout-panels>
 
     </ejs-dashboardlayout>
-
 </div>
 
 <script id="statusTemplate" type="text/x-template">
@@ -237,11 +238,15 @@
     }
 
     function actionComplete(args) {
+        console.log(args);
+
         if ((args.requestType === "beginEdit" || args.requestType === "add")) {
             var dialog = args.dialog;
             dialog.element.style.maxHeight = "1000px";
             dialog.header = args.requestType === "beginEdit" ? "@Localizer["Edit transaction"].Value" + args.rowData["Note"] : "@Localizer["Add transaction"].Value";
         }
+
+        updateBalance();
     }
 
     function toolbarClick(args) {
@@ -262,5 +267,23 @@
 
     function excelExportComplete(args) {
         this.hideSpinner();
+    }
+
+    function updateBalance() {
+        let currentBalanceElement = document.getElementById("currentBalance");
+        let realBalanceElement = document.getElementById("realBalance");
+        let cashflowElement = document.getElementById("cashflow");
+
+        fetch("/Balance").then(function (result) { return result.json() }).then(function (data) {
+            let positive = '<i class="fa-solid fa-sm fa-square-check text-success"></i> ';
+            let negative = '<i class="fa-solid fa-sm fa-circle-exclamation text-danger"></i> ';
+
+            currentBalanceElement.innerHTML = (data.currentBalance > 100 ? positive : negative)
+                + data.formattedCurrentBalance;
+            realBalanceElement.innerHTML = (data.realBalance > 100 ? positive : negative)
+                + data.formattedRealBalance;
+            cashflowElement.innerHTML = (data.cashflow > 100 ? positive : negative)
+                + data.formattedCashflow;
+        });
     }
 </script>

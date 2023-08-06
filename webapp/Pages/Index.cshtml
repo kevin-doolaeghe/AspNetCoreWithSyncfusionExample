@@ -18,7 +18,7 @@
         </e-breadcrumb-items>
     </ejs-breadcrumb>
 
-    <ejs-dashboardlayout id="editableLayout1" mediaQuery="max-width: 992px" columns="3" cellSpacing="cellSpacing" cellAspectRatio="2.5" allowDragging="false" allowResizing="false">
+    <ejs-dashboardlayout id="dashboardLayout" mediaQuery="max-width: 992px" columns="3" cellSpacing="cellSpacing" cellAspectRatio="2.5" allowDragging="false" allowResizing="false">
         <e-dashboardlayout-panels>
             <e-dashboardlayout-panel sizeX="1" sizeY="1" row="0" col="0">
                 <e-content-template>
@@ -31,7 +31,7 @@
                                 </div>
                             </div>
                             <div class="e-panel-content">
-                                <h1>
+                                <h1 id="currentBalance">
                                     @if (Model.CurrentBalance > 100) {
                                         <i class="fa-solid fa-sm fa-square-check text-success"></i>
                                     } else {
@@ -57,7 +57,7 @@
                                 </div>
                             </div>
                             <div class="e-panel-content">
-                                <h1>
+                                <h1 id="realBalance">
                                     @if (Model.RealBalance > 100) {
                                         <i class="fa-solid fa-sm fa-square-check text-success"></i>
                                     } else {
@@ -83,7 +83,7 @@
                                 </div>
                             </div>
                             <div class="e-panel-content">
-                                <h1>
+                                <h1 id="cashflow">
                                     @if (Model.Cashflow < 500) {
                                         <i class="fa-solid fa-sm fa-square-check text-success"></i>
                                     } else {
@@ -227,7 +227,7 @@
                         <div class="e-panel-container">
                             <div class="e-panel-header">
                                 <div class="title">
-                                    @Localizer["Recent records"]
+                                    @Localizer["Recent transactions"]
                                 </div>
                             </div>
                             <div class="e-panel-content">

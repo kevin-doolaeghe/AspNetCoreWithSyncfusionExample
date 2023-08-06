@@ -33,19 +33,16 @@ namespace webapp.Pages.Transactions {
 
         public async Task OnGetAsync() {
             Categories = await _databaseContext.Categories.AsNoTracking().ToListAsync();
-            var records = await _databaseContext.Transactions
-                .AsNoTracking()
-                .ToListAsync();
-
-            RealBalance = records.Select(x => x.Amount).Sum();
-            CurrentBalance = records.Where(x => x.IsDone).Select(x => x.Amount).Sum();
-            Cashflow = double.Abs(RealBalance - CurrentBalance);
-
             var currentDate = DateTime.Today;
             DataSource = await _databaseContext.Transactions
                 .Where(x => x.Date.Year == currentDate.Year && x.Date.Month == currentDate.Month)
                 .OrderBy(x => x.Date)
                 .ToListAsync();
+
+            var transactions = await _databaseContext.Transactions.AsNoTracking().ToListAsync();
+            CurrentBalance = transactions.Where(x => x.IsDone).Select(x => x.Amount).Sum();
+            RealBalance = transactions.Select(x => x.Amount).Sum();
+            Cashflow = double.Abs(RealBalance - CurrentBalance);
         }
 
         public async Task<JsonResult> OnPostDataSourceAsync([FromBody] DataManagerRequest dm) {

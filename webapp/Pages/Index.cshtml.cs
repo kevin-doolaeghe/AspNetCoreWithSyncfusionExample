@@ -40,13 +40,13 @@ namespace webapp.Pages {
                 .Take(20)
                 .ToList();
 
-            RealBalance = transactions.Select(x => x.Amount).Sum();
             CurrentBalance = transactions.Where(x => x.IsDone).Select(x => x.Amount).Sum();
+            RealBalance = transactions.Select(x => x.Amount).Sum();
             Cashflow = double.Abs(RealBalance - CurrentBalance);
 
             // Line chart data
             TransactionsByStatusData = transactions
-                .GroupBy(x => x.Category)
+                .GroupBy(x => x.CategoryId)
                 .Select(x => new ColumnChartData() {
                     Category = x.First().Category?.Description,
                     Pending = x.Where(y => !y.IsDone).Count(),
@@ -57,7 +57,7 @@ namespace webapp.Pages {
             // Pie chart data
             ExpensesByCategoryData = transactions
                 .Where(x => x.Amount < 0)
-                .GroupBy(x => x.Category)
+                .GroupBy(x => x.CategoryId)
                 .Select(x => new PieChartData() {
                     Category = x.First().Category?.Description,
                     Value = x.Sum(x => -x.Amount),
