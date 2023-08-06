@@ -31,7 +31,147 @@
     var searchSettings = new string[] { "Name" };
     var validationRules = new { required = true };
 
-    var icons = new string[] { "💰", "🍔", "🎁", "⚽", "💸" };
+    var iconsByCategory = new List<object>() {
+        // Money
+        new { Category = Localizer["Money"].Value, Icon = "💰" },
+        new { Category = Localizer["Money"].Value, Icon = "💸" },
+        new { Category = Localizer["Money"].Value, Icon = "💳" },
+        new { Category = Localizer["Money"].Value, Icon = "💶" },
+        new { Category = Localizer["Money"].Value, Icon = "💵" },
+        new { Category = Localizer["Money"].Value, Icon = "💲" },
+        new { Category = Localizer["Money"].Value, Icon = "🏛️" },
+        new { Category = Localizer["Money"].Value, Icon = "🤑" },
+        // Food
+        new { Category = Localizer["Food"].Value, Icon = "🍔" },
+        new { Category = Localizer["Food"].Value, Icon = "🍕" },
+        new { Category = Localizer["Food"].Value, Icon = "🥪" },
+        new { Category = Localizer["Food"].Value, Icon = "🥩" },
+        new { Category = Localizer["Food"].Value, Icon = "🥐" },
+        new { Category = Localizer["Food"].Value, Icon = "🍩" },
+        new { Category = Localizer["Food"].Value, Icon = "🍌" },
+        // Energy
+        new { Category = Localizer["Energy"].Value, Icon = "💡" },
+        new { Category = Localizer["Energy"].Value, Icon = "⚡" },
+        new { Category = Localizer["Energy"].Value, Icon = "🔥" },
+        new { Category = Localizer["Energy"].Value, Icon = "💧" },
+        new { Category = Localizer["Energy"].Value, Icon = "🌿" },
+        new { Category = Localizer["Energy"].Value, Icon = "☀️" },
+        new { Category = Localizer["Energy"].Value, Icon = "♻" },
+        new { Category = Localizer["Energy"].Value, Icon = "⛽" },
+        // Shopping
+        new { Category = Localizer["Shopping"].Value, Icon = "🧾" },
+        new { Category = Localizer["Shopping"].Value, Icon = "🏷️" },
+        new { Category = Localizer["Shopping"].Value, Icon = "🧺" },
+        new { Category = Localizer["Shopping"].Value, Icon = "🛒" },
+        new { Category = Localizer["Shopping"].Value, Icon = "🛍️" },
+        new { Category = Localizer["Shopping"].Value, Icon = "📦" },
+        // Transport
+        new { Category = Localizer["Transport"].Value, Icon = "🚗" },
+        new { Category = Localizer["Transport"].Value, Icon = "🏍️" },
+        new { Category = Localizer["Transport"].Value, Icon = "🚌" },
+        new { Category = Localizer["Transport"].Value, Icon = "🚕" },
+        new { Category = Localizer["Transport"].Value, Icon = "🏎️" },
+        new { Category = Localizer["Transport"].Value, Icon = "🚲" },
+        // Health
+        new { Category = Localizer["Health"].Value, Icon = "❤️" },
+        new { Category = Localizer["Health"].Value, Icon = "🧠" },
+        new { Category = Localizer["Health"].Value, Icon = "💉" },
+        new { Category = Localizer["Health"].Value, Icon = "💊" },
+        new { Category = Localizer["Health"].Value, Icon = "🔬" },
+        new { Category = Localizer["Health"].Value, Icon = "🏥" },
+        new { Category = Localizer["Health"].Value, Icon = "🤒" },
+        new { Category = Localizer["Health"].Value, Icon = "🤕" },
+        // Travel
+        new { Category = Localizer["Travel"].Value, Icon = "🧳" },
+        new { Category = Localizer["Travel"].Value, Icon = "⛱️" },
+        new { Category = Localizer["Travel"].Value, Icon = "🗻" },
+        new { Category = Localizer["Travel"].Value, Icon = "🏕" },
+        new { Category = Localizer["Travel"].Value, Icon = "🗺️" },
+        new { Category = Localizer["Travel"].Value, Icon = "🏄" },
+        // Pleasure
+        new { Category = Localizer["Pleasure"].Value, Icon = "⚽" },
+        new { Category = Localizer["Pleasure"].Value, Icon = "🎸" },
+        new { Category = Localizer["Pleasure"].Value, Icon = "🎥" },
+        new { Category = Localizer["Pleasure"].Value, Icon = "🍿" },
+        new { Category = Localizer["Pleasure"].Value, Icon = "🎳" },
+        new { Category = Localizer["Pleasure"].Value, Icon = "🎢" },
+        new { Category = Localizer["Pleasure"].Value, Icon = "😎" },
+        // Happening
+        new { Category = Localizer["Happening"].Value, Icon = "🎂" },
+        new { Category = Localizer["Happening"].Value, Icon = "🎁" },
+        new { Category = Localizer["Happening"].Value, Icon = "🎉" },
+        new { Category = Localizer["Happening"].Value, Icon = "🍾" },
+        new { Category = Localizer["Happening"].Value, Icon = "🥳" },
+        // Technology
+        new { Category = Localizer["Technology"].Value, Icon = "📺" },
+        new { Category = Localizer["Technology"].Value, Icon = "📱" },
+        new { Category = Localizer["Technology"].Value, Icon = "💻" },
+        new { Category = Localizer["Technology"].Value, Icon = "🕹️" },
+        new { Category = Localizer["Technology"].Value, Icon = "🎮" },
+        new { Category = Localizer["Technology"].Value, Icon = "💾" },
+        // Sport
+        new { Category = Localizer["Sport"].Value, Icon = "🎾" },
+        new { Category = Localizer["Sport"].Value, Icon = "🏐" },
+        new { Category = Localizer["Sport"].Value, Icon = "🏆" },
+        new { Category = Localizer["Sport"].Value, Icon = "🏅" },
+        new { Category = Localizer["Sport"].Value, Icon = "🥅" },
+        new { Category = Localizer["Sport"].Value, Icon = "🏟️" },
+        new { Category = Localizer["Sport"].Value, Icon = "💪" },
+        new { Category = Localizer["Sport"].Value, Icon = "⛹️" },
+        new { Category = Localizer["Sport"].Value, Icon = "🏋️" },
+        // House
+        new { Category = Localizer["House"].Value, Icon = "🔨" },
+        new { Category = Localizer["House"].Value, Icon = "🔧" },
+        new { Category = Localizer["House"].Value, Icon = "🔑" },
+        new { Category = Localizer["House"].Value, Icon = "🌱" },
+        new { Category = Localizer["House"].Value, Icon = "🛏️" },
+        new { Category = Localizer["House"].Value, Icon = "🏡" },
+        new { Category = Localizer["House"].Value, Icon = "👪" },
+        new { Category = Localizer["House"].Value, Icon = "🐶" },
+        // Office
+        new { Category = Localizer["Office"].Value, Icon = "💼" },
+        new { Category = Localizer["Office"].Value, Icon = "📖" },
+        new { Category = Localizer["Office"].Value, Icon = "📃" },
+        new { Category = Localizer["Office"].Value, Icon = "📚" },
+        new { Category = Localizer["Office"].Value, Icon = "🖊️" },
+        new { Category = Localizer["Office"].Value, Icon = "📨" },
+        new { Category = Localizer["Office"].Value, Icon = "🏢" },
+        new { Category = Localizer["Office"].Value, Icon = "👨‍💼" },
+        // School
+        new { Category = Localizer["School"].Value, Icon = "📒" },
+        new { Category = Localizer["School"].Value, Icon = "🎒" },
+        new { Category = Localizer["School"].Value, Icon = "🎓" },
+        new { Category = Localizer["School"].Value, Icon = "🏫" },
+        new { Category = Localizer["School"].Value, Icon = "🧑‍🏫" },
+        // Positive
+        new { Category = Localizer["Positive"].Value, Icon = "💕" },
+        new { Category = Localizer["Positive"].Value, Icon = "⭐" },
+        new { Category = Localizer["Positive"].Value, Icon = "✨" },
+        new { Category = Localizer["Positive"].Value, Icon = "🌈" },
+        new { Category = Localizer["Positive"].Value, Icon = "🎈" },
+        new { Category = Localizer["Positive"].Value, Icon = "📣" },
+        new { Category = Localizer["Positive"].Value, Icon = "😊" },
+        // Negative
+        new { Category = Localizer["Negative"].Value, Icon = "💣" },
+        new { Category = Localizer["Negative"].Value, Icon = "💥" },
+        new { Category = Localizer["Negative"].Value, Icon = "⚠️" },
+        new { Category = Localizer["Negative"].Value, Icon = "⛔" },
+        new { Category = Localizer["Negative"].Value, Icon = "❗" },
+        new { Category = Localizer["Negative"].Value, Icon = "💀" },
+        new { Category = Localizer["Negative"].Value, Icon = "🤯" },
+        // Other
+        new { Category = Localizer["Other"].Value, Icon = "✔️" },
+        new { Category = Localizer["Other"].Value, Icon = "❌" },
+        new { Category = Localizer["Other"].Value, Icon = "➕" },
+        new { Category = Localizer["Other"].Value, Icon = "➖" },
+        new { Category = Localizer["Other"].Value, Icon = "🔗" },
+        new { Category = Localizer["Other"].Value, Icon = "🔒" },
+    };
+    var iconParams = new DropDownList() {
+        DataSource = iconsByCategory,
+        Query = "new ej.data.Query()",
+        Fields = new DropDownListFieldSettings() { Value = "Icon", Text = "Icon", GroupBy = "Category" },
+    };
 }
 @Html.AntiForgeryToken()
 
@@ -53,9 +193,9 @@
         <e-grid-loadingIndicator indicatorType="Shimmer"></e-grid-loadingIndicator>
         <e-grid-columns>
             <e-grid-column field="CategoryId" headerText="@Localizer["Id"].Value" isPrimaryKey="true" visible="false"></e-grid-column>
-            <e-grid-column field="Icon" headerText="@Localizer["Icon"].Value" editType="dropdownedit" dataSource="icons" validationRules="validationRules" width="120"></e-grid-column>
-            <e-grid-column field="Name" headerText="@Localizer["Name"].Value" editType="textboxedit" validationRules="validationRules" minWidth="300" width="400"></e-grid-column>
-            <e-grid-column headerText="@Localizer["Commands"].Value" commands="commands" textAlign="Right" width="120"></e-grid-column>
+            <e-grid-column field="Icon" headerText="@Localizer["Icon"].Value" editType="dropdownedit" edit="new { @params = iconParams }" validationRules="validationRules" allowFiltering="false" width="10"></e-grid-column>
+            <e-grid-column field="Name" headerText="@Localizer["Name"].Value" editType="textboxedit" validationRules="validationRules" minWidth="40" width="65"></e-grid-column>
+            <e-grid-column headerText="@Localizer["Commands"].Value" commands="commands" textAlign="Right" width="25"></e-grid-column>
         </e-grid-columns>
     </ejs-grid>
 
@@ -71,10 +211,15 @@
     }
 
     function actionComplete(args) {
-        if ((args.requestType === "beginEdit" || args.requestType === "add")) {
+        console.log(args);
+        if (args.requestType === "beginEdit" || args.requestType === "add") {
             var dialog = args.dialog;
             dialog.element.style.maxHeight = "1000px";
             dialog.header = args.requestType === "beginEdit" ? "@Localizer["Edit category"].Value" + args.rowData["Name"] : "@Localizer["Add category"].Value";
+        }
+        if (args.requestType === "delete") {
+            // todo: Show dialog when delete operation is canceled.
+            var canceled = args.cancel;
         }
     }
 

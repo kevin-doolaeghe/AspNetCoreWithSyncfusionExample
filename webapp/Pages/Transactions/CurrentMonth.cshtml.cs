@@ -80,7 +80,6 @@ namespace webapp.Pages.Transactions {
         }
 
         public async Task<IActionResult> OnPostCrudUpdateAsync([FromBody] CRUDModel<Transaction> request) {
-            _logger.LogInformation($"Request: {JsonSerializer.Serialize(request)}");
             switch (request.Action) {
                 case "insert":
                     _databaseContext.Transactions.Add(request.Value);

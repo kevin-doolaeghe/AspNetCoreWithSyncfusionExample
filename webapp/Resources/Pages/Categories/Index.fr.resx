@@ -147,20 +147,41 @@
   <data name="Ends with" xml:space="preserve">
     <value>Se termine par</value>
   </data>
+  <data name="Energy" xml:space="preserve">
+    <value>Energie</value>
+  </data>
   <data name="Equal" xml:space="preserve">
     <value>Egal à</value>
+  </data>
+  <data name="Food" xml:space="preserve">
+    <value>Nourriture</value>
+  </data>
+  <data name="Happening" xml:space="preserve">
+    <value>Evènement</value>
+  </data>
+  <data name="Health" xml:space="preserve">
+    <value>Santé</value>
+  </data>
+  <data name="House" xml:space="preserve">
+    <value>Maison</value>
   </data>
   <data name="Icon" xml:space="preserve">
     <value>Icône</value>
   </data>
   <data name="Id" xml:space="preserve">
-    <value>Id</value>
+    <value>Identifiant</value>
   </data>
   <data name="Like" xml:space="preserve">
     <value>Comme</value>
   </data>
+  <data name="Money" xml:space="preserve">
+    <value>Argent</value>
+  </data>
   <data name="Name" xml:space="preserve">
     <value>Nom</value>
+  </data>
+  <data name="Negative" xml:space="preserve">
+    <value>Négatif</value>
   </data>
   <data name="Not empty" xml:space="preserve">
     <value>N'est pas vide</value>
@@ -168,7 +189,37 @@
   <data name="Not equal" xml:space="preserve">
     <value>Différent de</value>
   </data>
+  <data name="Office" xml:space="preserve">
+    <value>Bureau</value>
+  </data>
+  <data name="Other" xml:space="preserve">
+    <value>Autre</value>
+  </data>
+  <data name="Pleasure" xml:space="preserve">
+    <value>Plaisir</value>
+  </data>
+  <data name="Positive" xml:space="preserve">
+    <value>Positif</value>
+  </data>
+  <data name="School" xml:space="preserve">
+    <value>Ecole</value>
+  </data>
+  <data name="Shopping" xml:space="preserve">
+    <value>Achats</value>
+  </data>
+  <data name="Sport" xml:space="preserve">
+    <value>Sport</value>
+  </data>
   <data name="Starts with" xml:space="preserve">
     <value>Démarre par</value>
+  </data>
+  <data name="Technology" xml:space="preserve">
+    <value>Technologie</value>
+  </data>
+  <data name="Transport" xml:space="preserve">
+    <value>Transport</value>
+  </data>
+  <data name="Travel" xml:space="preserve">
+    <value>Voyage</value>
   </data>
 </root>

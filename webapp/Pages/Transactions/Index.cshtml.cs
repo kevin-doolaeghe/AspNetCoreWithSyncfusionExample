@@ -26,11 +26,15 @@ namespace webapp.Pages.Transactions {
 
         public async Task OnGetAsync() {
             Categories = await _databaseContext.Categories.AsNoTracking().ToListAsync();
-            DataSource = await _databaseContext.Transactions.ToListAsync();
+            DataSource = await _databaseContext.Transactions
+                .OrderBy(x => x.Date)
+                .ToListAsync();
         }
 
         public async Task<JsonResult> OnPostDataSourceAsync([FromBody] DataManagerRequest dm) {
-            DataSource = await _databaseContext.Transactions.Include(x => x.Category).ToListAsync();
+            DataSource = await _databaseContext.Transactions
+                .OrderBy(x => x.Date)
+                .ToListAsync();
             int count = DataSource.Cast<Transaction>().Count();
 
             DataOperations operations = new();

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Syncfusion.EJ2.Base;
 using System.Text.Json;
 using webapp.Models;
@@ -63,7 +64,9 @@ namespace webapp.Pages.Categories {
                     break;
                 case "remove":
                     long id = long.Parse($"{request.Key}");
-                    _databaseContext.Categories.Remove(_databaseContext.Categories.Where(x => x.CategoryId == id).First());
+                    if (_databaseContext.Transactions.Where(x => x.CategoryId == id).Count() == 0) {
+                        _databaseContext.Categories.Remove(_databaseContext.Categories.Where(x => x.CategoryId == id).First());
+                    }
                     break;
             }
             await _databaseContext.SaveChangesAsync();

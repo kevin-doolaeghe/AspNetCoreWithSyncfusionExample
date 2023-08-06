@@ -147,8 +147,23 @@
   <data name="Ends with" xml:space="preserve">
     <value>Ends with</value>
   </data>
+  <data name="Energy" xml:space="preserve">
+    <value>Energy</value>
+  </data>
   <data name="Equal" xml:space="preserve">
     <value>Equal</value>
+  </data>
+  <data name="Food" xml:space="preserve">
+    <value>Food</value>
+  </data>
+  <data name="Happening" xml:space="preserve">
+    <value>Happening</value>
+  </data>
+  <data name="Health" xml:space="preserve">
+    <value>Health</value>
+  </data>
+  <data name="House" xml:space="preserve">
+    <value>House</value>
   </data>
   <data name="Icon" xml:space="preserve">
     <value>Icon</value>
@@ -159,8 +174,14 @@
   <data name="Like" xml:space="preserve">
     <value>Like</value>
   </data>
+  <data name="Money" xml:space="preserve">
+    <value>Money</value>
+  </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
+  </data>
+  <data name="Negative" xml:space="preserve">
+    <value>Negative</value>
   </data>
   <data name="Not empty" xml:space="preserve">
     <value>Not empty</value>
@@ -168,7 +189,37 @@
   <data name="Not equal" xml:space="preserve">
     <value>Not equal</value>
   </data>
+  <data name="Office" xml:space="preserve">
+    <value>Office</value>
+  </data>
+  <data name="Other" xml:space="preserve">
+    <value>Other</value>
+  </data>
+  <data name="Pleasure" xml:space="preserve">
+    <value>Pleasure</value>
+  </data>
+  <data name="Positive" xml:space="preserve">
+    <value>Positive</value>
+  </data>
+  <data name="School" xml:space="preserve">
+    <value>School</value>
+  </data>
+  <data name="Shopping" xml:space="preserve">
+    <value>Shopping</value>
+  </data>
+  <data name="Sport" xml:space="preserve">
+    <value>Sport</value>
+  </data>
   <data name="Starts with" xml:space="preserve">
     <value>Starts with</value>
+  </data>
+  <data name="Technology" xml:space="preserve">
+    <value>Technology</value>
+  </data>
+  <data name="Transport" xml:space="preserve">
+    <value>Transport</value>
+  </data>
+  <data name="Travel" xml:space="preserve">
+    <value>Travel</value>
   </data>
 </root>

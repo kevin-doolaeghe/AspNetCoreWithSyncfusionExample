@@ -1,5 +1,6 @@
 ﻿@page "{handler?}"
 @model webapp.Pages.Transactions.CurrentMonthModel
+@using System.Globalization;
 @using Syncfusion.EJ2.Calendars;
 @using Syncfusion.EJ2.DropDowns;
 @using Syncfusion.EJ2.Inputs;
@@ -55,29 +56,27 @@
     var searchSettings = new string[] { "Note", "Category", "Status" };
     var validationRules = new { required = true };
 
-    var dateParams = new {
-        @@params = new DatePicker() {
-            Format = Localizer["Date format"].Value,
-        }
+    var dateParams = new DatePicker() {
+        Format = Localizer["Date format"].Value,
     };
-    var categoryParams = new {
-        @@params = new DropDownList() {
-            DataSource = Model.Categories.Select(x => new { Value = x.CategoryId, Text = x.Description }),
-            Query = "new ej.data.Query()",
-            Fields = new DropDownListFieldSettings() { Value = "Value", Text = "Text" },
-        }
+    var statusParams = new DropDownList() {
+        DataSource = new object[] {
+            new { Value = false, Text = Localizer["Pending"].Value },
+            new { Value = true, Text = Localizer["Closed"].Value },
+        },
+        Query = "new ej.data.Query()",
+        Fields = new DropDownListFieldSettings() { Value = "Value", Text = "Text" },
     };
-    var amountParams = new {
-        @@params = new NumericTextBox() {
-            Format = "C2",
-        }
+    var categoryParams = new DropDownList() {
+        DataSource = Model.Categories.Select(x => new { Value = x.CategoryId, Text = x.Description }),
+        Query = "new ej.data.Query()",
+        Fields = new DropDownListFieldSettings() { Value = "Value", Text = "Text" },
+        AllowFiltering = true,
+        FilterType = FilterType.Contains,
     };
-
-    var statusParams = new object[] {
-        new { Value = false, Text = Localizer["Pending"].Value },
-        new { Value = true, Text = Localizer["Closed"].Value },
+    var amountParams = new NumericTextBox() {
+        Format = "C2",
     };
-    var categories = Model.Categories.Select(x => new { Value = x.CategoryId, Text = x.Description });
 }
 @Html.AntiForgeryToken()
 
@@ -110,7 +109,7 @@
                                     } else {
                                         <i class="fa-solid fa-sm fa-circle-exclamation text-danger"></i>
                                     }
-                                    @Model.CurrentBalance
+                                    @Model.CurrentBalance.ToString("C2", CultureInfo.CurrentCulture)
                                 </h1>
                             </div>
                         </div>
@@ -136,7 +135,7 @@
                                     } else {
                                         <i class="fa-solid fa-sm fa-circle-exclamation text-danger"></i>
                                     }
-                                    @Model.RealBalance
+                                    @Model.RealBalance.ToString("C2", CultureInfo.CurrentCulture)
                                 </h1>
                             </div>
                         </div>
@@ -162,7 +161,7 @@
                                     } else {
                                         <i class="fa-solid fa-sm fa-circle-exclamation text-danger"></i>
                                     }
-                                    @Model.Cashflow
+                                    @Model.Cashflow.ToString("C2", CultureInfo.CurrentCulture)
                                 </h1>
                             </div>
                         </div>
@@ -192,11 +191,11 @@
                                     <e-grid-loadingindicator indicatorType="Shimmer"></e-grid-loadingindicator>
                                     <e-grid-columns>
                                         <e-grid-column field="RecordId" headerText="@Localizer["Id"].Value" isPrimaryKey="true" visible="false"></e-grid-column>
-                                        <e-grid-column field="Date" headerText="@Localizer["Date"].Value" editType="datepickeredit" edit="dateParams" validationRules="validationRules" format="@Localizer["Date format"].Value" defaultValue="@DateTime.Now" width="120"></e-grid-column>
-                                        <e-grid-column field="IsDone" headerText="@Localizer["Status"].Value" dataSource="statusParams" editType="dropdownedit" validationRules="validationRules" template="#statusTemplate" defaultValue="false" width="120"></e-grid-column>
+                                        <e-grid-column field="Date" headerText="@Localizer["Date"].Value" editType="datepickeredit" edit="new { @params = dateParams }" filter="new { @params = dateParams }" validationRules="validationRules" format="@Localizer["Date format"].Value" defaultValue="@DateTime.Today" width="120"></e-grid-column>
+                                        <e-grid-column field="IsDone" headerText="@Localizer["Status"].Value" editType="dropdownedit" edit="new { @params = statusParams }" filter="new { @params = statusParams }" validationRules="validationRules" template="#statusTemplate" defaultValue="false" width="120"></e-grid-column>
                                         <e-grid-column field="Note" headerText="@Localizer["Note"].Value" editType="textboxedit" validationRules="validationRules" minWidth="300" width="400"></e-grid-column>
-                                        <e-grid-column field="Category" headerText="@Localizer["Category"].Value" editType="dropdownedit" edit="categoryParams" validationRules="validationRules" width="180"></e-grid-column>
-                                        <e-grid-column field="Amount" headerText="@Localizer["Amount"].Value" editType="numericedit" edit="amountParams" validationRules="validationRules" format="C2" template="#amountTemplate" width="150"></e-grid-column>
+                                        <e-grid-column field="CategoryId" headerText="@Localizer["Category"].Value" editType="dropdownedit" edit="new { @params = categoryParams }" foreignKeyValue="Description" dataSource="Model.Categories" validationRules="validationRules" width="180"></e-grid-column>
+                                        <e-grid-column field="Amount" headerText="@Localizer["Amount"].Value" editType="numericedit" edit="new { @params = amountParams }" validationRules="validationRules" format="C2" template="#amountTemplate" width="150"></e-grid-column>
                                         <e-grid-column headerText="@Localizer["Commands"].Value" commands="commands" textAlign="Right" width="120"></e-grid-column>
                                     </e-grid-columns>
                                 </ejs-grid>

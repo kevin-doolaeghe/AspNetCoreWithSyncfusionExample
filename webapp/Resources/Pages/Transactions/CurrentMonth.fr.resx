@@ -178,7 +178,7 @@
     <value>Supérieur ou égal à</value>
   </data>
   <data name="Id" xml:space="preserve">
-    <value>Id</value>
+    <value>Identifiant</value>
   </data>
   <data name="Less than" xml:space="preserve">
     <value>Inférieur à</value>
