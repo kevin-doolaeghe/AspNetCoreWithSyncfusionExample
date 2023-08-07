@@ -56,7 +56,7 @@
         Format = Localizer["Date format"].Value,
     };
     var statusParams = new DropDownList() {
-        DataSource = new object[] {
+        DataSource = new List<object>() {
             new { Value = false, Text = Localizer["Pending"].Value },
             new { Value = true, Text = Localizer["Closed"].Value },
         },
@@ -98,9 +98,9 @@
         <e-grid-columns>
             <e-grid-column field="TransactionId" headerText="@Localizer["Id"].Value" isPrimaryKey="true" visible="false"></e-grid-column>
             <e-grid-column field="Date" headerText="@Localizer["Date"].Value" editType="datepickeredit" edit="new { @params = dateParams }" filter="new { @params = dateParams }" validationRules="validationRules" format="@Localizer["Date format"].Value" defaultValue="@DateTime.Today" width="120"></e-grid-column>
-            <e-grid-column field="IsDone" headerText="@Localizer["Status"].Value" editType="dropdownedit" edit="new { @params = statusParams }" filter="new { @params = statusParams }" validationRules="validationRules" template="#statusTemplate" defaultValue="false" width="100"></e-grid-column>
+            <e-grid-column field="IsDone" headerText="@Localizer["Status"].Value" editType="dropdownedit" edit="new { @params = statusParams }" validationRules="validationRules" template="#statusTemplate" defaultValue="false" width="100"></e-grid-column>
             <e-grid-column field="Note" headerText="@Localizer["Note"].Value" editType="textboxedit" validationRules="validationRules" minWidth="200" width="300"></e-grid-column>
-            <e-grid-column field="CategoryId" headerText="@Localizer["Category"].Value" editType="dropdownedit" edit="new { @params = categoryParams }" filter="new { @params = categoryParams }" foreignKeyValue="Description" dataSource="Model.Categories" validationRules="validationRules" width="140"></e-grid-column>
+            <e-grid-column field="CategoryId" headerText="@Localizer["Category"].Value" dataSource="Model.Categories" foreignKeyValue="Description" editType="dropdownedit" edit="new { @params = categoryParams }" validationRules="validationRules" width="140"></e-grid-column>
             <e-grid-column field="Amount" headerText="@Localizer["Amount"].Value" editType="numericedit" edit="new { @params = amountParams }" validationRules="validationRules" format="C2" template="#amountTemplate" width="120"></e-grid-column>
             <e-grid-column headerText="@Localizer["Commands"].Value" commands="commands" textAlign="Right" width="120"></e-grid-column>
         </e-grid-columns>
