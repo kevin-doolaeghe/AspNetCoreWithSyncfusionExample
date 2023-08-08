@@ -13,7 +13,7 @@ builder.Services.AddRazorPages()
     .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
     .AddDataAnnotationsLocalization();
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
-builder.Services.AddDbContext<DatabaseContext>(
+builder.Services.AddDbContext<ApplicationDatabaseContext>(
     options => options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServerConnectionString"))
 );
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -34,7 +34,7 @@ if (!app.Environment.IsDevelopment()) {
 
 // Migrate latest database changes during startup
 using (var scope = app.Services.CreateScope()) {
-    var context = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
+    var context = scope.ServiceProvider.GetRequiredService<ApplicationDatabaseContext>();
     context.Database.EnsureCreated();
     // context.Database.Migrate();
 

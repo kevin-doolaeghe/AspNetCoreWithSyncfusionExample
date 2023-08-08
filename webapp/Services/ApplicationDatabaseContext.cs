@@ -3,9 +3,9 @@ using webapp.Models;
 
 namespace webapp.Services {
 
-    public class DatabaseContext : DbContext {
+    public class ApplicationDatabaseContext : DbContext {
 
-        public DatabaseContext(DbContextOptions options) : base(options) { }
+        public ApplicationDatabaseContext(DbContextOptions options) : base(options) { }
 
         public DbSet<Transaction> Transactions { get; set; }
 
