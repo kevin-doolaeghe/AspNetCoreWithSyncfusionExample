@@ -9,9 +9,9 @@ namespace webapp.Pages {
 
     public class IndexModel : PageModel {
 
-        private readonly ApplicationDatabaseContext _databaseContext;
+        private readonly DatabaseContext _databaseContext;
 
-        public IndexModel(ApplicationDatabaseContext databaseContext) {
+        public IndexModel(DatabaseContext databaseContext) {
             _databaseContext = databaseContext;
         }
 

@@ -1,21 +1,26 @@
-﻿using Microsoft.AspNetCore.Mvc.Razor;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Localization;
 using webapp.Models;
 using webapp.Services;
 using System.Globalization;
+using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorPages()
+builder.Services
+    .AddRazorPages()
     .AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null)
     .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
     .AddDataAnnotationsLocalization();
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
-builder.Services.AddDbContext<ApplicationDatabaseContext>(
+builder.Services.AddDbContext<DatabaseContext>(
     options => options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServerConnectionString"))
 );
+builder.Services
+    .AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<DatabaseContext>();
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 // Register Syncfusion license
@@ -34,7 +39,7 @@ if (!app.Environment.IsDevelopment()) {
 
 // Migrate latest database changes during startup
 using (var scope = app.Services.CreateScope()) {
-    var context = scope.ServiceProvider.GetRequiredService<ApplicationDatabaseContext>();
+    var context = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
     context.Database.EnsureCreated();
     // context.Database.Migrate();
 

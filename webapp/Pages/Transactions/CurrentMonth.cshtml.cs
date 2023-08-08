@@ -14,9 +14,9 @@ namespace webapp.Pages.Transactions {
 
         private readonly ILogger<IndexModel> _logger;
 
-        private readonly ApplicationDatabaseContext _databaseContext;
+        private readonly DatabaseContext _databaseContext;
 
-        public CurrentMonthModel(ILogger<IndexModel> logger, ApplicationDatabaseContext databaseContext) {
+        public CurrentMonthModel(ILogger<IndexModel> logger, DatabaseContext databaseContext) {
             _logger = logger;
             _databaseContext = databaseContext;
         }

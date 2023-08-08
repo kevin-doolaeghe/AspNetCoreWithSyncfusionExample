@@ -3,9 +3,11 @@ using webapp.Models;
 
 namespace webapp.Services {
 
-    public class ApplicationDatabaseContext : DbContext {
+    public class DatabaseContext : DbContext {
 
-        public ApplicationDatabaseContext(DbContextOptions options) : base(options) { }
+        public DatabaseContext(DbContextOptions options) : base(options) { }
+
+        public DbSet<User> Users { get; set; }
 
         public DbSet<Transaction> Transactions { get; set; }
 

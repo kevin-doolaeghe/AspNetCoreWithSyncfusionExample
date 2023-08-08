@@ -10,9 +10,9 @@ namespace webapp.Pages.Balance {
 
         private readonly ILogger<IndexModel> _logger;
 
-        private readonly ApplicationDatabaseContext _databaseContext;
+        private readonly DatabaseContext _databaseContext;
 
-        public IndexModel(ILogger<IndexModel> logger, ApplicationDatabaseContext databaseContext) {
+        public IndexModel(ILogger<IndexModel> logger, DatabaseContext databaseContext) {
             _logger = logger;
             _databaseContext = databaseContext;
         }
