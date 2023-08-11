@@ -1,13 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using webapp.Models;
 
 namespace webapp.Services {
 
-    public class DatabaseContext : DbContext {
+    public class DatabaseContext : IdentityDbContext<User> {
 
         public DatabaseContext(DbContextOptions options) : base(options) { }
-
-        public DbSet<User> Users { get; set; }
 
         public DbSet<Transaction> Transactions { get; set; }
 
