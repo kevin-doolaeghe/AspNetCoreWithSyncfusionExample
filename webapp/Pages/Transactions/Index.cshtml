@@ -1,5 +1,5 @@
 ﻿@page "{handler?}"
-@model webapp.Pages.Transactions.IndexModel
+@model IndexModel
 @using Syncfusion.EJ2.Calendars;
 @using Syncfusion.EJ2.DropDowns;
 @using Syncfusion.EJ2.Inputs;
@@ -64,7 +64,7 @@
         Fields = new DropDownListFieldSettings() { Value = "Value", Text = "Text" },
     };
     var categoryParams = new DropDownList() {
-        DataSource = Model.Categories.Select(x => new { Value = x.CategoryId, Text = x.Description }),
+        DataSource = Model.Categories.Select(x => new { Value = x.Id, Text = x.Description }),
         Query = "new ej.data.Query()",
         Fields = new DropDownListFieldSettings() { Value = "Value", Text = "Text" },
         AllowFiltering = true,

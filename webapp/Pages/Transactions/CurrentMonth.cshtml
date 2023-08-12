@@ -1,5 +1,5 @@
 ﻿@page "{handler?}"
-@model webapp.Pages.Transactions.CurrentMonthModel
+@model CurrentMonthModel
 @using System.Globalization;
 @using Syncfusion.EJ2.Calendars;
 @using Syncfusion.EJ2.DropDowns;
@@ -76,7 +76,7 @@
             };
     // todo: category filter not working filter="new { @params = categoryParams }"
     var categoryParams = new DropDownList() {
-        DataSource = Model.Categories.Select(x => new { Value = x.CategoryId, Text = x.Description }),
+        DataSource = Model.Categories.Select(x => new { Value = x.Id, Text = x.Description }),
         Query = "new ej.data.Query()",
         Fields = new DropDownListFieldSettings() { Value = "Value", Text = "Text" },
         AllowFiltering = true,

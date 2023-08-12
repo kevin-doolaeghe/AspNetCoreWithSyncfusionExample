@@ -6,7 +6,7 @@ namespace webapp.Models {
     public class Category {
 
         [Key]
-        public long CategoryId { get; set; }
+        public long Id { get; set; }
 
         public string? Icon { get; set; }
 

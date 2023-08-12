@@ -7,7 +7,7 @@ namespace webapp.Models {
     public class Transaction {
 
         [Key]
-        public long TransactionId { get; set; }
+        public long Id { get; set; }
 
         public long CategoryId { get; set; }
 

@@ -127,6 +127,6 @@
     <value>&lt;i class="fa-solid fa-user"&gt;&lt;/i&gt; Mon compte</value>
   </data>
   <data name="Settings" xml:space="preserve">
-    <value>&lt;i class="fa-solid fa-gear"&gt;&lt;/i&gt; Settings</value>
+    <value>&lt;i class="fa-solid fa-gear"&gt;&lt;/i&gt; Paramètres</value>
   </data>
 </root>

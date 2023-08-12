@@ -70,7 +70,7 @@ namespace webapp.Pages.Transactions {
                     break;
                 case "remove":
                     long id = long.Parse($"{request.Key}");
-                    _databaseContext.Transactions.Remove(_databaseContext.Transactions.Where(x => x.TransactionId == id).First());
+                    _databaseContext.Transactions.Remove(_databaseContext.Transactions.Where(x => x.Id == id).First());
                     break;
             }
             await _databaseContext.SaveChangesAsync();

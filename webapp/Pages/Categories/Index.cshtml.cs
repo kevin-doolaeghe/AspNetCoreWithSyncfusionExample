@@ -65,7 +65,7 @@ namespace webapp.Pages.Categories {
                 case "remove":
                     long id = long.Parse($"{request.Key}");
                     if (_databaseContext.Transactions.Where(x => x.CategoryId == id).Count() == 0) {
-                        _databaseContext.Categories.Remove(_databaseContext.Categories.Where(x => x.CategoryId == id).First());
+                        _databaseContext.Categories.Remove(_databaseContext.Categories.Where(x => x.Id == id).First());
                     }
                     break;
             }

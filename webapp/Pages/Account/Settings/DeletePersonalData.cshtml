@@ -1,12 +1,12 @@
 ﻿@page
 @model DeletePersonalDataModel
 @{
-    ViewData["Title"] = "Delete Personal Data";
-    ViewData["ActivePage"] = ManageNavPages.PersonalData;
+    ViewData["IsSettingsPage"] = true;
+    ViewData["PageTitle"] = "Delete Personal Data";
+    ViewData["ActivePage"] = SettingsNavPages.PersonalData;
 }
 
-<h3>@ViewData["Title"]</h3>
-
+<h3>@ViewData["PageTitle"]</h3>
 <div class="alert alert-warning" role="alert">
     <p>
         <strong>Deleting this data will permanently remove your account, and this cannot be recovered.</strong>
@@ -16,8 +16,7 @@
 <div>
     <form id="delete-user" method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-        @if (Model.RequirePassword)
-        {
+        @if (Model.RequirePassword) {
             <div class="form-floating mb-3">
                 <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="Please enter your password." />
                 <label asp-for="Input.Password" class="form-label"></label>

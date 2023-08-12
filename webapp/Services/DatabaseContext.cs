@@ -11,5 +11,7 @@ namespace webapp.Services {
         public DbSet<Transaction> Transactions { get; set; }
 
         public DbSet<Category> Categories { get; set; }
+
+        public DbSet<MonthlyTransaction> MonthlyTransactions { get; set; }
     }
 }

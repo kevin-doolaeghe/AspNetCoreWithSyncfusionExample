@@ -22,37 +22,14 @@
     <header class="sticky-top">
         <nav class="navbar navbar-expand-lg navbar-toggleable-lg navbar-light bg-light box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">
+                <a class="navbar-brand" asp-page="/Index">
                     @Localizer["Title with icon"]
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse" id="navbarCollapse">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-page="/Index">
-                                @Localizer["Dashboard"]
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-page="/Transactions/CurrentMonth">
-                                @Localizer["Current month"]
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-page="/Transactions/Index">
-                                @Localizer["Transactions"]
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-page="/Categories/Index">
-                                @Localizer["Categories"]
-                            </a>
-                        </li>
-                        <li class="flex-grow-1">
-                        </li>
-                    </ul>
+                    <partial name="_NavbarPartial" />
                     <partial name="_LanguagePartial" />
                     <partial name="_LoginPartial" />
                 </div>
@@ -61,9 +38,22 @@
     </header>
 
     <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+        @if (ViewData["IsSettingsPage"] == null) {
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        } else {
+            <h2>@Localizer["Change your account settings"]</h2>
+            <hr />
+            <div class="row">
+                <div class="col-md-3">
+                    <partial name="_SettingsNavPartial" />
+                </div>
+                <div class="col-md-6">
+                    @RenderBody()
+                </div>
+            </div>
+        }
     </div>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

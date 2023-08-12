@@ -117,25 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Categories" xml:space="preserve">
-    <value>&lt;i class="fa-solid fa-icons"&gt;&lt;/i&gt; Catégories</value>
-  </data>
-  <data name="Currency" xml:space="preserve">
-    <value>EUR</value>
-  </data>
-  <data name="Current month" xml:space="preserve">
-    <value>&lt;i class="fa-solid fa-calendar"&gt;&lt;/i&gt; Mois actuel</value>
-  </data>
-  <data name="Dashboard" xml:space="preserve">
-    <value>&lt;i class="fa-solid fa-home"&gt;&lt;/i&gt; Tableau de bord</value>
+  <data name="Change your account settings" xml:space="preserve">
+    <value>Modifier les paramètres de votre compte</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>Démo</value>
   </data>
   <data name="Title with icon" xml:space="preserve">
     <value>&lt;i class="fa-solid fa-shapes"&gt;&lt;/i&gt; Démo</value>
-  </data>
-  <data name="Transactions" xml:space="preserve">
-    <value>&lt;i class="fa-solid fa-money-bill-transfer"&gt;&lt;/i&gt; Transactions</value>
   </data>
 </root>

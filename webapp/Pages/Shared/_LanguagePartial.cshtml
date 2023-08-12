@@ -4,10 +4,10 @@
             <i class="fa-solid fa-language"></i> @Thread.CurrentThread.CurrentUICulture.Name
         </a>
         <div class="dropdown-menu" aria-labelledby="languageSelector">
-            <form class="form-inline" asp-area="" asp-page="/Language" asp-route-newCulture="en-US">
+            <form class="form-inline" asp-page="/Language" asp-route-newCulture="en-US">
                 <button type="submit" class="dropdown-item">@Localizer["English"]</button>
             </form>
-            <form class="form-inline" asp-area="" asp-page="/Language" asp-route-newCulture="fr-FR">
+            <form class="form-inline" asp-page="/Language" asp-route-newCulture="fr-FR">
                 <button type="submit" class="dropdown-item">@Localizer["French"]</button>
             </form>
         </div>
