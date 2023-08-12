@@ -6,7 +6,7 @@ namespace webapp.Pages {
 
     public class LanguageModel : PageModel {
 
-        public IActionResult OnGet(string newCulture) {
+        public IActionResult OnPost(string newCulture) {
             Response.Cookies.Append(
                 CookieRequestCultureProvider.DefaultCookieName,
                 CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(newCulture)),

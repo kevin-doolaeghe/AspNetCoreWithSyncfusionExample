@@ -1,0 +1,276 @@
+﻿@page
+@model webapp.Pages.DashboardModel
+@using System.Globalization;
+@using Syncfusion.EJ2.Charts;
+@{
+    ViewData["PageTitle"] = Localizer["Dashboard"];
+
+    var palettes = new string[] { "#509ED9", "#80D950", "#D45D48", "#FEC200", "#D97F3F", "#64B9C4", "#5848C2", "#C248BA", "#2C3BC7", "#C24883", "#0E9622", "#914C5E", "#12C96E", "#70AD47", "#5B9BD5", "#C1C1C1", "#6F6FE2", "#E269AE", "#9E480E", "#997300" };
+    var cellSpacing = new double[] { 10, 10 };
+}
+
+<div class="text-center">
+
+    <ejs-breadcrumb id="breadcrumb" cssClass="p-4" enableNavigation="true" maxItems="3" overflowMode="Menu">
+        <e-breadcrumb-items>
+            <e-breadcrumb-item iconCss="e-icons e-home" url="/"></e-breadcrumb-item>
+            <e-breadcrumb-item text="@Localizer["Dashboard"].Value" url="/"></e-breadcrumb-item>
+        </e-breadcrumb-items>
+    </ejs-breadcrumb>
+
+    <ejs-dashboardlayout id="dashboardLayout" mediaQuery="max-width: 992px" columns="3" cellSpacing="cellSpacing" cellAspectRatio="2.5" allowDragging="false" allowResizing="false">
+        <e-dashboardlayout-panels>
+            <e-dashboardlayout-panel sizeX="1" sizeY="1" row="0" col="0">
+                <e-content-template>
+                    <div>
+
+                        <div class="e-panel-container">
+                            <div class="e-panel-header">
+                                <div class="title">
+                                    @Localizer["Current balance"]
+                                </div>
+                            </div>
+                            <div class="e-panel-content">
+                                <h1 id="currentBalance">
+                                    @if (Model.CurrentBalance > 100) {
+                                        <i class="fa-solid fa-sm fa-square-check text-success"></i>
+                                    } else {
+                                        <i class="fa-solid fa-sm fa-circle-exclamation text-danger"></i>
+                                    }
+                                    @Model.CurrentBalance.ToString("C2", CultureInfo.CurrentCulture)
+                                </h1>
+                            </div>
+                        </div>
+
+                    </div>
+                </e-content-template>
+            </e-dashboardlayout-panel>
+
+            <e-dashboardlayout-panel sizeX="1" sizeY="1" row="0" col="1">
+                <e-content-template>
+                    <div>
+
+                        <div class="e-panel-container">
+                            <div class="e-panel-header">
+                                <div class="title">
+                                    @Localizer["Real balance"]
+                                </div>
+                            </div>
+                            <div class="e-panel-content">
+                                <h1 id="realBalance">
+                                    @if (Model.RealBalance > 100) {
+                                        <i class="fa-solid fa-sm fa-square-check text-success"></i>
+                                    } else {
+                                        <i class="fa-solid fa-sm fa-circle-exclamation text-danger"></i>
+                                    }
+                                    @Model.RealBalance.ToString("C2", CultureInfo.CurrentCulture)
+                                </h1>
+                            </div>
+                        </div>
+
+                    </div>
+                </e-content-template>
+            </e-dashboardlayout-panel>
+
+            <e-dashboardlayout-panel sizeX="1" sizeY="1" row="0" col="2">
+                <e-content-template>
+                    <div>
+
+                        <div class="e-panel-container">
+                            <div class="e-panel-header">
+                                <div class="title">
+                                    @Localizer["Cashflow"]
+                                </div>
+                            </div>
+                            <div class="e-panel-content">
+                                <h1 id="cashflow">
+                                    @if (Model.Cashflow < 500) {
+                                        <i class="fa-solid fa-sm fa-square-check text-success"></i>
+                                    } else {
+                                        <i class="fa-solid fa-sm fa-circle-exclamation text-danger"></i>
+                                    }
+                                    @Model.Cashflow.ToString("C2", CultureInfo.CurrentCulture)
+                                </h1>
+                            </div>
+                        </div>
+
+                    </div>
+                </e-content-template>
+            </e-dashboardlayout-panel>
+
+            <e-dashboardlayout-panel sizeX="2" sizeY="3" row="1" col="0">
+                <e-content-template>
+                    <div>
+
+                        @* Bar chart *@
+                        <div class="e-panel-container" id="chart1">
+                            <div class="e-panel-header">
+                                <div class="title" id="header1">
+                                    @Localizer["Transactions by status"]
+                                </div>
+                            </div>
+                            <div class="e-panel-content">
+                                <ejs-chart id="lineChart" enableAnimation="true" width="100%" height="100%">
+                                    <e-chart-tooltipsettings enable="true" shared="true" header="@Localizer["Status"].Value"></e-chart-tooltipsettings>
+                                    <e-chart-legendsettings visible="true" enableHighlight="true"></e-chart-legendsettings>
+                                    <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category" interval="1">
+                                        <e-majorgridlines width="0"></e-majorgridlines>
+                                        <e-majorticklines width="0"></e-majorticklines>
+                                    </e-chart-primaryxaxis>
+                                    <e-chart-primaryyaxis>
+                                        <e-majorticklines width="0"></e-majorticklines>
+                                        <e-linestyle width="0"></e-linestyle>
+                                        <e-labelstyle size="11px"></e-labelstyle>
+                                    </e-chart-primaryyaxis>
+                                    <e-chart-chartarea>
+                                        <e-chartarea-border width="0"></e-chartarea-border>
+                                    </e-chart-chartarea>
+                                    <e-series-collection>
+                                        <e-series dataSource="Model.TransactionsByStatusData" xName="Category" yName="Pending" name="@Localizer["Pending"].Value" width="2" fill="#2485FA" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
+                                            <e-series-marker>
+                                                <e-series-datalabel visible="true" position="@LabelPosition.Middle" template="@Localizer["Line label format"].Value">
+                                                    <e-font color="white"></e-font>
+                                                </e-series-datalabel>
+                                            </e-series-marker>
+                                        </e-series>
+                                        <e-series dataSource="Model.TransactionsByStatusData" xName="Category" yName="Closed" name="@Localizer["Closed"].Value" fill="#FEC200" width="2" type="@Syncfusion.EJ2.Charts.ChartSeriesType.Column">
+                                            <e-series-marker>
+                                                <e-series-datalabel visible="true" position="@LabelPosition.Middle" template="<b>${point.y}</b>">
+                                                    <e-font color="white"></e-font>
+                                                </e-series-datalabel>
+                                            </e-series-marker>
+                                        </e-series>
+                                    </e-series-collection>
+                                </ejs-chart>
+                            </div>
+                        </div>
+
+                    </div>
+                </e-content-template>
+            </e-dashboardlayout-panel>
+
+            <e-dashboardlayout-panel sizeX="1" sizeY="3" row="1" col="2">
+                <e-content-template>
+                    <div>
+
+                        @* Pie chart *@
+                        <div class="e-panel-container" id="chart2">
+                            <div class="e-panel-header">
+                                <div class="title" id="header2">
+                                    @Localizer["Expenses by category"]
+                                </div>
+                            </div>
+                            <div class="e-panel-content">
+                                <ejs-accumulationchart id="pieChart" enableAnimation="true" enableBorderOnMouseMove="true" enableSmartLabels="true" width="100%" height="100%">
+                                    <e-accumulationchart-tooltipsettings enable="true" format="@Localizer["Pie tooltip format"].Value"></e-accumulationchart-tooltipsettings>
+                                    <e-accumulationchart-legendsettings position="Top" toggleVisibility="true">
+                                        <e-legendsettings-textstyle size="1rem"></e-legendsettings-textstyle>
+                                    </e-accumulationchart-legendsettings>
+                                    <e-accumulation-series-collection>
+                                        <e-accumulation-series tooltipMappingName="@Localizer["Description"].Value" dataSource="Model.ExpensesByCategoryData" xName="Category" yName="Value" innerRadius="50%" legendShape="Circle" palettes="palettes">
+                                            <e-accumulationseries-datalabel name="FormattedValue" visible="true" position="@AccumulationLabelPosition.Inside" textWrap="Wrap" template="@Localizer["Pie label format"].Value"></e-accumulationseries-datalabel>
+                                        </e-accumulation-series>
+                                    </e-accumulation-series-collection>
+                                </ejs-accumulationchart>
+                            </div>
+                        </div>
+
+                    </div>
+                </e-content-template>
+            </e-dashboardlayout-panel>
+
+            <e-dashboardlayout-panel sizeX="2" sizeY="3" row="4" col="1">
+                <e-content-template>
+                    <div>
+
+                        @* Spline chart *@
+                        <div class="e-panel-container" id="chart3">
+                            <div class="e-panel-header">
+                                <div class="title" id="header3">
+                                    @Localizer["Expenses vs income"]
+                                </div>
+                            </div>
+                            <div class="e-panel-content">
+                                <ejs-chart id="splineChart" enableAnimation="true" width="100%" height="100%">
+                                    <e-chart-primaryxaxis valueType="@Syncfusion.EJ2.Charts.ValueType.Category">
+                                        <e-majorgridlines width="0"></e-majorgridlines>
+                                        <e-majorticklines width="0"></e-majorticklines>
+                                        <e-labelstyle size="11px"></e-labelstyle>
+                                    </e-chart-primaryxaxis>
+                                    <e-chart-primaryyaxis labelFormat="@Localizer["Spline label format"].Value">
+                                        <e-linestyle width="0"></e-linestyle>
+                                        <e-majorticklines width="0"></e-majorticklines>
+                                        <e-labelstyle size="11px"></e-labelstyle>
+                                    </e-chart-primaryyaxis>
+                                    <e-chart-tooltipsettings enable="true" shared="true" enableMarker="true"></e-chart-tooltipsettings>
+                                    <e-chart-chartarea>
+                                        <e-chartarea-border width="0"></e-chartarea-border>
+                                    </e-chart-chartarea>
+                                    <e-series-collection>
+                                        <e-series dataSource="Model.ExpenseVsIncomeData" fill="#509ED9" name="@Localizer["Balance"].Value" xName="Date" opacity="1" width="3.5" yName="Balance" type="@ChartSeriesType.Spline"></e-series>
+                                        <e-series dataSource="Model.ExpenseVsIncomeData" fill="#80D950" name="@Localizer["Income"].Value" xName="Date" opacity="1" width="3.5" yName="Income" type="@ChartSeriesType.Spline"></e-series>
+                                        <e-series dataSource="Model.ExpenseVsIncomeData" fill="#D45D48" name="@Localizer["Expense"].Value" xName="Date" opacity="1" width="3.5" yName="Expense" type="@ChartSeriesType.Spline"></e-series>
+                                    </e-series-collection>
+                                    <e-chart-legendsettings enableHighlight="true"></e-chart-legendsettings>
+                                </ejs-chart>
+                            </div>
+                        </div>
+
+                    </div>
+                </e-content-template>
+            </e-dashboardlayout-panel>
+
+            <e-dashboardlayout-panel sizeX="1" sizeY="3" row="4" col="0">
+                <e-content-template>
+                    <div>
+
+                        <div class="e-panel-container">
+                            <div class="e-panel-header">
+                                <div class="title">
+                                    @Localizer["Recent transactions"]
+                                </div>
+                            </div>
+                            <div class="e-panel-content">
+                                <ejs-grid id="recentTransactions" dataBound="dataBound" dataSource="@Model.RecentTransactions" gridLines="None" width="100%" height="100%">
+                                    <e-grid-columns>
+                                        <e-grid-column headerText="@Localizer["Category"].Value" field="Category"></e-grid-column>
+                                        <e-grid-column headerText="@Localizer["Date"].Value" field="Date" type="date" format="@Localizer["Date format"].Value"></e-grid-column>
+                                        <e-grid-column headerText="@Localizer["Amount"].Value" field="Amount" textAlign="Right" template="#amountTemplate"></e-grid-column>
+                                    </e-grid-columns>
+                                </ejs-grid>
+                            </div>
+                        </div>
+
+                    </div>
+                </e-content-template>
+            </e-dashboardlayout-panel>
+        </e-dashboardlayout-panels>
+
+    </ejs-dashboardlayout>
+
+</div>
+
+<script id="amountTemplate" type="text/x-template">
+    ${if(Amount > 0)}
+        <span class="badge bg-success p-2">${FormattedAmount}</span>
+    ${else}
+        <span class="badge bg-danger p-2">${FormattedAmount}</span>
+    ${/if}
+</script>
+
+<script>
+    function dataBound(args) {
+        this.hideScroll();
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        var lineObj = document.getElementById("lineChart").ej2_instances[0];
+        lineObj.refresh();
+
+        var pieObj = document.getElementById("pieChart").ej2_instances[0];
+        pieObj.refresh();
+
+        var splineObj = document.getElementById("splineChart").ej2_instances[0];
+        splineObj.refresh();
+    });
+</script>
