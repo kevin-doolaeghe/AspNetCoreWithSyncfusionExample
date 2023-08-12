@@ -6,6 +6,17 @@
     ViewData["ActivePage"] = SettingsNavPages.Index;
 }
 
+<div class="text-center">
+
+    <ejs-breadcrumb id="breadcrumb" cssClass="p-4" enableNavigation="true" maxItems="3" overflowMode="Menu">
+        <e-breadcrumb-items>
+            <e-breadcrumb-item iconCss="e-icons e-home" url="/"></e-breadcrumb-item>
+            <e-breadcrumb-item text="@Localizer["Settings"].Value" url="/Settings"></e-breadcrumb-item>
+        </e-breadcrumb-items>
+    </ejs-breadcrumb>
+
+</div>
+
 <h3>@ViewData["PageTitle"]</h3>
 <div class="row">
     <div class="col-md-6">

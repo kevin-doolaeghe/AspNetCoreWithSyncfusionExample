@@ -6,6 +6,10 @@ namespace webapp.Pages {
 
     public class LanguageModel : PageModel {
 
+        public IActionResult OnGet() {
+            return RedirectToPage("/");
+        }
+
         public IActionResult OnPost(string newCulture) {
             Response.Cookies.Append(
                 CookieRequestCultureProvider.DefaultCookieName,
