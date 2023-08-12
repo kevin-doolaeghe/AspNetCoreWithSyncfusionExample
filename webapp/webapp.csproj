@@ -23,4 +23,8 @@
     <PackageReference Include="Syncfusion.EJ2.AspNet.Core" Version="22.2.8" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Resources\Pages\Account\" />
+  </ItemGroup>
+
 </Project>

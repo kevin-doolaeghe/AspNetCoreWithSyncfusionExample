@@ -1,0 +1,25 @@
+﻿<ul class="navbar-nav">
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="" id="languageSelector" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa-solid fa-language"></i> @Thread.CurrentThread.CurrentUICulture.Name
+        </a>
+        <div class="dropdown-menu" aria-labelledby="languageSelector">
+            <a class="dropdown-item" asp-area="" asp-page="/Language" asp-route-newCulture="en-US">@Localizer["English"]</a>
+            <a class="dropdown-item" asp-area="" asp-page="/Language" asp-route-newCulture="fr-FR">@Localizer["French"]</a>
+        </div>
+    </li>
+</ul>
+
+<script>
+    var currentCulture = "@Thread.CurrentThread.CurrentUICulture.Name";
+    // Load the json culture file
+    var ajax = new ej.base.Ajax(location.origin + "/locale/" + currentCulture + ".json", "GET", false);
+    ajax.send().then((args) => {
+        // Set the culture for the ASP.NET Core controls
+        ej.base.setCulture(currentCulture);
+        ej.base.setCurrencyCode("@Localizer["Currency"]");
+
+        var loader = JSON.parse(args);
+        ej.base.L10n.load(loader);
+    });
+</script>
