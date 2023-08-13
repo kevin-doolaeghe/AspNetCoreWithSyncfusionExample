@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
 using System.Text.Json;
 using webapp.Models;
 
@@ -18,7 +17,7 @@ namespace webapp.Pages.Account.Settings {
         }
 
         public IActionResult OnGet() {
-            return NotFound();
+            return RedirectToPage("/");
         }
 
         public async Task<IActionResult> OnPostAsync() {

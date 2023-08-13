@@ -8,12 +8,9 @@ namespace webapp.Pages.Balance {
 
     public class IndexModel : PageModel {
 
-        private readonly ILogger<IndexModel> _logger;
-
         private readonly DatabaseContext _databaseContext;
 
-        public IndexModel(ILogger<IndexModel> logger, DatabaseContext databaseContext) {
-            _logger = logger;
+        public IndexModel(DatabaseContext databaseContext) {
             _databaseContext = databaseContext;
         }
 
@@ -24,9 +21,9 @@ namespace webapp.Pages.Balance {
         public double Cashflow { get; set; }
 
         public async Task<IActionResult> OnGetAsync() {
-            var transactions = await _databaseContext.Transactions
-                .AsNoTracking()
-                .ToListAsync();
+            if (!(User.Identity?.IsAuthenticated ?? false)) return RedirectToPage("/");
+
+            var transactions = await _databaseContext.Transactions.AsNoTracking().ToListAsync();
             CurrentBalance = transactions.Where(x => x.IsDone).Select(x => x.Amount).Sum();
             RealBalance = transactions.Select(x => x.Amount).Sum();
             Cashflow = double.Abs(RealBalance - CurrentBalance);

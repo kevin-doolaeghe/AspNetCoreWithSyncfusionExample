@@ -120,6 +120,9 @@
   <data name="Confirm password" xml:space="preserve">
     <value>Confirm password</value>
   </data>
+  <data name="Confirm password error message" xml:space="preserve">
+    <value>The password and confirmation password do not match.</value>
+  </data>
   <data name="Create a new account" xml:space="preserve">
     <value>Create a new account</value>
   </data>
@@ -131,6 +134,9 @@
   </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
+  </data>
+  <data name="Password error message" xml:space="preserve">
+    <value>The {0} must be at least {2} and at max {1} characters long.</value>
   </data>
   <data name="Register" xml:space="preserve">
     <value>Register</value>

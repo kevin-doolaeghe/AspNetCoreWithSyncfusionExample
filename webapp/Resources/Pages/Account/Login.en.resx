@@ -127,7 +127,7 @@
     <value>Password</value>
   </data>
   <data name="Password forgotten" xml:space="preserve">
-    <value>Forgot your password ?</value>
+    <value>Password forgotten ?</value>
   </data>
   <data name="Register" xml:space="preserve">
     <value>Register</value>

@@ -11,12 +11,9 @@ namespace webapp.Pages.Transactions {
     [IgnoreAntiforgeryToken]
     public class IndexModel : PageModel {
 
-        private readonly ILogger<IndexModel> _logger;
-
         private readonly DatabaseContext _databaseContext;
 
-        public IndexModel(ILogger<IndexModel> logger, DatabaseContext databaseContext) {
-            _logger = logger;
+        public IndexModel(DatabaseContext databaseContext) {
             _databaseContext = databaseContext;
         }
 
@@ -24,14 +21,20 @@ namespace webapp.Pages.Transactions {
 
         public IEnumerable<Transaction> DataSource { get; set; } = default!;
 
-        public async Task OnGetAsync() {
+        public async Task<IActionResult> OnGetAsync() {
+            if (!(User.Identity?.IsAuthenticated ?? false)) return RedirectToPage("/");
+
             Categories = await _databaseContext.Categories.AsNoTracking().ToListAsync();
             DataSource = await _databaseContext.Transactions
                 .OrderBy(x => x.Date)
                 .ToListAsync();
+
+            return Page();
         }
 
-        public async Task<JsonResult> OnPostDataSourceAsync([FromBody] DataManagerRequest dm) {
+        public async Task<IActionResult> OnPostDataSourceAsync([FromBody] DataManagerRequest dm) {
+            if (!(User.Identity?.IsAuthenticated ?? false)) return RedirectToPage("/");
+
             DataSource = await _databaseContext.Transactions
                 .OrderBy(x => x.Date)
                 .ToListAsync();
@@ -61,6 +64,8 @@ namespace webapp.Pages.Transactions {
         }
 
         public async Task<IActionResult> OnPostCrudUpdateAsync([FromBody] CRUDModel<Transaction> request) {
+            if (!(User.Identity?.IsAuthenticated ?? false)) return RedirectToPage("/");
+
             switch (request.Action) {
                 case "insert":
                     _databaseContext.Transactions.Add(request.Value);

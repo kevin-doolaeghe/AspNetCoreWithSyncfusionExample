@@ -23,11 +23,17 @@ namespace webapp.Pages.Categories {
 
         public IEnumerable<Category> DataSource { get; set; } = default!;
 
-        public async Task OnGetAsync() {
+        public async Task<IActionResult> OnGetAsync() {
+            if (!(User.Identity?.IsAuthenticated ?? false)) return RedirectToPage("/");
+
             DataSource = await _databaseContext.Categories.ToListAsync();
+
+            return Page();
         }
 
-        public async Task<JsonResult> OnPostDataSourceAsync([FromBody] DataManagerRequest dm) {
+        public async Task<IActionResult> OnPostDataSourceAsync([FromBody] DataManagerRequest dm) {
+            if (!(User.Identity?.IsAuthenticated ?? false)) return RedirectToPage("/");
+
             DataSource = await _databaseContext.Categories.ToListAsync();
             int count = DataSource.Cast<Category>().Count();
 
@@ -55,6 +61,8 @@ namespace webapp.Pages.Categories {
         }
 
         public async Task<IActionResult> OnPostCrudUpdateAsync([FromBody] CRUDModel<Category> request) {
+            if (!(User.Identity?.IsAuthenticated ?? false)) return RedirectToPage("/");
+
             switch (request.Action) {
                 case "insert":
                     _databaseContext.Categories.Add(request.Value);

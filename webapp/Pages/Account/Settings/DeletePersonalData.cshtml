@@ -2,17 +2,25 @@
 @model DeletePersonalDataModel
 @{
     ViewData["IsSettingsPage"] = true;
-    ViewData["PageTitle"] = "Delete Personal Data";
+    ViewData["PageTitle"] = Localizer["Delete personal data"];
     ViewData["ActivePage"] = SettingsNavPages.PersonalData;
 }
 
+<ejs-breadcrumb id="breadcrumb" cssClass="p-4" enableNavigation="true" maxItems="3" overflowMode="Menu">
+    <e-breadcrumb-items>
+        <e-breadcrumb-item iconCss="e-icons e-home" url="/"></e-breadcrumb-item>
+        <e-breadcrumb-item text="@Localizer["Settings"].Value" url="/Account/Settings"></e-breadcrumb-item>
+        <e-breadcrumb-item text="@Localizer["Personal data"].Value" url="/Account/Settings/PersonalData"></e-breadcrumb-item>
+        <e-breadcrumb-item text="@Localizer["Delete personal data"].Value" url="/Account/Settings/DeletePersonalData"></e-breadcrumb-item>
+    </e-breadcrumb-items>
+</ejs-breadcrumb>
+
 <h3>@ViewData["PageTitle"]</h3>
-<div class="alert alert-warning" role="alert">
+<div class="alert alert-warning mt-3" role="alert">
     <p>
         <strong>Deleting this data will permanently remove your account, and this cannot be recovered.</strong>
     </p>
 </div>
-
 <div>
     <form id="delete-user" method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>

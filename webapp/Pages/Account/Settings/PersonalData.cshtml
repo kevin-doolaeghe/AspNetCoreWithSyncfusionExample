@@ -2,24 +2,33 @@
 @model PersonalDataModel
 @{
     ViewData["IsSettingsPage"] = true;
-    ViewData["PageTitle"] = "Personal Data";
+    ViewData["PageTitle"] = Localizer["Personal Data"];
     ViewData["ActivePage"] = SettingsNavPages.PersonalData;
 }
 
-<h3>@ViewData["PageTitle"]</h3>
+<ejs-breadcrumb id="breadcrumb" cssClass="p-4" enableNavigation="true" maxItems="3" overflowMode="Menu">
+    <e-breadcrumb-items>
+        <e-breadcrumb-item iconCss="e-icons e-home" url="/"></e-breadcrumb-item>
+        <e-breadcrumb-item text="@Localizer["Settings"].Value" url="/Account/Settings"></e-breadcrumb-item>
+        <e-breadcrumb-item text="@Localizer["Personal data"].Value" url="/Account/Settings/PersonalData"></e-breadcrumb-item>
+    </e-breadcrumb-items>
+</ejs-breadcrumb>
 
-<div class="row">
-    <div class="col-md-6">
+<h3>@ViewData["PageTitle"]</h3>
+<div class="row mt-3">
+    <div class="col-xxl-6">
         <p>Your account contains personal data that you have given us. This page allows you to download or delete that data.</p>
         <p>
             <strong>Deleting this data will permanently remove your account, and this cannot be recovered.</strong>
         </p>
-        <form id="download-data" asp-page="DownloadPersonalData" method="post">
-            <button class="btn btn-primary" type="submit">Download</button>
-        </form>
-        <p>
-            <a id="delete" asp-page="DeletePersonalData" class="btn btn-danger">Delete</a>
-        </p>
+        <div class="btn-group w-100">
+            <form asp-page="DownloadPersonalData" method="post">
+                <button class="btn btn-lg btn-primary" type="submit">@Localizer["Download"]</button>
+            </form>
+            <a class="btn btn-lg btn-danger" asp-page="DeletePersonalData">
+                @Localizer["Delete"]
+            </a>
+        </div>
     </div>
 </div>
 

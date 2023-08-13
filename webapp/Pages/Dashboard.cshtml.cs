@@ -29,7 +29,9 @@ namespace webapp.Pages {
 
         public IList<Transaction> RecentTransactions { get; set; } = default!;
 
-        public async Task OnGetAsync() {
+        public async Task<IActionResult> OnGetAsync() {
+            if (!(User.Identity?.IsAuthenticated ?? false)) return RedirectToPage("/");
+
             var transactions = await _databaseContext.Transactions
                 .AsNoTracking()
                 .Include(x => x.Category)
@@ -92,6 +94,8 @@ namespace webapp.Pages {
                 }
                 ExpenseVsIncomeData[i].Balance = ExpenseVsIncomeData[i].Income - ExpenseVsIncomeData[i].Expense;
             }
+
+            return Page();
         }
 
         public class ColumnChartData {

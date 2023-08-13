@@ -31,7 +31,9 @@ namespace webapp.Pages.Transactions {
 
         public double Cashflow { get; set; }
 
-        public async Task OnGetAsync() {
+        public async Task<IActionResult> OnGetAsync() {
+            if (!(User.Identity?.IsAuthenticated ?? false)) return RedirectToPage("/");
+
             Categories = await _databaseContext.Categories.AsNoTracking().ToListAsync();
             var currentDate = DateTime.Today;
             DataSource = await _databaseContext.Transactions
@@ -43,9 +45,13 @@ namespace webapp.Pages.Transactions {
             CurrentBalance = transactions.Where(x => x.IsDone).Select(x => x.Amount).Sum();
             RealBalance = transactions.Select(x => x.Amount).Sum();
             Cashflow = double.Abs(RealBalance - CurrentBalance);
+
+            return Page();
         }
 
-        public async Task<JsonResult> OnPostDataSourceAsync([FromBody] DataManagerRequest dm) {
+        public async Task<IActionResult> OnPostDataSourceAsync([FromBody] DataManagerRequest dm) {
+            if (!(User.Identity?.IsAuthenticated ?? false)) return RedirectToPage("/");
+
             var currentDate = DateTime.Today;
             DataSource = await _databaseContext.Transactions
                 .Where(x => x.Date.Year == currentDate.Year && x.Date.Month == currentDate.Month)
@@ -77,6 +83,8 @@ namespace webapp.Pages.Transactions {
         }
 
         public async Task<IActionResult> OnPostCrudUpdateAsync([FromBody] CRUDModel<Transaction> request) {
+            if (!(User.Identity?.IsAuthenticated ?? false)) return RedirectToPage("/");
+
             switch (request.Action) {
                 case "insert":
                     _databaseContext.Transactions.Add(request.Value);
