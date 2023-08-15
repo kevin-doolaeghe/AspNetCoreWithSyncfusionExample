@@ -1,9 +1,8 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using Syncfusion.EJ2.Base;
-using System.Text.Json;
 using webapp.Models;
 using webapp.Services;
 
@@ -12,12 +11,11 @@ namespace webapp.Pages.Categories {
     [IgnoreAntiforgeryToken]
     public class IndexModel : PageModel {
 
-        private readonly ILogger<IndexModel> _logger;
-
+        private readonly UserManager<User> _userManager;
         private readonly DatabaseContext _databaseContext;
 
-        public IndexModel(ILogger<IndexModel> logger, DatabaseContext databaseContext) {
-            _logger = logger;
+        public IndexModel(UserManager<User> userManager, DatabaseContext databaseContext) {
+            _userManager = userManager;
             _databaseContext = databaseContext;
         }
 
@@ -26,7 +24,12 @@ namespace webapp.Pages.Categories {
         public async Task<IActionResult> OnGetAsync() {
             if (!(User.Identity?.IsAuthenticated ?? false)) return Redirect("/");
 
-            DataSource = await _databaseContext.Categories.ToListAsync();
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null) return Redirect("/");
+
+            DataSource = await _databaseContext.Categories
+                .Where(x => x.UserId == user.Id)
+                .ToListAsync();
 
             return Page();
         }
@@ -34,7 +37,12 @@ namespace webapp.Pages.Categories {
         public async Task<IActionResult> OnPostDataSourceAsync([FromBody] DataManagerRequest dm) {
             if (!(User.Identity?.IsAuthenticated ?? false)) return Redirect("/");
 
-            DataSource = await _databaseContext.Categories.ToListAsync();
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null) return Redirect("/");
+
+            DataSource = await _databaseContext.Categories
+                .Where(x => x.UserId == user.Id)
+                .ToListAsync();
             int count = DataSource.Cast<Category>().Count();
 
             DataOperations operations = new();
@@ -63,8 +71,12 @@ namespace webapp.Pages.Categories {
         public async Task<IActionResult> OnPostCrudUpdateAsync([FromBody] CRUDModel<Category> request) {
             if (!(User.Identity?.IsAuthenticated ?? false)) return Redirect("/");
 
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null) return Redirect("/");
+
             switch (request.Action) {
                 case "insert":
+                    request.Value.UserId = user.Id;
                     _databaseContext.Categories.Add(request.Value);
                     break;
                 case "update":
@@ -72,8 +84,17 @@ namespace webapp.Pages.Categories {
                     break;
                 case "remove":
                     long id = long.Parse($"{request.Key}");
-                    if (_databaseContext.Transactions.Where(x => x.CategoryId == id).Count() == 0) {
-                        _databaseContext.Categories.Remove(_databaseContext.Categories.Where(x => x.Id == id).First());
+                    var transactionsWithCategory = await _databaseContext.Transactions
+                        .AsNoTracking()
+                        .Where(x => x.UserId == user.Id)
+                        .Where(x => x.CategoryId == id)
+                        .ToListAsync();
+                    if (transactionsWithCategory.Count == 0) {
+                        var category = await _databaseContext.Categories
+                            .Where(x => x.UserId == user.Id)
+                            .Where(x => x.Id == id)
+                            .FirstAsync();
+                        _databaseContext.Categories.Remove(category);
                     }
                     break;
             }

@@ -1,8 +1,8 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Syncfusion.EJ2.Base;
-using System.Text.Json;
 using webapp.Models;
 using webapp.Services;
 
@@ -11,9 +11,11 @@ namespace webapp.Pages.Transactions {
     [IgnoreAntiforgeryToken]
     public class IndexModel : PageModel {
 
+        private readonly UserManager<User> _userManager;
         private readonly DatabaseContext _databaseContext;
 
-        public IndexModel(DatabaseContext databaseContext) {
+        public IndexModel(UserManager<User> userManager, DatabaseContext databaseContext) {
+            _userManager = userManager;
             _databaseContext = databaseContext;
         }
 
@@ -24,8 +26,15 @@ namespace webapp.Pages.Transactions {
         public async Task<IActionResult> OnGetAsync() {
             if (!(User.Identity?.IsAuthenticated ?? false)) return Redirect("/");
 
-            Categories = await _databaseContext.Categories.AsNoTracking().ToListAsync();
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null) return Redirect("/");
+
+            Categories = await _databaseContext.Categories
+                .AsNoTracking()
+                .Where(x => x.UserId == user.Id)
+                .ToListAsync();
             DataSource = await _databaseContext.Transactions
+                .Where(x => x.UserId == user.Id)
                 .OrderBy(x => x.Date)
                 .ToListAsync();
 
@@ -35,7 +44,11 @@ namespace webapp.Pages.Transactions {
         public async Task<IActionResult> OnPostDataSourceAsync([FromBody] DataManagerRequest dm) {
             if (!(User.Identity?.IsAuthenticated ?? false)) return Redirect("/");
 
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null) return Redirect("/");
+
             DataSource = await _databaseContext.Transactions
+                .Where(x => x.UserId == user.Id)
                 .OrderBy(x => x.Date)
                 .ToListAsync();
             int count = DataSource.Cast<Transaction>().Count();
@@ -66,8 +79,12 @@ namespace webapp.Pages.Transactions {
         public async Task<IActionResult> OnPostCrudUpdateAsync([FromBody] CRUDModel<Transaction> request) {
             if (!(User.Identity?.IsAuthenticated ?? false)) return Redirect("/");
 
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null) return Redirect("/");
+
             switch (request.Action) {
                 case "insert":
+                    request.Value.UserId = user.Id;
                     _databaseContext.Transactions.Add(request.Value);
                     break;
                 case "update":
@@ -75,7 +92,11 @@ namespace webapp.Pages.Transactions {
                     break;
                 case "remove":
                     long id = long.Parse($"{request.Key}");
-                    _databaseContext.Transactions.Remove(_databaseContext.Transactions.Where(x => x.Id == id).First());
+                    var transaction = await _databaseContext.Transactions
+                        .Where(x => x.UserId == user.Id)
+                        .Where(x => x.Id == id)
+                        .FirstAsync();
+                    _databaseContext.Transactions.Remove(transaction);
                     break;
             }
             await _databaseContext.SaveChangesAsync();

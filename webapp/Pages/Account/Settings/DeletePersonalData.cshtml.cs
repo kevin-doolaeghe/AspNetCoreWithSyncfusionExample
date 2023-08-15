@@ -52,7 +52,7 @@ namespace webapp.Pages.Account.Settings {
         public async Task<IActionResult> OnGetAsync() {
             var user = await _userManager.GetUserAsync(User);
             if (user == null) return NotFound();
-
+            
             RequirePassword = await _userManager.HasPasswordAsync(user);
             return Page();
         }

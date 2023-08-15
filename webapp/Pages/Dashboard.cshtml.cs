@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
@@ -9,9 +10,11 @@ namespace webapp.Pages {
 
     public class DashboardModel : PageModel {
 
+        private readonly UserManager<User> _userManager;
         private readonly DatabaseContext _databaseContext;
 
-        public DashboardModel(DatabaseContext databaseContext) {
+        public DashboardModel(UserManager<User> userManager, DatabaseContext databaseContext) {
+            _userManager = userManager;
             _databaseContext = databaseContext;
         }
 
@@ -32,8 +35,12 @@ namespace webapp.Pages {
         public async Task<IActionResult> OnGetAsync() {
             if (!(User.Identity?.IsAuthenticated ?? false)) return Redirect("/");
 
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null) return Redirect("/");
+
             var transactions = await _databaseContext.Transactions
                 .AsNoTracking()
+                .Where(x => x.UserId == user.Id)
                 .Include(x => x.Category)
                 .ToListAsync();
 

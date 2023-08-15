@@ -13,6 +13,10 @@ namespace webapp.Models {
 
         public Category? Category { get; set; }
 
+        public string? UserId { get; set; }
+
+        public User? User { get; set; }
+
         public string? Note { get; set; }
 
         public double Amount { get; set; }

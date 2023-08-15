@@ -26,6 +26,11 @@
             <span asp-validation-for="Input.PhoneNumber" class="text-danger d-block my-2"></span>
         </div>
         <button id="update-profile-button" type="submit" class="w-100 btn btn-primary">@Localizer["Save"]</button>
+        @if (Model.StatusMessage != null) {
+            <div class="alert alert-success mt-3" role="alert">
+                @Model.StatusMessage
+            </div>
+        }
     </form>
 </div>
 
