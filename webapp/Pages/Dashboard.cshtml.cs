@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
+using System.Security.Claims;
 using webapp.Models;
 using webapp.Services;
 
@@ -10,12 +10,12 @@ namespace webapp.Pages {
 
     public class DashboardModel : PageModel {
 
-        private readonly UserManager<User> _userManager;
         private readonly DatabaseContext _databaseContext;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public DashboardModel(UserManager<User> userManager, DatabaseContext databaseContext) {
-            _userManager = userManager;
+        public DashboardModel(DatabaseContext databaseContext, IHttpContextAccessor httpContextAccessor) {
             _databaseContext = databaseContext;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public double CurrentBalance { get; set; }
@@ -35,7 +35,7 @@ namespace webapp.Pages {
         public async Task<IActionResult> OnGetAsync() {
             if (!(User.Identity?.IsAuthenticated ?? false)) return Redirect("/");
 
-            var user = await _userManager.GetUserAsync(User);
+            var user = await GetUserAsync();
             if (user == null) return Redirect("/");
 
             var transactions = await _databaseContext.Transactions
@@ -103,6 +103,13 @@ namespace webapp.Pages {
             }
 
             return Page();
+        }
+
+        public async Task<User?> GetUserAsync() {
+            var userId = _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return await _databaseContext.Users
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Id == userId);
         }
 
         public class ColumnChartData {

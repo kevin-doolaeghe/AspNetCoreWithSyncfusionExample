@@ -1,8 +1,8 @@
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Syncfusion.EJ2.Base;
+using System.Security.Claims;
 using webapp.Models;
 using webapp.Services;
 
@@ -11,12 +11,12 @@ namespace webapp.Pages.Categories {
     [IgnoreAntiforgeryToken]
     public class IndexModel : PageModel {
 
-        private readonly UserManager<User> _userManager;
         private readonly DatabaseContext _databaseContext;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public IndexModel(UserManager<User> userManager, DatabaseContext databaseContext) {
-            _userManager = userManager;
+        public IndexModel(DatabaseContext databaseContext, IHttpContextAccessor httpContextAccessor) {
             _databaseContext = databaseContext;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public IEnumerable<Category> DataSource { get; set; } = default!;
@@ -24,7 +24,7 @@ namespace webapp.Pages.Categories {
         public async Task<IActionResult> OnGetAsync() {
             if (!(User.Identity?.IsAuthenticated ?? false)) return Redirect("/");
 
-            var user = await _userManager.GetUserAsync(User);
+            var user = await GetUserAsync();
             if (user == null) return Redirect("/");
 
             DataSource = await _databaseContext.Categories
@@ -37,7 +37,7 @@ namespace webapp.Pages.Categories {
         public async Task<IActionResult> OnPostDataSourceAsync([FromBody] DataManagerRequest dm) {
             if (!(User.Identity?.IsAuthenticated ?? false)) return Redirect("/");
 
-            var user = await _userManager.GetUserAsync(User);
+            var user = await GetUserAsync();
             if (user == null) return Redirect("/");
 
             DataSource = await _databaseContext.Categories
@@ -71,7 +71,7 @@ namespace webapp.Pages.Categories {
         public async Task<IActionResult> OnPostCrudUpdateAsync([FromBody] CRUDModel<Category> request) {
             if (!(User.Identity?.IsAuthenticated ?? false)) return Redirect("/");
 
-            var user = await _userManager.GetUserAsync(User);
+            var user = await GetUserAsync();
             if (user == null) return Redirect("/");
 
             switch (request.Action) {
@@ -102,6 +102,13 @@ namespace webapp.Pages.Categories {
 
             if (request.Action == "remove") return new JsonResult(request);
             return new JsonResult(request.Value);
+        }
+
+        public async Task<User?> GetUserAsync() {
+            var userId = _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return await _databaseContext.Users
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Id == userId);
         }
     }
 }

@@ -1,8 +1,8 @@
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Syncfusion.EJ2.Base;
+using System.Security.Claims;
 using webapp.Models;
 using webapp.Services;
 
@@ -11,12 +11,12 @@ namespace webapp.Pages.Transactions {
     [IgnoreAntiforgeryToken]
     public class CurrentMonthModel : PageModel {
 
-        private readonly UserManager<User> _userManager;
         private readonly DatabaseContext _databaseContext;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public CurrentMonthModel(UserManager<User> userManager, DatabaseContext databaseContext) {
-            _userManager = userManager;
+        public CurrentMonthModel(DatabaseContext databaseContext, IHttpContextAccessor httpContextAccessor) {
             _databaseContext = databaseContext;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public IList<Category> Categories { get; set; } = default!;
@@ -32,7 +32,7 @@ namespace webapp.Pages.Transactions {
         public async Task<IActionResult> OnGetAsync() {
             if (!(User.Identity?.IsAuthenticated ?? false)) return Redirect("/");
 
-            var user = await _userManager.GetUserAsync(User);
+            var user = await GetUserAsync();
             if (user == null) return Redirect("/");
 
             Categories = await _databaseContext.Categories
@@ -60,7 +60,7 @@ namespace webapp.Pages.Transactions {
         public async Task<IActionResult> OnPostDataSourceAsync([FromBody] DataManagerRequest dm) {
             if (!(User.Identity?.IsAuthenticated ?? false)) return Redirect("/");
 
-            var user = await _userManager.GetUserAsync(User);
+            var user = await GetUserAsync();
             if (user == null) return Redirect("/");
 
             var currentDate = DateTime.Today;
@@ -97,7 +97,7 @@ namespace webapp.Pages.Transactions {
         public async Task<IActionResult> OnPostCrudUpdateAsync([FromBody] CRUDModel<Transaction> request) {
             if (!(User.Identity?.IsAuthenticated ?? false)) return Redirect("/");
 
-            var user = await _userManager.GetUserAsync(User);
+            var user = await GetUserAsync();
             if (user == null) return Redirect("/");
 
             switch (request.Action) {
@@ -121,6 +121,13 @@ namespace webapp.Pages.Transactions {
 
             if (request.Action == "remove") return new JsonResult(request);
             return new JsonResult(request.Value);
+        }
+
+        public async Task<User?> GetUserAsync() {
+            var userId = _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return await _databaseContext.Users
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Id == userId);
         }
     }
 }

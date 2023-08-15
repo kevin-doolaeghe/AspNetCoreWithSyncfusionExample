@@ -1,8 +1,8 @@
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using System.Globalization;
+using System.Security.Claims;
 using webapp.Models;
 using webapp.Services;
 
@@ -10,12 +10,12 @@ namespace webapp.Pages.Balance {
 
     public class IndexModel : PageModel {
 
-        private readonly UserManager<User> _userManager;
         private readonly DatabaseContext _databaseContext;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public IndexModel(UserManager<User> userManager, DatabaseContext databaseContext) {
-            _userManager = userManager;
+        public IndexModel(DatabaseContext databaseContext, IHttpContextAccessor httpContextAccessor) {
             _databaseContext = databaseContext;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public double CurrentBalance { get; set; }
@@ -27,8 +27,8 @@ namespace webapp.Pages.Balance {
         public async Task<IActionResult> OnGetAsync() {
             if (!(User.Identity?.IsAuthenticated ?? false)) return Redirect("/");
 
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null) return NotFound();
+            var user = await GetUserAsync();
+            if (user == null) return Redirect("/");
 
             var transactions = await _databaseContext.Transactions
                 .AsNoTracking()
@@ -46,6 +46,13 @@ namespace webapp.Pages.Balance {
                 cashflow = Cashflow,
                 formattedCashflow = Cashflow.ToString("C2", CultureInfo.CurrentCulture),
             });
+        }
+
+        public async Task<User?> GetUserAsync() {
+            var userId = _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return await _databaseContext.Users
+                .AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Id == userId);
         }
     }
 }
