@@ -32,7 +32,7 @@ namespace webapp.Pages.Transactions {
         public double Cashflow { get; set; }
 
         public async Task<IActionResult> OnGetAsync() {
-            if (!(User.Identity?.IsAuthenticated ?? false)) return RedirectToPage("/");
+            if (!(User.Identity?.IsAuthenticated ?? false)) return Redirect("/");
 
             Categories = await _databaseContext.Categories.AsNoTracking().ToListAsync();
             var currentDate = DateTime.Today;
@@ -50,7 +50,7 @@ namespace webapp.Pages.Transactions {
         }
 
         public async Task<IActionResult> OnPostDataSourceAsync([FromBody] DataManagerRequest dm) {
-            if (!(User.Identity?.IsAuthenticated ?? false)) return RedirectToPage("/");
+            if (!(User.Identity?.IsAuthenticated ?? false)) return Redirect("/");
 
             var currentDate = DateTime.Today;
             DataSource = await _databaseContext.Transactions
@@ -83,7 +83,7 @@ namespace webapp.Pages.Transactions {
         }
 
         public async Task<IActionResult> OnPostCrudUpdateAsync([FromBody] CRUDModel<Transaction> request) {
-            if (!(User.Identity?.IsAuthenticated ?? false)) return RedirectToPage("/");
+            if (!(User.Identity?.IsAuthenticated ?? false)) return Redirect("/");
 
             switch (request.Action) {
                 case "insert":

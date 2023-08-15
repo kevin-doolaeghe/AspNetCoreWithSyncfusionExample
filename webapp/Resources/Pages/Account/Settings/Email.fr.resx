@@ -118,13 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Change email" xml:space="preserve">
-    <value>Modifier l'adresse mail</value>
+    <value>Changer l'adresse mail</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Adresse mail</value>
   </data>
   <data name="Email placeholder" xml:space="preserve">
     <value>Entrer votre nouvelle adresse mail.</value>
-  </data>
-  <data name="Email update" xml:space="preserve">
-    <value>Mise à jour de l'adresse mail</value>
   </data>
   <data name="Settings" xml:space="preserve">
     <value>Paramètres</value>

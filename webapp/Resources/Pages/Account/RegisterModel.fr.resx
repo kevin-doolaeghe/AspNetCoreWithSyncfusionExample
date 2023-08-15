@@ -117,7 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Title" xml:space="preserve">
-    <value>Demo</value>
+  <data name="DuplicateEmail" xml:space="preserve">
+    <value>Cette adresse mail est déjà utilisée.</value>
+  </data>
+  <data name="DuplicateUserName" xml:space="preserve">
+    <value>Ce nom d'utilisateur est déjà utilisé.</value>
   </data>
 </root>

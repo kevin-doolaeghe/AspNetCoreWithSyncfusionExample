@@ -21,7 +21,7 @@ namespace webapp.Pages.Balance {
         public double Cashflow { get; set; }
 
         public async Task<IActionResult> OnGetAsync() {
-            if (!(User.Identity?.IsAuthenticated ?? false)) return RedirectToPage("/");
+            if (!(User.Identity?.IsAuthenticated ?? false)) return Redirect("/");
 
             var transactions = await _databaseContext.Transactions.AsNoTracking().ToListAsync();
             CurrentBalance = transactions.Where(x => x.IsDone).Select(x => x.Amount).Sum();

@@ -22,7 +22,7 @@ namespace webapp.Pages.Transactions {
         public IEnumerable<Transaction> DataSource { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync() {
-            if (!(User.Identity?.IsAuthenticated ?? false)) return RedirectToPage("/");
+            if (!(User.Identity?.IsAuthenticated ?? false)) return Redirect("/");
 
             Categories = await _databaseContext.Categories.AsNoTracking().ToListAsync();
             DataSource = await _databaseContext.Transactions
@@ -33,7 +33,7 @@ namespace webapp.Pages.Transactions {
         }
 
         public async Task<IActionResult> OnPostDataSourceAsync([FromBody] DataManagerRequest dm) {
-            if (!(User.Identity?.IsAuthenticated ?? false)) return RedirectToPage("/");
+            if (!(User.Identity?.IsAuthenticated ?? false)) return Redirect("/");
 
             DataSource = await _databaseContext.Transactions
                 .OrderBy(x => x.Date)
@@ -64,7 +64,7 @@ namespace webapp.Pages.Transactions {
         }
 
         public async Task<IActionResult> OnPostCrudUpdateAsync([FromBody] CRUDModel<Transaction> request) {
-            if (!(User.Identity?.IsAuthenticated ?? false)) return RedirectToPage("/");
+            if (!(User.Identity?.IsAuthenticated ?? false)) return Redirect("/");
 
             switch (request.Action) {
                 case "insert":

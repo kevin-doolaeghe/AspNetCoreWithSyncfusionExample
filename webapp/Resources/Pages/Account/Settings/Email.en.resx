@@ -120,11 +120,11 @@
   <data name="Change email" xml:space="preserve">
     <value>Change email</value>
   </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
   <data name="Email placeholder" xml:space="preserve">
     <value>Please enter new email.</value>
-  </data>
-  <data name="Email update" xml:space="preserve">
-    <value>Email update</value>
   </data>
   <data name="Settings" xml:space="preserve">
     <value>Settings</value>

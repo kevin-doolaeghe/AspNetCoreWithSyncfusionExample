@@ -6,8 +6,8 @@ namespace webapp.Pages {
     public class IndexModel : PageModel {
 
         public IActionResult OnGet() {
-            if (User.Identity?.IsAuthenticated ?? false) return RedirectToPage("/Dashboard");
-            else return RedirectToPage("/Account/Login");
+            if (User.Identity?.IsAuthenticated ?? false) return Redirect("/Dashboard");
+            else return Redirect("/Account/Login");
         }
     }
 }

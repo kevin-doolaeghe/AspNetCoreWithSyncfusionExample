@@ -117,6 +117,21 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Delete" xml:space="preserve">
+    <value>Supprimer</value>
+  </data>
+  <data name="Deletion warning" xml:space="preserve">
+    <value>Supprimer ces données entraînera la suppression définitive de votre compte.</value>
+  </data>
+  <data name="Download" xml:space="preserve">
+    <value>Télécharger</value>
+  </data>
+  <data name="Personal data" xml:space="preserve">
+    <value>Données personnelles</value>
+  </data>
+  <data name="Personal data description" xml:space="preserve">
+    <value>Les données personnelles liées à votre compte correspondent aux données que vous avez saisies. Cette page vous permet de télécharger ou de supprimer ces données.</value>
+  </data>
   <data name="Settings" xml:space="preserve">
     <value>Paramètres</value>
   </data>

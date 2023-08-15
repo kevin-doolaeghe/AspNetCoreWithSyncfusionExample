@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Localization;
 using System.ComponentModel.DataAnnotations;
 using webapp.Models;
 
@@ -10,11 +11,13 @@ namespace webapp.Pages.Account.Settings {
 
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly IStringLocalizer<DeletePersonalDataModel> _localizer;
         private readonly ILogger<DeletePersonalDataModel> _logger;
 
-        public DeletePersonalDataModel(UserManager<User> userManager, SignInManager<User> signInManager, ILogger<DeletePersonalDataModel> logger) {
+        public DeletePersonalDataModel(UserManager<User> userManager, SignInManager<User> signInManager, IStringLocalizer<DeletePersonalDataModel> localizer, ILogger<DeletePersonalDataModel> logger) {
             _userManager = userManager;
             _signInManager = signInManager;
+            _localizer = localizer;
             _logger = logger;
         }
 
@@ -35,7 +38,7 @@ namespace webapp.Pages.Account.Settings {
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required]
+            [Required(ErrorMessage = "The field is required")]
             [DataType(DataType.Password)]
             public string Password { get; set; } = default!;
         }
@@ -46,11 +49,9 @@ namespace webapp.Pages.Account.Settings {
         /// </summary>
         public bool RequirePassword { get; set; } = default!;
 
-        public async Task<IActionResult> OnGet() {
+        public async Task<IActionResult> OnGetAsync() {
             var user = await _userManager.GetUserAsync(User);
-            if (user == null) {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
+            if (user == null) return NotFound();
 
             RequirePassword = await _userManager.HasPasswordAsync(user);
             return Page();
@@ -58,14 +59,12 @@ namespace webapp.Pages.Account.Settings {
 
         public async Task<IActionResult> OnPostAsync() {
             var user = await _userManager.GetUserAsync(User);
-            if (user == null) {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
+            if (user == null) return NotFound();
 
             RequirePassword = await _userManager.HasPasswordAsync(user);
             if (RequirePassword) {
                 if (!await _userManager.CheckPasswordAsync(user, Input.Password)) {
-                    ModelState.AddModelError(string.Empty, "Incorrect password.");
+                    ModelState.AddModelError(string.Empty, _localizer["Incorrect password"]);
                     return Page();
                 }
             }
@@ -77,9 +76,9 @@ namespace webapp.Pages.Account.Settings {
             }
 
             await _signInManager.SignOutAsync();
-
             _logger.LogInformation("User with ID '{UserId}' deleted themselves.", userId);
-            return Redirect("~/");
+            
+            return Redirect("/");
         }
     }
 }

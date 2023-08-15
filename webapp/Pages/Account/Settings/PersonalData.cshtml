@@ -2,34 +2,33 @@
 @model PersonalDataModel
 @{
     ViewData["IsSettingsPage"] = true;
-    ViewData["PageTitle"] = Localizer["Personal Data"];
+    ViewData["PageTitle"] = Localizer["Personal data"];
     ViewData["ActivePage"] = SettingsNavPages.PersonalData;
 }
 
-<ejs-breadcrumb id="breadcrumb" cssClass="p-4" enableNavigation="true" maxItems="3" overflowMode="Menu">
-    <e-breadcrumb-items>
-        <e-breadcrumb-item iconCss="e-icons e-home" url="/"></e-breadcrumb-item>
-        <e-breadcrumb-item text="@Localizer["Settings"].Value" url="/Account/Settings"></e-breadcrumb-item>
-        <e-breadcrumb-item text="@Localizer["Personal data"].Value" url="/Account/Settings/PersonalData"></e-breadcrumb-item>
-    </e-breadcrumb-items>
-</ejs-breadcrumb>
+<div class="container">
+    <ejs-breadcrumb id="breadcrumb" cssClass="my-3" enableNavigation="true" maxItems="3" overflowMode="Menu">
+        <e-breadcrumb-items>
+            <e-breadcrumb-item iconCss="e-icons e-home" url="/"></e-breadcrumb-item>
+            <e-breadcrumb-item text="@Localizer["Settings"].Value" url="/Account/Settings"></e-breadcrumb-item>
+            <e-breadcrumb-item text="@Localizer["Personal data"].Value" url="/Account/Settings/PersonalData"></e-breadcrumb-item>
+        </e-breadcrumb-items>
+    </ejs-breadcrumb>
 
-<h3>@ViewData["PageTitle"]</h3>
-<div class="row mt-3">
-    <div class="col-xxl-6">
-        <p>Your account contains personal data that you have given us. This page allows you to download or delete that data.</p>
-        <p>
-            <strong>Deleting this data will permanently remove your account, and this cannot be recovered.</strong>
-        </p>
+    <div>
+        <p>@Localizer["Personal data description"]</p>
+        <p><strong>@Localizer["Deletion warning"]</strong></p>
+    </div>
+    <form asp-page="DownloadPersonalData" method="post">
         <div class="btn-group w-100">
-            <form asp-page="DownloadPersonalData" method="post">
-                <button class="btn btn-lg btn-primary" type="submit">@Localizer["Download"]</button>
-            </form>
-            <a class="btn btn-lg btn-danger" asp-page="DeletePersonalData">
+            <button class="btn btn-primary" type="submit">
+                @Localizer["Download"]
+            </button>
+            <a class="btn btn-danger" asp-page="DeletePersonalData">
                 @Localizer["Delete"]
             </a>
         </div>
-    </div>
+    </form>
 </div>
 
 @section Scripts {

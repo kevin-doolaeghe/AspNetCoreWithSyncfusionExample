@@ -1,11 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Text;
-using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Localization;
 using webapp.Models;
 
 namespace webapp.Pages.Account.Settings {
@@ -14,18 +11,21 @@ namespace webapp.Pages.Account.Settings {
 
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        private readonly IEmailSender _emailSender;
+        private readonly IStringLocalizer<EmailModel> _localizer;
+        private readonly ILogger<EmailModel> _logger;
 
-        public EmailModel(UserManager<User> userManager, SignInManager<User> signInManager, IEmailSender emailSender) {
+        public EmailModel(UserManager<User> userManager, SignInManager<User> signInManager, IStringLocalizer<EmailModel> localizer, ILogger<EmailModel> logger) {
             _userManager = userManager;
             _signInManager = signInManager;
-            _emailSender = emailSender;
+            _localizer = localizer;
+            _logger = logger;
         }
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
+        [Display(Name = "Email")]
         public string Email { get; set; } = default!;
 
         /// <summary>
@@ -39,14 +39,21 @@ namespace webapp.Pages.Account.Settings {
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
+        [TempData]
+        public string StatusMessage { get; set; } = default!;
+
+        /// <summary>
+        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
+        ///     directly from your code. This API may change or be removed in future releases.
+        /// </summary>
         public class InputModel {
 
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required]
-            [EmailAddress]
+            [Required(ErrorMessage = "The field is required")]
+            [EmailAddress(ErrorMessage = "Wrong email format")]
             [Display(Name = "New email")]
             public string NewEmail { get; set; } = default!;
         }
@@ -61,32 +68,36 @@ namespace webapp.Pages.Account.Settings {
 
         public async Task<IActionResult> OnGetAsync() {
             var user = await _userManager.GetUserAsync(User);
-            if (user == null) {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
+            if (user == null) return NotFound();
 
             await LoadAsync(user);
             return Page();
         }
 
         public async Task<IActionResult> OnPostChangeEmailAsync() {
+            if (!ModelState.IsValid) return Page();
+
             var user = await _userManager.GetUserAsync(User);
-            if (user == null) {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
+            if (user == null) return NotFound();
 
-            if (!ModelState.IsValid) {
-                var code = await _userManager.GenerateChangeEmailTokenAsync(user, Input.NewEmail);
-                await _userManager.ConfirmEmailAsync(
-                    user,
-                    WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code))
-                );
+            user.UserName = Input.NewEmail;
+            user.Email = Input.NewEmail;
 
-                await LoadAsync(user);
+            var changeEmailResult = await _userManager.UpdateAsync(user);
+            if (!changeEmailResult.Succeeded) {
+                foreach (var error in changeEmailResult.Errors) {
+                    string description = _localizer[error.Code];
+                    ModelState.AddModelError(string.Empty, description);
+                }
                 return Page();
             }
             
-            return RedirectToPage();
+            await _signInManager.RefreshSignInAsync(user);
+            _logger.LogInformation("User changed their email successfully.");
+            StatusMessage = _localizer["Email updated"];
+
+            await LoadAsync(user);
+            return Page();
         }
     }
 }

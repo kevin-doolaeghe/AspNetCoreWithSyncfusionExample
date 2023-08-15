@@ -2,38 +2,40 @@
 @model EmailModel
 @{
     ViewData["IsSettingsPage"] = true;
-    ViewData["PageTitle"] = Localizer["Email update"];
+    ViewData["PageTitle"] = Localizer["Email"];
     ViewData["ActivePage"] = SettingsNavPages.Email;
 }
 
-<ejs-breadcrumb id="breadcrumb" cssClass="p-4" enableNavigation="true" maxItems="3" overflowMode="Menu">
-    <e-breadcrumb-items>
-        <e-breadcrumb-item iconCss="e-icons e-home" url="/"></e-breadcrumb-item>
-        <e-breadcrumb-item text="@Localizer["Settings"].Value" url="/Account/Settings"></e-breadcrumb-item>
-        <e-breadcrumb-item text="@Localizer["Email update"].Value" url="/Account/Settings/Email"></e-breadcrumb-item>
-    </e-breadcrumb-items>
-</ejs-breadcrumb>
+<div class="container">
+    <ejs-breadcrumb id="breadcrumb" cssClass="my-3" enableNavigation="true" maxItems="3" overflowMode="Menu">
+        <e-breadcrumb-items>
+            <e-breadcrumb-item iconCss="e-icons e-home" url="/"></e-breadcrumb-item>
+            <e-breadcrumb-item text="@Localizer["Settings"].Value" url="/Account/Settings"></e-breadcrumb-item>
+            <e-breadcrumb-item text="@Localizer["Email"].Value" url="/Account/Settings/Email"></e-breadcrumb-item>
+        </e-breadcrumb-items>
+    </ejs-breadcrumb>
 
-<h3>@ViewData["PageTitle"]</h3>
-<div class="row mt-3">
-    <div class="col-xxl-6">
-        <form method="post">
-            <div asp-validation-summary="All" class="text-danger" role="alert"></div>
-            <div class="form-floating mb-3 input-group">
-                <input asp-for="Email" class="form-control" disabled />
-                    <div class="input-group-append">
-                        <span class="h-100 input-group-text text-success font-weight-bold">✓</span>
-                    </div>
-                <label asp-for="Email" class="form-label"></label>
+    <form method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+        <div class="form-floating mb-3 input-group">
+            <input asp-for="Email" class="form-control" disabled />
+            <div class="input-group-append">
+                <span class="h-100 input-group-text text-success font-weight-bold">✓</span>
             </div>
-            <div class="form-floating mb-3">
-                <input id="email" asp-for="Input.NewEmail" class="form-control" autocomplete="email" aria-required="true" placeholder="@Localizer["Email placeholder"]" />
-                <label asp-for="Input.NewEmail" class="form-label"></label>
-                <span asp-validation-for="Input.NewEmail" class="text-danger d-block my-2"></span>
+            <label asp-for="Email" class="form-label"></label>
+        </div>
+        <div class="form-floating mb-3">
+            <input id="email" asp-for="Input.NewEmail" class="form-control" autocomplete="email" aria-required="true" placeholder="@Localizer["Email placeholder"]" />
+            <label asp-for="Input.NewEmail" class="form-label"></label>
+            <span asp-validation-for="Input.NewEmail" class="text-danger d-block my-2"></span>
+        </div>
+        <button type="submit" asp-page-handler="ChangeEmail" class="w-100 btn btn-primary">@Localizer["Change email"]</button>
+        @if (Model.StatusMessage != null) {
+            <div class="alert alert-success mt-3" role="alert">
+                @Model.StatusMessage
             </div>
-            <button type="submit" asp-page-handler="ChangeEmail" class="w-100 btn btn-lg btn-primary">@Localizer["Change email"]</button>
-        </form>
-    </div>
+        }
+    </form>
 </div>
 
 @section Scripts {

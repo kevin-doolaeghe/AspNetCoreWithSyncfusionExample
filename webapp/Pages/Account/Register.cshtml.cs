@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Localization;
 using webapp.Models;
 
 namespace webapp.Pages.Account {
@@ -17,13 +18,15 @@ namespace webapp.Pages.Account {
         private readonly UserManager<User> _userManager;
         private readonly IUserStore<User> _userStore;
         private readonly IUserEmailStore<User> _emailStore;
+        private readonly IStringLocalizer<RegisterModel> _localizer;
         private readonly ILogger<RegisterModel> _logger;
 
-        public RegisterModel(UserManager<User> userManager, IUserStore<User> userStore, SignInManager<User> signInManager, ILogger<RegisterModel> logger) {
+        public RegisterModel(UserManager<User> userManager, IUserStore<User> userStore, SignInManager<User> signInManager, IStringLocalizer<RegisterModel> localizer, ILogger<RegisterModel> logger) {
             _userManager = userManager;
             _userStore = userStore;
             _emailStore = GetEmailStore();
             _signInManager = signInManager;
+            _localizer = localizer;
             _logger = logger;
         }
 
@@ -100,7 +103,8 @@ namespace webapp.Pages.Account {
                     }
                 }
                 foreach (var error in result.Errors) {
-                    ModelState.AddModelError(string.Empty, error.Description);
+                    string description = _localizer[error.Code];
+                    ModelState.AddModelError(string.Empty, description);
                 }
             }
 

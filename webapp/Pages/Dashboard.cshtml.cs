@@ -30,7 +30,7 @@ namespace webapp.Pages {
         public IList<Transaction> RecentTransactions { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync() {
-            if (!(User.Identity?.IsAuthenticated ?? false)) return RedirectToPage("/");
+            if (!(User.Identity?.IsAuthenticated ?? false)) return Redirect("/");
 
             var transactions = await _databaseContext.Transactions
                 .AsNoTracking()
