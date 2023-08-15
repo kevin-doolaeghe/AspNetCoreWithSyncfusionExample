@@ -22,6 +22,7 @@ builder.Services
     .AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<DatabaseContext>();
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+builder.Services.AddHttpContextAccessor();
 
 // Register Syncfusion license
 Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Mgo+DSMBMAY9C3t2V1hhQlJMfV5AQmBIYVp/TGpJfl96cVxMZVVBJAtUQF1hSn5Ud0FjUX5fcXdcRWhf");
