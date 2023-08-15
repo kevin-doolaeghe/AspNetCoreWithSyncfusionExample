@@ -118,7 +118,10 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Email" xml:space="preserve">
-    <value>Email</value>
+    <value>Adresse mail</value>
+  </data>
+  <data name="Email placeholder" xml:space="preserve">
+    <value>nom@exemple.com</value>
   </data>
   <data name="Login" xml:space="preserve">
     <value>Connexion</value>
@@ -126,8 +129,8 @@
   <data name="Password" xml:space="preserve">
     <value>Mot de passe</value>
   </data>
-  <data name="Password forgotten" xml:space="preserve">
-    <value>Mot de passe oublié ?</value>
+  <data name="Password placeholder" xml:space="preserve">
+    <value>Mot de passe</value>
   </data>
   <data name="Register" xml:space="preserve">
     <value>S'inscrire</value>

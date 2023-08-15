@@ -15,26 +15,26 @@
                     @Localizer["Register"]
                 </a>
             </div>
-            <div class="mt-4 mb-5">
-                <h2>@Localizer["Create a new account"]</h2>
+            <div class="my-4">
+                <h2>@ViewData["PageTitle"]</h2>
                 <hr />
             </div>
             <div>
-                <div asp-validation-summary="ModelOnly" class="text-danger my-2" role="alert"></div>
+                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
                 <div class="form-floating mb-3">
-                    <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                    <input id="username" asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="@Localizer["Email placeholder"]" />
                     <label asp-for="Input.Email">@Localizer["Email"]</label>
-                    <span asp-validation-for="Input.Email" class="text-danger my-2"></span>
+                    <span asp-validation-for="Input.Email" class="text-danger d-block my-2"></span>
                 </div>
                 <div class="form-floating mb-3">
-                    <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+                    <input id="password" asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="@Localizer["Password placeholder"]" />
                     <label asp-for="Input.Password">@Localizer["Password"]</label>
-                    <span asp-validation-for="Input.Password" class="text-danger my-2"></span>
+                    <span asp-validation-for="Input.Password" class="text-danger d-block my-2"></span>
                 </div>
-                <div class="form-floating mb-3">
-                    <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+                <div class="form-floating mb-4">
+                    <input id="confirmPassword" asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="@Localizer["Password placeholder"]" />
                     <label asp-for="Input.ConfirmPassword">@Localizer["Confirm password"]</label>
-                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger my-2"></span>
+                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger d-block my-2"></span>
                 </div>
             </div>
             <div>

@@ -1,10 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Text;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.WebUtilities;
 using webapp.Models;
 
 namespace webapp.Pages.Account {
@@ -16,17 +18,13 @@ namespace webapp.Pages.Account {
         private readonly IUserStore<User> _userStore;
         private readonly IUserEmailStore<User> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
-        private readonly IViewLocalizer _localizer;
-        private readonly IEmailSender _emailSender;
 
-        public RegisterModel(UserManager<User> userManager, IUserStore<User> userStore, SignInManager<User> signInManager, ILogger<RegisterModel> logger, IViewLocalizer localizer, IEmailSender emailSender) {
+        public RegisterModel(UserManager<User> userManager, IUserStore<User> userStore, SignInManager<User> signInManager, ILogger<RegisterModel> logger) {
             _userManager = userManager;
             _userStore = userStore;
             _emailStore = GetEmailStore();
             _signInManager = signInManager;
             _logger = logger;
-            _localizer = localizer;
-            _emailSender = emailSender;
         }
 
         /// <summary>
@@ -46,20 +44,14 @@ namespace webapp.Pages.Account {
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
-        public IList<AuthenticationScheme> ExternalLogins { get; set; } = default!;
-
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public class InputModel {
 
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required]
-            [EmailAddress]
+            [Required(ErrorMessage = "The field is required")]
+            [EmailAddress(ErrorMessage = "Wrong email format")]
             [Display(Name = "Email")]
             public string Email { get; set; } = default!;
 
@@ -67,8 +59,8 @@ namespace webapp.Pages.Account {
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long." /* _localizer["Password error message"].Value */, MinimumLength = 6)]
+            [Required(ErrorMessage = "The field is required")]
+            [StringLength(20, ErrorMessage = "Password error message", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
             public string Password { get; set; } = default!;
@@ -77,20 +69,19 @@ namespace webapp.Pages.Account {
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
+            [Required(ErrorMessage = "The field is required")]
             [DataType(DataType.Password)]
+            [Compare("Password", ErrorMessage = "Confirm password error message")]
             [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; } = default!;
         }
 
-        public async Task OnGetAsync(string? returnUrl = null) {
+        public void OnGet(string? returnUrl = null) {
             ReturnUrl = returnUrl ?? "/";
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
         public async Task<IActionResult> OnPostAsync(string? returnUrl = null) {
             returnUrl ??= Url.Content("~/");
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid) {
                 var user = CreateUser();
 
@@ -133,7 +124,7 @@ namespace webapp.Pages.Account {
             if (!_userManager.SupportsUserEmail) {
                 throw new NotSupportedException("The default UI requires a user store with email support.");
             }
-            return (IUserEmailStore<User>)_userStore;
+            return (IUserEmailStore<User>) _userStore;
         }
     }
 }

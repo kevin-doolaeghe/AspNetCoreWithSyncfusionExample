@@ -117,16 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Change email" xml:space="preserve">
-    <value>Change email</value>
-  </data>
-  <data name="Email placeholder" xml:space="preserve">
-    <value>Please enter new email.</value>
-  </data>
-  <data name="Email update" xml:space="preserve">
-    <value>Email update</value>
-  </data>
-  <data name="Settings" xml:space="preserve">
-    <value>Settings</value>
+  <data name="Invalid login attempt" xml:space="preserve">
+    <value>La tentative d'authentification a échoué.</value>
   </data>
 </root>

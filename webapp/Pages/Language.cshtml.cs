@@ -7,7 +7,7 @@ namespace webapp.Pages {
     public class LanguageModel : PageModel {
 
         public IActionResult OnGet() {
-            return RedirectToPage("/");
+            return Redirect("/");
         }
 
         public IActionResult OnPost(string newCulture) {

@@ -117,16 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Change email" xml:space="preserve">
-    <value>Change email</value>
+  <data name="Email" xml:space="preserve">
+    <value>Adresse mail</value>
   </data>
-  <data name="Email placeholder" xml:space="preserve">
-    <value>Please enter new email.</value>
+  <data name="Password" xml:space="preserve">
+    <value>Mot de passe</value>
   </data>
-  <data name="Email update" xml:space="preserve">
-    <value>Email update</value>
+  <data name="Remember me" xml:space="preserve">
+    <value>Se souvenir de moi</value>
   </data>
-  <data name="Settings" xml:space="preserve">
-    <value>Settings</value>
+  <data name="The field is required" xml:space="preserve">
+    <value>Le champ est requis.</value>
+  </data>
+  <data name="Wrong email format" xml:space="preserve">
+    <value>L'adresse email saisie n'est pas valide.</value>
   </data>
 </root>

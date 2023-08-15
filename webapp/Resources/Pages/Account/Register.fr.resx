@@ -120,14 +120,14 @@
   <data name="Confirm password" xml:space="preserve">
     <value>Confirmer le mot de passe</value>
   </data>
-  <data name="Confirm password error message" xml:space="preserve">
-    <value>Les mots de passe saisis ne correspondent pas.</value>
-  </data>
   <data name="Create a new account" xml:space="preserve">
     <value>Créer un nouveau compte</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>Email</value>
+  </data>
+  <data name="Email placeholder" xml:space="preserve">
+    <value>nom@exemple.com</value>
   </data>
   <data name="Login" xml:space="preserve">
     <value>Connexion</value>
@@ -135,8 +135,8 @@
   <data name="Password" xml:space="preserve">
     <value>Mot de passe</value>
   </data>
-  <data name="Password error message" xml:space="preserve">
-    <value>La longueur {0} doit être comprise entre {2} et {1}.</value>
+  <data name="Password placeholder" xml:space="preserve">
+    <value>Mot de passe</value>
   </data>
   <data name="Register" xml:space="preserve">
     <value>S'inscrire</value>

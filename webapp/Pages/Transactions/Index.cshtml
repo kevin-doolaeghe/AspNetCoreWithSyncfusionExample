@@ -96,7 +96,7 @@
         <e-grid-searchSettings fields="searchSettings" operator="contains" ignoreCase="true"></e-grid-searchSettings>
         <e-grid-loadingIndicator indicatorType="Shimmer"></e-grid-loadingIndicator>
         <e-grid-columns>
-            <e-grid-column field="TransactionId" headerText="@Localizer["Id"].Value" isPrimaryKey="true" visible="false"></e-grid-column>
+            <e-grid-column field="Id" headerText="@Localizer["Id"].Value" isPrimaryKey="true" visible="false"></e-grid-column>
             <e-grid-column field="Date" headerText="@Localizer["Date"].Value" editType="datepickeredit" edit="new { @params = dateParams }" filter="new { @params = dateParams }" validationRules="validationRules" format="@Localizer["Date format"].Value" defaultValue="@DateTime.Today" width="120"></e-grid-column>
             <e-grid-column field="IsDone" headerText="@Localizer["Status"].Value" editType="dropdownedit" edit="new { @params = statusParams }" validationRules="validationRules" template="#statusTemplate" defaultValue="false" width="100"></e-grid-column>
             <e-grid-column field="Note" headerText="@Localizer["Note"].Value" editType="textboxedit" validationRules="validationRules" minWidth="200" width="300"></e-grid-column>

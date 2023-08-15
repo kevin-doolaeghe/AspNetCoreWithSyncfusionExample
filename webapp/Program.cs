@@ -19,7 +19,7 @@ builder.Services.AddDbContext<DatabaseContext>(
     options => options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServerConnectionString"))
 );
 builder.Services
-    .AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<DatabaseContext>();
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 

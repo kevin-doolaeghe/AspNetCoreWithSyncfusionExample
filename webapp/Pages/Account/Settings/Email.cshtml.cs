@@ -32,19 +32,6 @@ namespace webapp.Pages.Account.Settings {
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
-        public bool IsEmailConfirmed { get; set; } = default!;
-
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
-        [TempData]
-        public string StatusMessage { get; set; } = default!;
-
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         [BindProperty]
         public InputModel Input { get; set; } = default!;
 
@@ -70,8 +57,6 @@ namespace webapp.Pages.Account.Settings {
                 Email = email;
                 Input = new InputModel { NewEmail = email };
             }
-
-            IsEmailConfirmed = await _userManager.IsEmailConfirmedAsync(user);
         }
 
         public async Task<IActionResult> OnGetAsync() {
@@ -91,63 +76,16 @@ namespace webapp.Pages.Account.Settings {
             }
 
             if (!ModelState.IsValid) {
-                await LoadAsync(user);
-                return Page();
-            }
-
-            var email = await _userManager.GetEmailAsync(user);
-            if (Input.NewEmail != email) {
-                var userId = await _userManager.GetUserIdAsync(user);
                 var code = await _userManager.GenerateChangeEmailTokenAsync(user, Input.NewEmail);
-                code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                var callbackUrl = Url.Page(
-                    "/Account/ConfirmEmailChange",
-                    pageHandler: null,
-                    values: new { area = "Identity", userId = userId, email = Input.NewEmail, code = code },
-                    protocol: Request.Scheme
-                );
-                await _emailSender.SendEmailAsync(
-                    Input.NewEmail,
-                    "Confirm your email",
-                    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>."
+                await _userManager.ConfirmEmailAsync(
+                    user,
+                    WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code))
                 );
 
-                StatusMessage = "Confirmation link to change email sent. Please check your email.";
-                return RedirectToPage();
-            }
-
-            StatusMessage = "Your email is unchanged.";
-            return RedirectToPage();
-        }
-
-        public async Task<IActionResult> OnPostSendVerificationEmailAsync() {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null) {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
-
-            if (!ModelState.IsValid) {
                 await LoadAsync(user);
                 return Page();
             }
-
-            var userId = await _userManager.GetUserIdAsync(user);
-            var email = await _userManager.GetEmailAsync(user);
-            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-            var callbackUrl = Url.Page(
-                "/Account/ConfirmEmail",
-                pageHandler: null,
-                values: new { area = "Identity", userId = userId, code = code },
-                protocol: Request.Scheme
-            );
-            await _emailSender.SendEmailAsync(
-                email,
-                "Confirm your email",
-                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>."
-            );
-
-            StatusMessage = "Verification email sent. Please check your email.";
+            
             return RedirectToPage();
         }
     }
