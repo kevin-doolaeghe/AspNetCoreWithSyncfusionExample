@@ -1,0 +1,162 @@
+﻿@page "{handler?}"
+@model IndexModel
+@using Syncfusion.EJ2.Calendars;
+@using Syncfusion.EJ2.DropDowns;
+@using Syncfusion.EJ2.Inputs;
+@{
+    ViewData["PageTitle"] = Localizer["Monthly transactions"];
+
+    var toolbarItems = new string[] {
+        "Add", "Edit", "Delete", "Print", "ExcelExport", "PdfExport", "Search"
+    };
+    var commands = new List<object>() {
+        new { type = "Edit", buttonOption = new { iconCss = "e-icons e-edit", cssClass = "e-flat" }},
+        new { type = "Delete", buttonOption = new { iconCss = "e-icons e-delete", cssClass = "e-flat" }},
+    };
+    var sortSettings = new List<object>() { new { field = "Date", direction = "Ascending" } };
+    var filterSettings = new {
+        stringOperator = new List<object>() {
+            new { value = "contains", text = Localizer["Contains"].Value },
+            new { value = "startsWith", text = Localizer["Starts with"].Value },
+            new { value = "endsWith", text = Localizer["Ends with"].Value },
+            new { value = "equal", text = Localizer["Equal"].Value },
+            new { value = "isempty", text = Localizer["Empty"].Value },
+            new { value = "doesnotcontain", text = Localizer["Does not contain"].Value },
+            new { value = "doesnotstartwith", text = Localizer["Does not start with"].Value },
+            new { value = "doesnotendwith", text = Localizer["Does not end with"].Value },
+            new { value = "notequal", text = Localizer["Not equal"].Value },
+            new { value = "isnotempty", text = Localizer["Not empty"].Value },
+            new { value = "wildcard", text = Localizer["Like"].Value },
+        },
+        numberOperator = new List<object>() {
+            new { value = "equal", text = Localizer["Equal"].Value },
+            new { value = "notequal", text = Localizer["Not equal"].Value },
+            new { value = "greaterthan", text = Localizer["Greater than"].Value },
+            new { value = "greaterthanorequal", text = Localizer["Greater than or equal"].Value },
+            new { value = "lessthan", text = Localizer["Less than"].Value },
+            new { value = "lessthanorequal", text = Localizer["Less than or equal"].Value }
+        },
+        dateOperator = new List<object>() {
+            new { value = "equal", text = Localizer["Equal"].Value },
+            new { value = "notequal", text = Localizer["Not equal"].Value },
+            new { value = "greaterthan", text = Localizer["Greater than"].Value },
+            new { value = "greaterthanorequal", text = Localizer["Greater than or equal"].Value },
+            new { value = "lessthan", text = Localizer["Less than"].Value },
+            new { value = "lessthanorequal", text = Localizer["Less than or equal"].Value },
+        },
+        booleanOperator = new List<object>() {
+            new { value = "equals", text = Localizer["Equal"].Value },
+            new { value = "notequal", text = Localizer["Not equal"].Value },
+        },
+    };
+    var searchSettings = new string[] { "Note", "Category", "Status" };
+    var validationRules = new { required = true };
+
+    var dateParams = new DatePicker() {
+        Format = Localizer["Date format"].Value,
+    };
+    var statusParams = new DropDownList() {
+        DataSource = new List<object>() {
+            new { Value = false, Text = Localizer["Pending"].Value },
+            new { Value = true, Text = Localizer["Closed"].Value },
+        },
+        Query = "new ej.data.Query()",
+        Fields = new DropDownListFieldSettings() { Value = "Value", Text = "Text" },
+    };
+    var categoryParams = new DropDownList() {
+        DataSource = Model.Categories.Select(x => new { Value = x.Id, Text = x.Description }),
+        Query = "new ej.data.Query()",
+        Fields = new DropDownListFieldSettings() { Value = "Value", Text = "Text" },
+        AllowFiltering = true,
+        FilterType = FilterType.Contains,
+    };
+    var amountParams = new NumericTextBox() {
+        Format = "C2",
+        Step = 10,
+    };
+    
+}
+@Html.AntiForgeryToken()
+
+<div class="text-center">
+
+    <ejs-breadcrumb id="breadcrumb" cssClass="p-4" enableNavigation="true" maxItems="3" overflowMode="Menu">
+        <e-breadcrumb-items>
+            <e-breadcrumb-item iconCss="e-icons e-home" url="/"></e-breadcrumb-item>
+            <e-breadcrumb-item text="@Localizer["Monthly transactions"].Value" url="/MonthlyTransactions"></e-breadcrumb-item>
+        </e-breadcrumb-items>
+    </ejs-breadcrumb>
+
+    <form method="post">
+        <div class="d-flex justify-content-end mb-3">
+            <ejs-datepicker ejs-for="SelectedMonth" cssClass="w-25 m-2" format="MMMM y" start="Year" depth="Year"></ejs-datepicker>
+            <button type="submit" class="btn btn-primary m-2">@Localizer["Apply"]</button>
+        </div>
+    </form>
+
+    <ejs-grid id="grid" load="onLoad" dataBound="dataBound" actionComplete="actionComplete" allowPaging="true" allowSorting="true" allowFiltering="true" enableStickyHeader="true" allowPdfExport="true" allowExcelExport="true" pdfExportComplete="pdfExportComplete" excelExportComplete="excelExportComplete" toolbarClick="toolbarClick" toolbar="toolbarItems" width="100%" height="100%">
+        <e-data-manager url="/MonthlyTransactions/DataSource" crudUrl="/MonthlyTransactions/CrudUpdate" adaptor="UrlAdaptor"></e-data-manager>
+        <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true" mode="Dialog" showConfirmDialog="true" showDeleteConfirmDialog="true"></e-grid-editSettings>
+        <e-grid-pagesettings pageSize="20"></e-grid-pagesettings>
+        <e-grid-sortsettings columns="sortSettings"></e-grid-sortsettings>
+        <e-grid-filtersettings operators="filterSettings" enableCaseSensitivity="false" ignoreAccent="false" type="Menu"></e-grid-filtersettings>
+        <e-grid-searchSettings fields="searchSettings" operator="contains" ignoreCase="true"></e-grid-searchSettings>
+        <e-grid-loadingIndicator indicatorType="Shimmer"></e-grid-loadingIndicator>
+        <e-grid-columns>
+            <e-grid-column field="Id" headerText="@Localizer["Id"].Value" isPrimaryKey="true" visible="false"></e-grid-column>
+            <e-grid-column field="Date" headerText="@Localizer["Date"].Value" editType="datepickeredit" edit="new { @params = dateParams }" filter="new { @params = dateParams }" validationRules="validationRules" format="@Localizer["Date format"].Value" defaultValue="@DateTime.Today" width="120"></e-grid-column>
+            <e-grid-column field="IsDone" headerText="@Localizer["Status"].Value" visible="false" defaultValue="false"></e-grid-column>
+            <e-grid-column field="Note" headerText="@Localizer["Note"].Value" editType="textboxedit" validationRules="validationRules" minWidth="200" width="300"></e-grid-column>
+            <e-grid-column field="CategoryId" headerText="@Localizer["Category"].Value" dataSource="Model.Categories" foreignKeyField="Id" foreignKeyValue="Description" editType="dropdownedit" edit="new { @params = categoryParams }" validationRules="validationRules" width="140"></e-grid-column>
+            <e-grid-column field="Amount" headerText="@Localizer["Amount"].Value" editType="numericedit" edit="new { @params = amountParams }" validationRules="validationRules" format="C2" template="#amountTemplate" width="120"></e-grid-column>
+            <e-grid-column headerText="@Localizer["Commands"].Value" commands="commands" textAlign="Right" width="120"></e-grid-column>
+        </e-grid-columns>
+    </ejs-grid>
+
+</div>
+
+<script id="amountTemplate" type="text/x-template">
+    ${if(Amount > 0)}
+        <span class="badge bg-success p-2">${FormattedAmount}</span>
+    ${else}
+        <span class="badge bg-danger p-2">${FormattedAmount}</span>
+    ${/if}
+</script>
+
+<script>
+    function onLoad() {
+        this.dataSource.dataSource.headers = [{ "XSRF-TOKEN": $("input:hidden[name='__RequestVerificationToken']").val() }];
+    }
+
+    function dataBound(args) {
+        this.hideScroll();
+    }
+
+    function actionComplete(args) {
+        if ((args.requestType === "beginEdit" || args.requestType === "add")) {
+            var dialog = args.dialog;
+            dialog.element.style.maxHeight = "1000px";
+            dialog.header = args.requestType === "beginEdit" ? "@Localizer["Edit transaction"].Value" + args.rowData["Note"] : "@Localizer["Add transaction"].Value";
+        }
+    }
+
+    function toolbarClick(args) {
+        var gridObj = document.getElementById("grid").ej2_instances[0];
+        if (args.item.id === "grid_pdfexport") {
+            gridObj.showSpinner();
+            gridObj.pdfExport();
+        }
+        if (args.item.id === "grid_excelexport") {
+            gridObj.showSpinner();
+            gridObj.excelExport();
+        }
+    }
+
+    function pdfExportComplete(args) {
+        this.hideSpinner();
+    }
+
+    function excelExportComplete(args) {
+        this.hideSpinner();
+    }
+</script>
