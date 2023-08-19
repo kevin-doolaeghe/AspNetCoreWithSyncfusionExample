@@ -15,21 +15,18 @@
 </ul>
 
 <script>
-    function changeCulture(culture, currency) {
-        let ajax = new ej.base.Ajax(location.origin + "/locale/" + culture + ".json", "GET", false);
-        ajax.send().then((args) => ej.base.L10n.load(JSON.parse(args)));
-
-        let cultureFiles = ["ca-generic.json", "ca-gregorian.json", "dateFields.json", "numbers.json", "timeZoneNames.json", "units.json"];
-        cultureFiles.forEach((file) => {
-            ajax = new ej.base.Ajax(location.origin + "/locale/cldr-data/main/" + culture + "/" + file, "GET", false);
-            ajax.send().then((args) => ej.base.loadCldr(JSON.parse(args)));
-        });
-
-        ej.base.setCurrencyCode(currency);
-        ej.base.setCulture(culture);
-    }
-
-    let culture = "@Thread.CurrentThread.CurrentUICulture.Name";
+    let culture = "@Thread.CurrentThread.CurrentUICulture.Parent";
     let currency = "@Localizer["Currency"]";
-    changeCulture(culture, currency);
+
+    ej.base.setCurrencyCode(currency);
+    ej.base.setCulture(culture);
+
+    let ajaxL10n = new ej.base.Ajax(location.origin + "/locale/" + culture + ".json", "GET", false);
+    ajaxL10n.send().then((result) => ej.base.L10n.load(JSON.parse(result)));
+
+    let cultureFiles = ["ca-gregorian.json", "currencies.json", "dateFields.json", "numbers.json", "timeZoneNames.json", "units.json"];
+    cultureFiles.forEach((file) => {
+        let ajaxCldr = new ej.base.Ajax(location.origin + "/locale/cldr-data/main/" + culture + "/" + file, "GET", false);
+        ajaxCldr.send().then((result) => ej.base.loadCldr(JSON.parse(result)));
+    });
 </script>
