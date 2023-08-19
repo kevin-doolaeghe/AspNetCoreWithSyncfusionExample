@@ -201,11 +201,11 @@
                                     <e-grid-loadingindicator indicatorType="Shimmer"></e-grid-loadingindicator>
                                     <e-grid-columns>
                                         <e-grid-column field="Id" headerText="@Localizer["Id"].Value" isPrimaryKey="true" visible="false"></e-grid-column>
-                                        <e-grid-column field="Date" headerText="@Localizer["Date"].Value" editType="datepickeredit" edit="new { @params = dateParams }" filter="new { @params = dateParams }" validationRules="validationRules" format="@Localizer["Date format"].Value" defaultValue="@DateTime.Today" width="120"></e-grid-column>
-                                        <e-grid-column field="IsDone" headerText="@Localizer["Status"].Value" editType="dropdownedit" edit="new { @params = statusParams }" validationRules="validationRules" template="#statusTemplate" defaultValue="false" width="100"></e-grid-column>
+                                        <e-grid-column field="Date" headerText="@Localizer["Date"].Value" editType="datepickeredit" edit="new { @@params = dateParams }" filter="new { @@params = dateParams }" validationRules="validationRules" format="@Localizer["Date format"].Value" defaultValue="@DateTime.Today" width="120"></e-grid-column>
+                                        <e-grid-column field="IsDone" headerText="@Localizer["Status"].Value" editType="dropdownedit" edit="new { @@params = statusParams }" validationRules="validationRules" template="#statusTemplate" defaultValue="false" width="100"></e-grid-column>
                                         <e-grid-column field="Note" headerText="@Localizer["Note"].Value" editType="textboxedit" validationRules="validationRules" minWidth="200" width="300"></e-grid-column>
                                         <e-grid-column field="CategoryId" headerText="@Localizer["Category"].Value" dataSource="Model.Categories" foreignKeyField="Id" foreignKeyValue="Description" editType="dropdownedit" validationRules="validationRules" width="140"></e-grid-column>
-                                        <e-grid-column field="Amount" headerText="@Localizer["Amount"].Value" editType="numericedit" edit="new { @params = amountParams }" validationRules="validationRules" format="C2" template="#amountTemplate" width="120"></e-grid-column>
+                                        <e-grid-column field="Amount" headerText="@Localizer["Amount"].Value" editType="numericedit" edit="new { @@params = amountParams }" validationRules="validationRules" format="C2" template="#amountTemplate" width="120"></e-grid-column>
                                         <e-grid-column headerText="@Localizer["Commands"].Value" commands="commands" textAlign="Right" width="120"></e-grid-column>
                                     </e-grid-columns>
                                 </ejs-grid>
@@ -290,7 +290,7 @@
                 + data.formattedCurrentBalance;
             realBalanceElement.innerHTML = (data.realBalance > 100 ? positive : negative)
                 + data.formattedRealBalance;
-            cashflowElement.innerHTML = (data.cashflow > 100 ? positive : negative)
+            cashflowElement.innerHTML = (data.cashflow < 500 ? positive : negative)
                 + data.formattedCashflow;
         });
     }
