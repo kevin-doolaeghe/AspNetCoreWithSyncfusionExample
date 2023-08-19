@@ -126,8 +126,8 @@
   <data name="Dashboard" xml:space="preserve">
     <value>&lt;i class="fa-solid fa-home"&gt;&lt;/i&gt; Dashboard</value>
   </data>
-  <data name="Monthly transactions" xml:space="preserve">
-    <value>&lt;i class="fa-solid fa-list"&gt;&lt;/i&gt; Monthly transactions</value>
+  <data name="Fixed costs" xml:space="preserve">
+    <value>&lt;i class="fa-solid fa-sack-dollar"&gt;&lt;/i&gt; Fixed costs</value>
   </data>
   <data name="Transactions" xml:space="preserve">
     <value>&lt;i class="fa-solid fa-money-bill-transfer"&gt;&lt;/i&gt; Transactions</value>

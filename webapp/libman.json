@@ -1,0 +1,23 @@
+{
+  "version": "1.0",
+  "defaultProvider": "jsdelivr",
+  "libraries": [
+    {
+      "library": "@syncfusion/ej2@22.2.9",
+      "destination": "wwwroot/lib/syncfusion/ej2/"
+    },
+    {
+      "provider": "cdnjs",
+      "library": "font-awesome@6.4.2",
+      "destination": "wwwroot/lib/font-awesome/"
+    },
+    {
+      "library": "@fontsource/inter@5.0.8",
+      "destination": "wwwroot/lib/fontsource/inter/"
+    },
+    {
+      "library": "@fontsource/roboto@5.0.8",
+      "destination": "wwwroot/lib/fontsource/roboto/"
+    }
+  ]
+}

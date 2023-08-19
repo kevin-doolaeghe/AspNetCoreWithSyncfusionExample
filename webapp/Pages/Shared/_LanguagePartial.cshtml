@@ -15,21 +15,21 @@
 </ul>
 
 <script>
+    function changeCulture(culture, currency) {
+        let ajax = new ej.base.Ajax(location.origin + "/locale/" + culture + ".json", "GET", false);
+        ajax.send().then((args) => ej.base.L10n.load(JSON.parse(args)));
+
+        let cultureFiles = ["ca-generic.json", "ca-gregorian.json", "dateFields.json", "numbers.json", "timeZoneNames.json", "units.json"];
+        cultureFiles.forEach((file) => {
+            ajax = new ej.base.Ajax(location.origin + "/locale/cldr-data/main/" + culture + "/" + file, "GET", false);
+            ajax.send().then((args) => ej.base.loadCldr(JSON.parse(args)));
+        });
+
+        ej.base.setCurrencyCode(currency);
+        ej.base.setCulture(culture);
+    }
+
     let culture = "@Thread.CurrentThread.CurrentUICulture.Name";
     let currency = "@Localizer["Currency"]";
-
-    // Set the culture for the ASP.NET Core controls
-    ej.base.setCulture(culture);
-    ej.base.setCurrencyCode(currency);
-
-    /* Load the json culture files */
-    
-    var ajax = new ej.base.Ajax(location.origin + "/locale/" + culture + "/culture.json", "GET", false);
-    ajax.send().then((args) => ej.base.L10n.load(JSON.parse(args)));
-
-    let cultureFiles = ["ca-generic.json", "ca-gregorian.json", "dateFields.json", "timeZoneNames.json"];
-    cultureFiles.forEach((file) => {
-        var ajax = new ej.base.Ajax(location.origin + "/locale/" + culture + "/" + file, "GET", false);
-        ajax.send().then((args) => ej.base.loadCldr(JSON.parse(args)));
-    });
+    changeCulture(culture, currency);
 </script>

@@ -126,8 +126,8 @@
   <data name="Dashboard" xml:space="preserve">
     <value>&lt;i class="fa-solid fa-home"&gt;&lt;/i&gt; Tableau de bord</value>
   </data>
-  <data name="Monthly transactions" xml:space="preserve">
-    <value>&lt;i class="fa-solid fa-list"&gt;&lt;/i&gt; Transactions mensuelles</value>
+  <data name="Fixed costs" xml:space="preserve">
+    <value>&lt;i class="fa-solid fa-sack-dollar"&gt;&lt;/i&gt; Charges fixes</value>
   </data>
   <data name="Transactions" xml:space="preserve">
     <value>&lt;i class="fa-solid fa-money-bill-transfer"&gt;&lt;/i&gt; Transactions</value>
