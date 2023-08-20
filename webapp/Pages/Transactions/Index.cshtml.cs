@@ -35,6 +35,7 @@ namespace webapp.Pages.Transactions {
                 .ToListAsync();
             DataSource = await _databaseContext.Transactions
                 .Where(x => x.UserId == user.Id)
+                .Include(x => x.Category)
                 .OrderBy(x => x.Date)
                 .ToListAsync();
 
@@ -49,6 +50,7 @@ namespace webapp.Pages.Transactions {
 
             DataSource = await _databaseContext.Transactions
                 .Where(x => x.UserId == user.Id)
+                .Include(x => x.Category)
                 .OrderBy(x => x.Date)
                 .ToListAsync();
             int count = DataSource.Cast<Transaction>().Count();

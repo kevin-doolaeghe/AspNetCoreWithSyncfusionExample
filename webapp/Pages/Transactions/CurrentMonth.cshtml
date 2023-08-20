@@ -40,7 +40,6 @@
             new { value = "lessthan", text = Localizer["Less than"].Value },
             new { value = "lessthanorequal", text = Localizer["Less than or equal"].Value }
         },
-        // todo: dateOperator not working
         dateOperator = new List<object>() {
             new { value = "equal", text = Localizer["Equal"].Value },
             new { value = "notequal", text = Localizer["Not equal"].Value },
@@ -54,7 +53,8 @@
             new { value = "notequal", text = Localizer["Not equal"].Value },
         },
     };
-    var searchSettings = new string[] { "Note", "Category", "Status" };
+    // todo: search not working with category
+    var searchSettings = new string[] { "Note", "Category.Description", "Status" };
     var validationRules = new { required = true };
 
     var today = DateTime.Today;
@@ -65,7 +65,7 @@
         Min = firstDayOfTheMonth,
         Max = lastDayOfTheMonth,
     };
-    // todo: status filter not working filter="new { @params = statusParams }"
+    // todo: status params not working for filtering
     var statusParams = new DropDownList() {
         DataSource = new List<object>() {
             new { Value = false, Text = Localizer["Pending"].Value },
@@ -73,8 +73,8 @@
         },
         Query = "new ej.data.Query()",
         Fields = new DropDownListFieldSettings() { Value = "Value", Text = "Text" },
-            };
-    // todo: category filter not working filter="new { @params = categoryParams }"
+    };
+    // todo: category params not working for filtering
     var categoryParams = new DropDownList() {
         DataSource = Model.Categories.Select(x => new { Value = x.Id, Text = x.Description }),
         Query = "new ej.data.Query()",

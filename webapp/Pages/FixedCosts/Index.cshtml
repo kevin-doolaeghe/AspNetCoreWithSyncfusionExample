@@ -4,7 +4,7 @@
 @using Syncfusion.EJ2.DropDowns;
 @using Syncfusion.EJ2.Inputs;
 @{
-    ViewData["PageTitle"] = Localizer["Monthly transactions"];
+    ViewData["PageTitle"] = Localizer["Fixed costs"];
 
     var toolbarItems = new string[] {
         "Add", "Edit", "Delete", "Print", "ExcelExport", "PdfExport", "Search"
@@ -13,7 +13,7 @@
         new { type = "Edit", buttonOption = new { iconCss = "e-icons e-edit", cssClass = "e-flat" }},
         new { type = "Delete", buttonOption = new { iconCss = "e-icons e-delete", cssClass = "e-flat" }},
     };
-    var sortSettings = new List<object>() { new { field = "Date", direction = "Ascending" } };
+    var sortSettings = new List<object>() { new { field = "DayOfMonth", direction = "Ascending" } };
     var filterSettings = new {
         stringOperator = new List<object>() {
             new { value = "contains", text = Localizer["Contains"].Value },
@@ -49,12 +49,21 @@
             new { value = "notequal", text = Localizer["Not equal"].Value },
         },
     };
-    var searchSettings = new string[] { "Note", "Category", "Status" };
+    // todo: search not working with category
+    var searchSettings = new string[] { "Note", "Category.Description", "Status" };
     var validationRules = new { required = true };
 
-    var dateParams = new DatePicker() {
-        Format = Localizer["Date format"].Value,
+    // todo: date params not working
+    var dayOfMonthSelector = new List<object>();
+    for (int i = 1; i <= 28; i++) {
+        dayOfMonthSelector.Add(new { Value = i, Text = i.ToString("00") });
+    }
+    var dayOfMonthParams = new DropDownList() {
+        DataSource = dayOfMonthSelector,
+        Query = "new ej.data.Query()",
+        Fields = new DropDownListFieldSettings() { Value = "Value", Text = "Text" },
     };
+    // todo: status params not working for filtering
     var statusParams = new DropDownList() {
         DataSource = new List<object>() {
             new { Value = false, Text = Localizer["Pending"].Value },
@@ -63,6 +72,7 @@
         Query = "new ej.data.Query()",
         Fields = new DropDownListFieldSettings() { Value = "Value", Text = "Text" },
     };
+    // todo: category params not working for filtering
     var categoryParams = new DropDownList() {
         DataSource = Model.Categories.Select(x => new { Value = x.Id, Text = x.Description }),
         Query = "new ej.data.Query()",
@@ -83,29 +93,33 @@
     <ejs-breadcrumb id="breadcrumb" cssClass="p-4" enableNavigation="true" maxItems="3" overflowMode="Menu">
         <e-breadcrumb-items>
             <e-breadcrumb-item iconCss="e-icons e-home" url="/"></e-breadcrumb-item>
-            <e-breadcrumb-item text="@Localizer["Monthly transactions"].Value" url="/MonthlyTransactions"></e-breadcrumb-item>
+            <e-breadcrumb-item text="@Localizer["Fixed costs"].Value" url="/FixedCosts"></e-breadcrumb-item>
         </e-breadcrumb-items>
     </ejs-breadcrumb>
 
-    <form method="post">
+    <form method="post" onsubmit="return confirmForm(this);">
         <div class="d-flex justify-content-end mb-3">
-            <ejs-datepicker ejs-for="SelectedMonth" cssClass="w-25 m-2" format="MMMM y" start="Year" depth="Year"></ejs-datepicker>
+            @if (Model.StatusMessage != null) {
+                <div class="alert alert-success p-2 m-2" role="alert">
+                    @Model.StatusMessage
+                </div>
+            }
+            <ejs-datepicker ejs-for="SelectedMonth" cssClass="w-25 my-2" format="MMMM y" start="Year" depth="Year"></ejs-datepicker>
             <button type="submit" class="btn btn-primary m-2">@Localizer["Apply"]</button>
         </div>
     </form>
 
     <ejs-grid id="grid" load="onLoad" dataBound="dataBound" actionComplete="actionComplete" allowPaging="true" allowSorting="true" allowFiltering="true" enableStickyHeader="true" allowPdfExport="true" allowExcelExport="true" pdfExportComplete="pdfExportComplete" excelExportComplete="excelExportComplete" toolbarClick="toolbarClick" toolbar="toolbarItems" width="100%" height="100%">
-        <e-data-manager url="/MonthlyTransactions/DataSource" crudUrl="/MonthlyTransactions/CrudUpdate" adaptor="UrlAdaptor"></e-data-manager>
-        <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true" mode="Dialog" showConfirmDialog="true" showDeleteConfirmDialog="true"></e-grid-editSettings>
+        <e-data-manager url="/FixedCosts/DataSource" crudUrl="/FixedCosts/CrudUpdate" adaptor="UrlAdaptor"></e-data-manager>
+        <e-grid-editsettings allowAdding="true" allowDeleting="true" allowEditing="true" mode="Dialog" showConfirmDialog="true" showDeleteConfirmDialog="true"></e-grid-editsettings>
         <e-grid-pagesettings pageSize="20"></e-grid-pagesettings>
         <e-grid-sortsettings columns="sortSettings"></e-grid-sortsettings>
         <e-grid-filtersettings operators="filterSettings" enableCaseSensitivity="false" ignoreAccent="false" type="Menu"></e-grid-filtersettings>
-        <e-grid-searchSettings fields="searchSettings" operator="contains" ignoreCase="true"></e-grid-searchSettings>
-        <e-grid-loadingIndicator indicatorType="Shimmer"></e-grid-loadingIndicator>
+        <e-grid-searchsettings fields="searchSettings" operator="contains" ignoreCase="true"></e-grid-searchsettings>
+        <e-grid-loadingindicator indicatorType="Shimmer"></e-grid-loadingindicator>
         <e-grid-columns>
             <e-grid-column field="Id" headerText="@Localizer["Id"].Value" isPrimaryKey="true" visible="false"></e-grid-column>
-            <e-grid-column field="Date" headerText="@Localizer["Date"].Value" editType="datepickeredit" edit="new { @@params = dateParams }" filter="new { @@params = dateParams }" validationRules="validationRules" format="@Localizer["Date format"].Value" defaultValue="@DateTime.Today" width="120"></e-grid-column>
-            <e-grid-column field="IsDone" headerText="@Localizer["Status"].Value" visible="false" defaultValue="false"></e-grid-column>
+            <e-grid-column field="DayOfMonth" headerText="@Localizer["Day of month"].Value" editType="dropdownedit" edit="new { @@params = dayOfMonthParams }" filter="new { @@params = dayOfMonthParams }" validationRules="validationRules" defaultValue="1" width="120"></e-grid-column>
             <e-grid-column field="Note" headerText="@Localizer["Note"].Value" editType="textboxedit" validationRules="validationRules" minWidth="200" width="300"></e-grid-column>
             <e-grid-column field="CategoryId" headerText="@Localizer["Category"].Value" dataSource="Model.Categories" foreignKeyField="Id" foreignKeyValue="Description" editType="dropdownedit" edit="new { @@params = categoryParams }" validationRules="validationRules" width="140"></e-grid-column>
             <e-grid-column field="Amount" headerText="@Localizer["Amount"].Value" editType="numericedit" edit="new { @@params = amountParams }" validationRules="validationRules" format="C2" template="#amountTemplate" width="120"></e-grid-column>
@@ -158,5 +172,9 @@
 
     function excelExportComplete(args) {
         this.hideSpinner();
+    }
+
+    function confirmForm(form) {
+        return confirm("@Localizer["Confirm form"]");
     }
 </script>
