@@ -11,7 +11,7 @@
     var cellSpacing = new double[] { 10, 10 };
 
     var toolbarItems = new string[] {
-        "Add", "Edit", "Delete", "Print", "ExcelExport", "PdfExport", "Search"
+        "Add", "Edit", "Delete", "ExcelExport", "Search"
     };
     var commands = new List<object>() {
         new { type = "Edit", buttonOption = new { iconCss = "e-icons e-edit", cssClass = "e-flat" }},
@@ -197,7 +197,7 @@
                                 </div>
                             </div>
                             <div class="e-panel-content">
-                                <ejs-grid id="grid" load="onLoad" dataBound="dataBound" actionComplete="actionComplete" allowPaging="true" allowSorting="true" allowFiltering="true" enableStickyHeader="true" allowPdfExport="true" allowExcelExport="true" pdfExportComplete="pdfExportComplete" excelExportComplete="excelExportComplete" toolbarClick="toolbarClick" toolbar="toolbarItems" width="100%" height="100%">
+                                <ejs-grid id="grid" load="onLoad" dataBound="dataBound" actionComplete="actionComplete" allowPaging="true" allowSorting="true" allowFiltering="true" enableStickyHeader="true" allowExcelExport="true" excelExportComplete="excelExportComplete" toolbarClick="toolbarClick" toolbar="toolbarItems" width="100%" height="100%">
                                     <e-data-manager url="/Transactions/CurrentMonth/DataSource" crudUrl="/Transactions/CurrentMonth/CrudUpdate" adaptor="UrlAdaptor"></e-data-manager>
                                     <e-grid-editsettings allowAdding="true" allowDeleting="true" allowEditing="true" mode="Dialog" showConfirmDialog="true" showDeleteConfirmDialog="true"></e-grid-editsettings>
                                     <e-grid-pagesettings pageSize="20"></e-grid-pagesettings>
@@ -309,18 +309,10 @@
 
     function toolbarClick(args) {
         let gridObj = document.getElementById("grid").ej2_instances[0];
-        if (args.item.id === "grid_pdfexport") {
-            gridObj.showSpinner();
-            gridObj.pdfExport();
-        }
         if (args.item.id === "grid_excelexport") {
             gridObj.showSpinner();
             gridObj.excelExport();
         }
-    }
-
-    function pdfExportComplete(args) {
-        this.hideSpinner();
     }
 
     function excelExportComplete(args) {

@@ -201,10 +201,6 @@
 
     function toolbarClick(args) {
         let gridObj = document.getElementById("grid").ej2_instances[0];
-        if (args.item.id === "grid_pdfexport") {
-            gridObj.showSpinner();
-            gridObj.pdfExport();
-        }
         if (args.item.id === "grid_excelexport") {
             gridObj.showSpinner();
             gridObj.excelExport();

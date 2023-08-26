@@ -7,7 +7,7 @@
     ViewData["PageTitle"] = Localizer["Categories"];
 
     var toolbarItems = new string[] {
-        "Add", "Edit", "Delete", "Print", "ExcelExport", "PdfExport", "Search"
+        "Add", "Edit", "Delete", "ExcelExport", "Search"
     };
     var commands = new List<object>() {
         new { type = "Edit", buttonOption = new { iconCss = "e-icons e-edit", cssClass = "e-flat" }},
@@ -31,7 +31,7 @@
     var searchSettings = new string[] { "Name" };
     var validationRules = new { required = true };
 
-    var iconsByCategory = new List<object>() {
+    var iconParams = new List<object>() {
         // Money
         new { Category = Localizer["Money"].Value, Icon = "💰" },
         new { Category = Localizer["Money"].Value, Icon = "💸" },
@@ -167,8 +167,8 @@
         new { Category = Localizer["Other"].Value, Icon = "🔗" },
         new { Category = Localizer["Other"].Value, Icon = "🔒" },
     };
-    var iconParams = new DropDownList() {
-        DataSource = iconsByCategory,
+    var iconEdit = new DropDownList() {
+        DataSource = iconParams,
         Query = "new ej.data.Query()",
         Fields = new DropDownListFieldSettings() { Value = "Icon", Text = "Icon", GroupBy = "Category" },
     };
@@ -184,7 +184,7 @@
         </e-breadcrumb-items>
     </ejs-breadcrumb>
 
-    <ejs-grid id="grid" load="onLoad" dataBound="dataBound" actionComplete="actionComplete" allowPaging="true" allowSorting="true" allowFiltering="true" enableStickyHeader="true" allowPdfExport="true" allowExcelExport="true" pdfExportComplete="pdfExportComplete" excelExportComplete="excelExportComplete" toolbarClick="toolbarClick" toolbar="toolbarItems" width="100%" height="100%">
+    <ejs-grid id="grid" load="onLoad" dataBound="dataBound" actionComplete="actionComplete" allowPaging="true" allowSorting="true" allowFiltering="true" enableStickyHeader="true" allowExcelExport="true" excelExportComplete="excelExportComplete" toolbarClick="toolbarClick" toolbar="toolbarItems" width="100%" height="100%">
         <e-data-manager url="/Categories/DataSource" crudUrl="/Categories/CrudUpdate" adaptor="UrlAdaptor"></e-data-manager>
         <e-grid-editSettings allowAdding="true" allowDeleting="true" allowEditing="true" mode="Dialog" showConfirmDialog="true" showDeleteConfirmDialog="true"></e-grid-editSettings>
         <e-grid-pagesettings pageSize="20"></e-grid-pagesettings>
@@ -225,18 +225,10 @@
 
     function toolbarClick(args) {
         var gridObj = document.getElementById("grid").ej2_instances[0];
-        if (args.item.id === "grid_pdfexport") {
-            gridObj.showSpinner();
-            gridObj.pdfExport();
-        }
         if (args.item.id === "grid_excelexport") {
             gridObj.showSpinner();
             gridObj.excelExport();
         }
-    }
-
-    function pdfExportComplete(args) {
-        this.hideSpinner();
     }
 
     function excelExportComplete(args) {
