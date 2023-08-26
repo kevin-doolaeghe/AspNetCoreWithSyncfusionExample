@@ -120,6 +120,9 @@
   <data name="Add category" xml:space="preserve">
     <value>Add category</value>
   </data>
+  <data name="Cancel message" xml:space="preserve">
+    <value>Cannot be deleted : the category is linked to other transactions.</value>
+  </data>
   <data name="Categories" xml:space="preserve">
     <value>Categories</value>
   </data>

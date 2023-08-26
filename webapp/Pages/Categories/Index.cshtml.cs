@@ -34,6 +34,21 @@ namespace webapp.Pages.Categories {
             return Page();
         }
 
+        public async Task<IActionResult> OnGetNumberOfTransactionsAssociatedAsync(long id) {
+            if (!(User.Identity?.IsAuthenticated ?? false)) return Redirect("/");
+
+            var user = await GetUserAsync();
+            if (user == null) return Redirect("/");
+
+            var transactionsWithCategory = await _databaseContext.Transactions
+                        .AsNoTracking()
+                        .Where(x => x.UserId == user.Id)
+                        .Where(x => x.CategoryId == id)
+                        .ToListAsync();
+
+            return new JsonResult(transactionsWithCategory.Count);
+        }
+
         public async Task<IActionResult> OnPostDataSourceAsync([FromBody] DataManagerRequest dm) {
             if (!(User.Identity?.IsAuthenticated ?? false)) return Redirect("/");
 

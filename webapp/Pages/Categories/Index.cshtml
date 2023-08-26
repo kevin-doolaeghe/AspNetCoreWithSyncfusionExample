@@ -193,7 +193,7 @@
         <e-grid-loadingIndicator indicatorType="Shimmer"></e-grid-loadingIndicator>
         <e-grid-columns>
             <e-grid-column field="Id" headerText="@Localizer["Id"].Value" isPrimaryKey="true" visible="false"></e-grid-column>
-            <e-grid-column field="Icon" headerText="@Localizer["Icon"].Value" editType="dropdownedit" edit="new { @@params = iconParams }" validationRules="validationRules" allowFiltering="false" width="50"></e-grid-column>
+            <e-grid-column field="Icon" headerText="@Localizer["Icon"].Value" editType="dropdownedit" edit="new { @@params = iconEdit }" validationRules="validationRules" allowFiltering="false" width="50"></e-grid-column>
             <e-grid-column field="Name" headerText="@Localizer["Name"].Value" editType="textboxedit" validationRules="validationRules" minWidth="120" width="140"></e-grid-column>
             <e-grid-column headerText="@Localizer["Commands"].Value" commands="commands" textAlign="Right" width="120"></e-grid-column>
         </e-grid-columns>
@@ -213,18 +213,22 @@
     function actionComplete(args) {
         console.log(args);
         if (args.requestType === "beginEdit" || args.requestType === "add") {
-            var dialog = args.dialog;
+            let dialog = args.dialog;
             dialog.element.style.maxHeight = "1000px";
             dialog.header = args.requestType === "beginEdit" ? "@Localizer["Edit category"].Value" + args.rowData["Name"] : "@Localizer["Add category"].Value";
         }
         if (args.requestType === "delete") {
-            // todo: Show dialog when delete operation is canceled.
-            var canceled = args.cancel;
+            if (args.data != null && args.data.length > 0) {
+                let selectedCategory = args.data[0];
+                fetch("/Categories/NumberOfTransactionsAssociated?id=" + selectedCategory.Id).then(function (result) { return result.json() }).then(function (data) {
+                    if (data > 0) alert("@Localizer["Cancel message"].Value");
+                });
+            }
         }
     }
 
     function toolbarClick(args) {
-        var gridObj = document.getElementById("grid").ej2_instances[0];
+        let gridObj = document.getElementById("grid").ej2_instances[0];
         if (args.item.id === "grid_excelexport") {
             gridObj.showSpinner();
             gridObj.excelExport();

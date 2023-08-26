@@ -120,6 +120,9 @@
   <data name="Add category" xml:space="preserve">
     <value>Créer une catégorie</value>
   </data>
+  <data name="Cancel message" xml:space="preserve">
+    <value>Suppression impossible : la cat\u00e9gorie est li\u00e9e \u00e0 d\u0027autres transactions.</value>
+  </data>
   <data name="Categories" xml:space="preserve">
     <value>Catégories</value>
   </data>

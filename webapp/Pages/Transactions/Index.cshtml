@@ -52,11 +52,8 @@
     var searchSettings = new string[] { "Note", "CategoryId" };
     var validationRules = new { required = true };
 
-    // todo: date params problem on filtering: time is displayed
     var dateEdit = new DatePicker() {
         Format = Localizer["Date format"].Value,
-        Min = DateOnly.MinValue,
-        Max = DateOnly.MaxValue,
     };
     var statusParams = new List<object>() {
         new { Value = false, Text = Localizer["Pending"].Value },
@@ -66,7 +63,7 @@
         DataSource = statusParams,
         Query = "new ej.data.Query()",
         Fields = new DropDownListFieldSettings() { Value = "Value", Text = "Text" },
-            };
+    };
     var categoryParams = Model.Categories.Select(x => new { Value = x.Id, Text = x.Description });
     var categoryEdit = new DropDownList() {
         DataSource = categoryParams,
