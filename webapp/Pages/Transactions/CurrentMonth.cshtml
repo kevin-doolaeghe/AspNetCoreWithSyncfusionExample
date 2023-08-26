@@ -49,42 +49,48 @@
             new { value = "lessthanorequal", text = Localizer["Less than or equal"].Value },
         },
         booleanOperator = new List<object>() {
-            new { value = "equals", text = Localizer["Equal"].Value },
+            new { value = "equal", text = Localizer["Equal"].Value },
             new { value = "notequal", text = Localizer["Not equal"].Value },
         },
     };
-    // todo: search not working with category
-    var searchSettings = new string[] { "Note", "CategoryId", "IsDone" };
+    var searchSettings = new string[] { "Note", "CategoryId" };
     var validationRules = new { required = true };
 
     var today = DateTime.Today;
     var firstDayOfTheMonth = new DateTime(today.Year, today.Month, 1);
     var lastDayOfTheMonth = firstDayOfTheMonth.AddMonths(1).AddDays(-1);
-    var dateParams = new DatePicker() {
+    var dateEdit = new DatePicker() {
         Format = Localizer["Date format"].Value,
         Min = firstDayOfTheMonth,
         Max = lastDayOfTheMonth,
     };
-    // todo: status params not working for filtering
-    var statusParams = new DropDownList() {
-        DataSource = new List<object>() {
-            new { Value = false, Text = Localizer["Pending"].Value },
-            new { Value = true, Text = Localizer["Closed"].Value },
-        },
+    var statusParams = new List<object>() {
+        new { Value = false, Text = Localizer["Pending"].Value },
+        new { Value = true, Text = Localizer["Closed"].Value },
+    };
+    var statusEdit = new DropDownList() {
+        DataSource = statusParams,
         Query = "new ej.data.Query()",
         Fields = new DropDownListFieldSettings() { Value = "Value", Text = "Text" },
     };
-    // todo: category params not working for filtering
-    var categoryParams = new DropDownList() {
-        DataSource = Model.Categories.Select(x => new { Value = x.Id, Text = x.Description }),
+    var categoryParams = Model.Categories.Select(x => new { Value = x.Id, Text = x.Description });
+    var categoryEdit = new DropDownList() {
+        DataSource = categoryParams,
         Query = "new ej.data.Query()",
         Fields = new DropDownListFieldSettings() { Value = "Value", Text = "Text" },
         AllowFiltering = true,
         FilterType = FilterType.Contains,
     };
-    var amountParams = new NumericTextBox() {
+    var amountEdit = new NumericTextBox() {
         Format = "C2",
         Step = 10,
+    };
+
+    var statusFilter = new {
+        ui = new { create = "statusCreateFilter", read = "statusReadFilter", write = "statusWriteFilter" }
+    };
+    var categoryFilter = new {
+        ui = new { create = "categoryCreateFilter", read = "categoryReadFilter", write = "categoryWriteFilter" }
     };
 }
 @Html.AntiForgeryToken()
@@ -201,11 +207,11 @@
                                     <e-grid-loadingindicator indicatorType="Shimmer"></e-grid-loadingindicator>
                                     <e-grid-columns>
                                         <e-grid-column field="Id" headerText="@Localizer["Id"].Value" isPrimaryKey="true" visible="false"></e-grid-column>
-                                        <e-grid-column field="Date" headerText="@Localizer["Date"].Value" editType="datepickeredit" edit="new { @@params = dateParams }" filter="new { @@params = dateParams }" validationRules="validationRules" format="@Localizer["Date format"].Value" defaultValue="@DateTime.Today" width="120"></e-grid-column>
-                                        <e-grid-column field="IsDone" headerText="@Localizer["Status"].Value" editType="dropdownedit" edit="new { @@params = statusParams }" validationRules="validationRules" template="#statusTemplate" defaultValue="false" width="100"></e-grid-column>
+                                        <e-grid-column field="Date" headerText="@Localizer["Date"].Value" editType="datepickeredit" edit="new { @@params = dateEdit }" validationRules="validationRules" format="@Localizer["Date format"].Value" defaultValue="@DateTime.Today" width="120"></e-grid-column>
+                                        <e-grid-column field="IsDone" headerText="@Localizer["Status"].Value" editType="dropdownedit" edit="new { @@params = statusEdit }" filter="statusFilter" validationRules="validationRules" template="#statusTemplate" defaultValue="false" width="100"></e-grid-column>
                                         <e-grid-column field="Note" headerText="@Localizer["Note"].Value" editType="textboxedit" validationRules="validationRules" minWidth="200" width="300"></e-grid-column>
-                                        <e-grid-column field="CategoryId" headerText="@Localizer["Category"].Value" dataSource="Model.Categories" foreignKeyField="Id" foreignKeyValue="Description" editType="dropdownedit" validationRules="validationRules" width="140"></e-grid-column>
-                                        <e-grid-column field="Amount" headerText="@Localizer["Amount"].Value" editType="numericedit" edit="new { @@params = amountParams }" validationRules="validationRules" format="C2" template="#amountTemplate" width="120"></e-grid-column>
+                                        <e-grid-column field="CategoryId" headerText="@Localizer["Category"].Value" dataSource="Model.Categories" foreignKeyField="Id" foreignKeyValue="Description" editType="dropdownedit" edit="new { @@params = categoryEdit }" filter="categoryFilter" validationRules="validationRules" width="140"></e-grid-column>
+                                        <e-grid-column field="Amount" headerText="@Localizer["Amount"].Value" editType="numericedit" edit="new { @@params = amountEdit }" validationRules="validationRules" format="C2" template="#amountTemplate" width="120"></e-grid-column>
                                         <e-grid-column headerText="@Localizer["Commands"].Value" commands="commands" textAlign="Right" width="120"></e-grid-column>
                                     </e-grid-columns>
                                 </ejs-grid>
@@ -246,19 +252,63 @@
     }
 
     function actionComplete(args) {
-        console.log(args);
-
         if ((args.requestType === "beginEdit" || args.requestType === "add")) {
-            var dialog = args.dialog;
+            let dialog = args.dialog;
             dialog.element.style.maxHeight = "1000px";
             dialog.header = args.requestType === "beginEdit" ? "@Localizer["Edit transaction"].Value" + args.rowData["Note"] : "@Localizer["Add transaction"].Value";
         }
-
         updateBalance();
     }
 
+    function statusCreateFilter(args) {
+        let data = @Json.Serialize(statusParams);
+        let flValInput = new ej.base.createElement("input", { className: "flm-input" });
+        args.target.appendChild(flValInput);
+
+        this.dropInstance = new ej.dropdowns.DropDownList({
+            dataSource: new ej.data.DataManager(data),
+            fields: { text: "Text", value: "Value" },
+            popupHeight: "200px",
+            index: 0
+        });
+        this.dropInstance.appendTo(flValInput);
+    }
+
+    function statusReadFilter(args) {
+        args.fltrObj.filterByColumn(args.column.field, args.operator, this.dropInstance.value);
+    }
+
+    function statusWriteFilter(args) {
+        this.dropInstance.text = args.filteredValue || "";
+    }
+
+    function categoryCreateFilter(args) {
+        let data = @Json.Serialize(categoryParams);
+        let flValInput = new ej.base.createElement("input", { className: "flm-input" });
+        args.target.appendChild(flValInput);
+
+        this.dropInstance = new ej.dropdowns.DropDownList({
+            dataSource: new ej.data.DataManager(data),
+            fields: { text: "Text", value: "Value" },
+            query: new ej.data.Query(),
+            popupHeight: "200px",
+            index: 0,
+            allowFiltering: true,
+            filterType: "contains"
+        });
+        this.dropInstance.appendTo(flValInput);
+    }
+
+    function categoryReadFilter(args) {
+        args.fltrObj.filterByColumn(args.column.field, args.operator, this.dropInstance.text);
+    }
+
+    function categoryWriteFilter(args) {
+        this.dropInstance.text = args.filteredValue || "";
+    }
+
     function toolbarClick(args) {
-        var gridObj = document.getElementById("grid").ej2_instances[0];
+        let gridObj = document.getElementById("grid").ej2_instances[0];
         if (args.item.id === "grid_pdfexport") {
             gridObj.showSpinner();
             gridObj.pdfExport();
