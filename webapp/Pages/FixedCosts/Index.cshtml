@@ -114,7 +114,7 @@
         <e-grid-loadingindicator indicatorType="Shimmer"></e-grid-loadingindicator>
         <e-grid-columns>
             <e-grid-column field="Id" headerText="@Localizer["Id"].Value" isPrimaryKey="true" visible="false"></e-grid-column>
-            <e-grid-column field="DayOfMonth" headerText="@Localizer["Day of month"].Value" editType="dropdownedit" edit="new { @@params = dayOfMonthParams }" filter="dayOfMonthFilter" validationRules="validationRules" defaultValue="1" width="120"></e-grid-column>
+            <e-grid-column field="DayOfMonth" headerText="@Localizer["Day of month"].Value" editType="dropdownedit" edit="new { @@params = dayOfMonthEdit }" filter="dayOfMonthFilter" validationRules="validationRules" defaultValue="1" width="120"></e-grid-column>
             <e-grid-column field="Note" headerText="@Localizer["Note"].Value" editType="textboxedit" validationRules="validationRules" minWidth="200" width="300"></e-grid-column>
             <e-grid-column field="CategoryId" headerText="@Localizer["Category"].Value" dataSource="Model.Categories" foreignKeyField="Id" foreignKeyValue="Description" editType="dropdownedit" edit="new { @@params = categoryEdit }" filter="categoryFilter" validationRules="validationRules" width="140"></e-grid-column>
             <e-grid-column field="Amount" headerText="@Localizer["Amount"].Value" editType="numericedit" edit="new { @@params = amountParams }" validationRules="validationRules" format="C2" template="#amountTemplate" width="120"></e-grid-column>
